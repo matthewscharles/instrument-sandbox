@@ -1,0 +1,19 @@
+{
+  "name": "instrument-sandbox",
+  "version": "1.0.0",
+  "description": "Testing ground for instrument code.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthewscharles/instrument-sandbox.git"
+  },
+  "author": "Charles Matthews",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/matthewscharles/instrument-sandbox/issues"
+  },
+  "homepage": "https://github.com/matthewscharles/instrument-sandbox#readme"
+}
