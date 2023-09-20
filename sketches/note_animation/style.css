@@ -4,7 +4,7 @@
 
 /* the default style for the note */
 
-.note{
+.piano.note{
     transition:background-color 1s;         /* fade-out time */
     background-color:black;               /* colour: note off */
     
@@ -16,7 +16,18 @@
 
 /* the style for the note when it is on */
 
-.on{
+.note.on{
     transition:background-color 0.1s;      /* fade-in time */
     background-color:white;              /* colour: note on */
+}
+
+.display{
+    transition:background-color 0.1s;
+    background-color:darkgray;
+    color:gray;
+}
+
+.display.on{
+    transition:background-color 1s;
+    background-color:black;
 }
