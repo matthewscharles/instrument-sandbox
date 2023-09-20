@@ -8,11 +8,18 @@ const glide = false;
 function noteHandler(e){
     let {type, target} = e;
     let events = ['pointerdown'];
-    
+    let notes = ['C','Csharp','D','Dsharp','E','F','Fsharp','G','Gsharp','A','Asharp','B'];
     if(glide) events.push('pointerenter');
-    let value = events.includes(type);
+    let value = events.includes(type) ? 'on' : 'off';
+    const event = new CustomEvent('note',{
+        detail:{
+            type: value,
+            instrument:'piano',
+            pitch: notes[target.dataset.note]      
+        }
+    });
     
-    target.classList[value?'add':'remove']('on');
+    window.dispatchEvent(event);
 }
 
 export default noteHandler;

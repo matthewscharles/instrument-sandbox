@@ -1,4 +1,5 @@
 import noteHandler from './handler.js';
+import noteTransition from './noteTransition.js';
 
 let listenerTypes = ['pointerdown','pointerup','pointerleave','pointerenter'];
 
@@ -12,3 +13,9 @@ document.querySelectorAll('.note').forEach((note,i)=>{
         note.addEventListener(x,noteHandler)
     })
 })
+
+/**
+ * Trigger a custom event when a note is triggered.
+ */
+
+window.addEventListener('note',noteTransition);
