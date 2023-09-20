@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/matthewscharles/instrument-sandbox/issues"
   },
-  "homepage": "https://github.com/matthewscharles/instrument-sandbox#readme"
+  "homepage": "https://github.com/matthewscharles/instrument-sandbox#readme",
+  "devDependencies": {
+    "sass": "^1.67.0"
+  }
 }
