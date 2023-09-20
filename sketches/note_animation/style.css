@@ -1,0 +1,13 @@
+/* these styles accompany note_animation.js */
+
+.note{
+    transition:all 1s;
+    background-color:black;
+    -webkit-user-select: none;
+    user-select:none;
+}
+
+.on{
+    transition:background-color 0.1s;
+    background-color:white;
+}
