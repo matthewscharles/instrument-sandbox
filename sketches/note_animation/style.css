@@ -1,13 +1,22 @@
-/* these styles accompany note_animation.js */
+/* 
+    these styles accompany handler.js 
+*/
+
+/* the default style for the note */
 
 .note{
-    transition:all 1s;
-    background-color:black;
+    transition:background-color 1s;         /* fade-out time */
+    background-color:black;               /* colour: note off */
+    
+    /* default styles: do not touch */
+    
     -webkit-user-select: none;
     user-select:none;
 }
 
+/* the style for the note when it is on */
+
 .on{
-    transition:background-color 0.1s;
-    background-color:white;
+    transition:background-color 0.1s;      /* fade-in time */
+    background-color:white;              /* colour: note on */
 }
