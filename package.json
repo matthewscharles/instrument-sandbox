@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Testing ground for instrument code.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "build": "webpack ./src/js/main.js -o ./sketches",
     "test": "echo \"Error: no test specified\" && exit 1"

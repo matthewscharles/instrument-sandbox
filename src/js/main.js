@@ -1,3 +1,3 @@
 import MultitouchMapper from "@matthewscharles/multitouch-mapper";
-
-export {MultitouchMapper};
+window.touch = new MultitouchMapper();
+// export {MultitouchMapper};
