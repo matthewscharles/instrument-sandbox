@@ -1,3 +1,5 @@
+/* note display */
+
 .note.display{
     transition:all 3s;
     filter:brightness(80%);
@@ -7,6 +9,39 @@
     transition:all 0.1s;
     filter:brightness(150%);
 }
+
+.text{
+    /* background-color:red; */
+    color:white;
+    font-family:'Courier New', Courier, monospace;
+    padding:0.3em;
+    border-radius:15%;
+    transition:all 0.1s;
+}
+
+.text.on{
+    transition:all 0.1s;
+    color:beige;
+    background-color:red;
+    padding:0.4em;
+}
+
+.notation{
+    background-color:black;
+    width:auto;
+    text-align: center;
+    display:block;
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0px;
+    margin:auto;
+    font-size:2rem;
+    
+}
+
+
+/* main */
 
 .instrument{
     width:100%;
@@ -23,4 +58,8 @@
 
 .background.contrast{
     filter:grayscale(100%) brightness(50%);
+}
+
+body{
+    background-color:black;
 }
