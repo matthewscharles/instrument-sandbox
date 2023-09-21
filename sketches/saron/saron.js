@@ -2,6 +2,7 @@ import selector from './selector.js';
 import noteTransition from '../note_animation/noteTransition.js';
 import {setGui} from './setGui.js';
 import setKeyboard from './setKeyboard.js';
+import noteTrigger from '../note_trigger/note_trigger.js';
 
 document.querySelectorAll(selector('hc')).forEach((x)=>{
     let noteName = x.id.replace('_Imageremove_hc','');
@@ -36,14 +37,11 @@ document.querySelectorAll(selector('Image')).forEach((x)=>{
 });
 
 touch.setAction('.hc');
+window.addEventListener('note', noteTransition)
 document.addEventListener('touch-pickup', (e)=>{
     let {element,type} = e.detail;
     if(!['start','enter','end','leave'].includes(type)) return;
-    noteTransition({detail:{
-        type:type=='start'||type=='enter'?'on':'off',
-        pitch:element.dataset.note,
-        instrument:element.dataset.instrument
-    }})
+    noteTrigger(element.dataset.instrument,element.dataset.note,type=='start'||type=='enter'?'on':'off')
 })
 
 setGui();

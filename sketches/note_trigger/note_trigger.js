@@ -4,7 +4,6 @@ function noteTrigger(instrument, pitch, type){
             instrument,pitch,type   
         }
     });
-    
     window.dispatchEvent(event);
 }
 
