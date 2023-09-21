@@ -1,3 +1,4 @@
+import { MultitouchMapper } from '../main.js';
 import selector from './selector.js';
 
 document.querySelectorAll(selector('hc')).forEach((x)=>{
