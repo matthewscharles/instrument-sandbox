@@ -1,28 +1,32 @@
 <head>
   <title>Saron demo</title>
   <style>
-    .note{
-      transition:all 10s;
+    .note.display{
+      transition:all 3s;
     }
-    .note.on{
-      
-      transition:all 0.1s;
+    .note.display.on{
+      transition:all 0.2s;
       filter:brightness(50%);
-      /* opacity:0.2; */
-      /* filter:url(#brightness); */
+    }
+    .instrument{
+      width:100%;
+      height:100%;
+      display:block;
+      position:absolute;
+      top:0;
+      left:0;
+    }
+    .background{
+      transition:filter 3s;
+    }
+    .background.contrast{
+      filter:grayscale(100%) brightness(50%);
     }
   </style>
 </head>
 
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1211 908">
+<svg class="instrument background" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1211 908">
   <defs>
-    <filter id="brightness">
-      <feComponentTransfer>
-        <feFuncR type="linear" slope="1.5" />
-        <feFuncG type="linear" slope="1.5" />
-        <feFuncB type="linear" slope="1.5" />
-      </feComponentTransfer>
-    </filter>
   </defs>
   <style>
     

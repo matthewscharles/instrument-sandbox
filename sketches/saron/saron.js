@@ -1,8 +1,10 @@
 import selector from './selector.js';
+
 document.querySelectorAll(selector('hc')).forEach((x)=>{
-    let classes = [ 'note',
+    let noteName = x.id.replace('_Imageremove_hc','');
+    let classes = [ noteName,
+                    'note',
                     'hc',
-                    x.id.replace('_Imageremove_hc',''),
                     'saron',
                     'pelog'
                   ]; 
@@ -10,16 +12,17 @@ document.querySelectorAll(selector('hc')).forEach((x)=>{
 });
 
 document.querySelectorAll(selector('Image')).forEach((x)=>{
-    let classes = [ 'note',
-                    x.id.replace('_Image',''),
+    let noteName = x.id.replace('_Image','');
+    let classes = [ noteName,
+                    'note',
                     'saron',
                     'pelog'
                 ]
     x.classList.add('note', ...classes);
-    console.log(x.parentElement)
     let newSVG = x.parentElement.cloneNode(false);
+    newSVG.classList.remove('background');
     newSVG.appendChild(x)
     document.body.appendChild(newSVG);
-    newSVG.classList.add('note', 'on');
+    newSVG.classList.add('note','display');
 });
 
