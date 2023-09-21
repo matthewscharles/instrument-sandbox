@@ -37,9 +37,9 @@ document.querySelectorAll(selector('Image')).forEach((x)=>{
 touch.setAction('.hc');
 document.addEventListener('touch-pickup', (e)=>{
     let {element,type} = e.detail;
-    if(!['start','end','leave'].includes(type)) return;
+    if(!['start','enter','end','leave'].includes(type)) return;
     noteTransition({detail:{
-        type:type=='start'?'on':'off',
+        type:type=='start'||type=='enter'?'on':'off',
         pitch:element.dataset.note,
         instrument:element.dataset.instrument
     }})

@@ -1,0 +1,21 @@
+.note.display{
+    transition:all 3s;
+  }
+  .note.display.on{
+    transition:all 0.1s;
+    filter:brightness(150%);
+  }
+  .instrument{
+    width:100%;
+    height:100%;
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+  }
+  .background{
+    transition:filter 3s;
+  }
+  .background.contrast{
+    filter:grayscale(100%) brightness(50%);
+  }
