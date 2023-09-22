@@ -18,6 +18,7 @@ setGui();
 setKeyboard();
 setMidi();
 
+window.auto_off = false;
 window.midiNotes = [1,3,6,8,10];
 
 Tone.context.lookahead = 0;
@@ -30,7 +31,7 @@ window.addEventListener('note', (e)=>{
     if(type=='on'){
         window.players[index].start(Tone.immediate(),0.1);    
     } else {
-        window.players[index].stop();
+        if(window.auto_off) window.players[index].stop();
     }
 })
 

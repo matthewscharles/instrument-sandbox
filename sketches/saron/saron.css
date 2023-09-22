@@ -10,6 +10,16 @@
     filter:brightness(150%);
 }
 
+.current{
+    /* to be used to represent current user input */
+    opacity:1;
+}
+
+.current.on{
+    /* user is currently playing this note on screen, keyboard etc. */
+    opacity:1;
+}
+
 
 .text{
     color:white;

@@ -1,5 +1,7 @@
 import noteTransition from '../note_animation/noteTransition.js';
 
+// tuning based on a toy saron
+
 let tuning = {
     slendro:{
         "M1":0.73,
