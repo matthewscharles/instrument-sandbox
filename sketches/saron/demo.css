@@ -1,0 +1,7 @@
+.note.display.M2.on{
+    filter:hue-rotate(180deg);
+}
+
+.note.display.M3.on{
+    filter:hue-rotate(90deg);
+}

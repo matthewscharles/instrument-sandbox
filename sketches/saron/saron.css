@@ -2,25 +2,18 @@
 
 .note.display{
     transition:all 3s;
-    filter:brightness(150%) grayscale(100%);
+    filter:brightness(80%);
 }
 
 .note.display.on{
     transition:all 0.1s;
-    filter:brightness(150%) grayscale(0%);
+    filter:brightness(150%);
 }
 
-.note.display.M2.on{
-    filter:hue-rotate(180deg);
-}
-
-.note.display.M3.on{
-    filter:hue-rotate(90deg);
-}
 
 .text{
     color:white;
-    font-family:'Vag Rounded', Courier, monospace;
+    font-family:'Courier', Courier, monospace;
     padding:0.3em;
     border-radius:15%;
     transition:all 0.1s;
@@ -44,7 +37,6 @@
     right:0px;
     margin:auto;
     font-size:2rem;
-    
 }
 
 /* main */

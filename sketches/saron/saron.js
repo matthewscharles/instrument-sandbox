@@ -8,7 +8,7 @@ import assignClasses from './assignClasses.js';
 // -----------
 
 assignClasses();
-touchMapper.setAction('.hc');
+mapper.touch.setAction('.hc');
 window.addEventListener('note', noteTransition)
 document.addEventListener('touch-pickup', (e)=>{
     Tone.start();
@@ -31,9 +31,24 @@ window.midiNoteNames = {
     M6: 'F#5'
 }
 
+Tone.context.lookahead = 0;
+window.players = [];
+for(let i=0;i<6;i++){
+    window.players.push(new Tone.Player(`sounds/H3_lo.mp3`).toDestination());
+}
 window.synth = new Tone.PolySynth().toDestination();
-Tone.start();
+window.player = new Tone.Player('sounds/H3.wav').toDestination();
+window.player2 = new Tone.Player('sounds/H3.mp3').toDestination();
 window.addEventListener('note', (e)=>{
+    console.log('note',e.timeStamp)
     let {type, pitch, instrument} = e.detail;
-    window.synth[type=='on'?'triggerAttack':'triggerRelease'](midiNoteNames[pitch]);
+    let index = Object.keys(window.midiNoteNames).indexOf(pitch);
+    if(type=='on'){
+        window.players[index].start().seek(0.1);    
+    } else {
+        window.players[index].stop();
+    }
+    
+    // window.synth[type=='on'?'triggerAttack':'triggerRelease'](midiNoteNames[pitch]);
 })
+

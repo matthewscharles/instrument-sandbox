@@ -18,9 +18,9 @@ function setKeyboard(){
         M6: 'H'
     }
     keyboardMapper.keymap['Key'] = function(e, item, direction){
-        // if(!e.repeat) console.log(item, direction)
         let note = Object.keys(window.saronKeys).find((x)=>window.saronKeys[x]==item);
         if(!note || e.repeat) return;
+        console.log('timestamp',e.timeStamp)
         noteTrigger('saron',note,direction?'on':'off')
     }
 }
