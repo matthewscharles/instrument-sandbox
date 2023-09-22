@@ -19,17 +19,22 @@ export default function setSamplers(){
     window.players.forEach((x,i)=>{
         x.playbackRate = Object.values(tuning.slendro)[i];
         x.onstop = function(){  
-            window.setTimeout(()=>{
-                const event = new CustomEvent('displayNote', {
-                    detail:{
-                        type:'off',
-                        pitch:Object.keys(tuning.slendro)[i],
-                        instrument:'saron',
-                        player:x.state
-                    }
-                });
-                window.dispatchEvent(event);
-            },1);
+            /**
+             * note: this has been removed because the sampler retriggering causes a note off event to be triggered
+             * we could possibly remove the timeOut here, but right now this is not top priority
+             */
+            
+            // window.setTimeout(()=>{
+            //     const event = new CustomEvent('displayNote', {
+            //         detail:{
+            //             type:'off',
+            //             pitch:Object.keys(tuning.slendro)[i],
+            //             instrument:'saron',
+            //             player:x.state
+            //         }
+            //     });
+            //     window.dispatchEvent(event);
+            // },1);
         }
     })
     // quick transposition: players.forEach(player=>{player.playbackRate = player.playbackRate/2})

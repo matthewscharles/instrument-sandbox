@@ -20,7 +20,6 @@ function setKeyboard(){
     keyboardMapper.keymap['Key'] = function(e, item, direction){
         let note = Object.keys(window.saronKeys).find((x)=>window.saronKeys[x]==item);
         if(!note || e.repeat) return;
-        // console.log('timestamp',e.timeStamp)
         noteTrigger('saron',note,direction?'on':'off')
     }
 }

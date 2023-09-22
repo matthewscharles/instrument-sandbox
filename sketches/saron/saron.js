@@ -1,5 +1,5 @@
 // Imports ---
-import noteTransition from '../note_animation/noteTransition.js';
+import noteTransition from './noteTransition.js';
 import {setGui} from './setGui.js';
 import setKeyboard from './setKeyboard.js';
 import setTouch from './setTouch.js';
@@ -23,9 +23,7 @@ window.midiNotes = [1,3,6,8,10];
 
 Tone.context.lookahead = 0;
 
-
 window.addEventListener('note', (e)=>{
-    // console.log('note',e.timeStamp)
     let {type, pitch, instrument} = e.detail;
     let index = availableNotes.indexOf(pitch);
     if(type=='on'){
