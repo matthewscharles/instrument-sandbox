@@ -2,21 +2,15 @@
 import noteTransition from '../note_animation/noteTransition.js';
 import {setGui} from './setGui.js';
 import setKeyboard from './setKeyboard.js';
-import noteTrigger from '../note_trigger/note_trigger.js';
+import setTouch from './setTouch.js';
 import setMidi from './setMidi.js';
 import assignClasses from './assignClasses.js';
 // -----------
 
 assignClasses();
 mapper.touch.setAction('.hc');
-window.addEventListener('note', noteTransition)
-document.addEventListener('touch-pickup', (e)=>{
-    Tone.start();
-    let {element,type} = e.detail;
-    if(!['start','enter','end','leave'].includes(type)) return;
-    noteTrigger(element.dataset.instrument,element.dataset.note,type=='start'||type=='enter'?'on':'off')
-})
-
+window.addEventListener('note', noteTransition);
+setTouch();
 setGui();
 setKeyboard();
 setMidi();
@@ -32,15 +26,13 @@ window.midiNoteNames = {
 }
 
 Tone.context.lookahead = 0;
-window.players = [];
-for(let i=0;i<6;i++){
-    window.players.push(new Tone.Player(`sounds/H3_lo.mp3`).toDestination());
-}
-window.synth = new Tone.PolySynth().toDestination();
-window.player = new Tone.Player('sounds/H3.wav').toDestination();
-window.player2 = new Tone.Player('sounds/H3.mp3').toDestination();
+window.players = [...new Array(6)].map(()=>new Tone.Player(`sounds/H3_lo.mp3`).toDestination());
+window.players.forEach((x,i)=>{
+    x.playbackRate = 0.5 + (i/3);
+})
+
 window.addEventListener('note', (e)=>{
-    console.log('note',e.timeStamp)
+    // console.log('note',e.timeStamp)
     let {type, pitch, instrument} = e.detail;
     let index = Object.keys(window.midiNoteNames).indexOf(pitch);
     if(type=='on'){
@@ -48,7 +40,5 @@ window.addEventListener('note', (e)=>{
     } else {
         window.players[index].stop();
     }
-    
-    // window.synth[type=='on'?'triggerAttack':'triggerRelease'](midiNoteNames[pitch]);
 })
 
