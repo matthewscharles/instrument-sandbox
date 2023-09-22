@@ -7,7 +7,7 @@ import setMidi from './setMidi.js';
 import assignClasses from './assignClasses.js';
 import setSamplers from './setSamplers.js';
 // -----------
-const availableNotes = ['M1','M2','M3','M4','M5','M6'];
+const availableNotes = ['M1','M2','M3','M5','M6','H1'];
 
 assignClasses();
 setSamplers();
@@ -20,7 +20,7 @@ setMidi();
 
 window.midiNotes = [1,3,6,8,10];
 
-Tone.context.lookahead = 0.01;
+Tone.context.lookahead = 0;
 
 
 window.addEventListener('note', (e)=>{
@@ -28,7 +28,7 @@ window.addEventListener('note', (e)=>{
     let {type, pitch, instrument} = e.detail;
     let index = availableNotes.indexOf(pitch);
     if(type=='on'){
-        window.players[index].start().seek(0.1);    
+        window.players[index].start(Tone.immediate(),0.1);    
     } else {
         window.players[index].stop();
     }

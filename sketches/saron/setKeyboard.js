@@ -5,17 +5,17 @@ function setKeyboard(){
         A: 'M1',
         S: 'M2',
         D: 'M3',
-        F: 'M4',
-        G: 'M5',
-        H: 'M6'
+        F: 'M5',
+        G: 'M6',
+        H: 'H1'
     }
     window.saronKeys = {
         M1: 'A',
         M2: 'S',
         M3: 'D',
-        M4: 'F',
-        M5: 'G',
-        M6: 'H'
+        M5: 'F',
+        M6: 'G',
+        H1: 'H'
     }
     keyboardMapper.keymap['Key'] = function(e, item, direction){
         let note = Object.keys(window.saronKeys).find((x)=>window.saronKeys[x]==item);
