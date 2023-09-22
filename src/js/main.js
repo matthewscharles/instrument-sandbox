@@ -4,6 +4,6 @@ import KeyboardMapper from "keyboard-mapper";
 import MidiMapper from "midi-mapper";
 
 window.dat = dat;
-window.touch = new MultitouchMapper();
+window.touchMapper = new MultitouchMapper();
 window.keyboardMapper = new KeyboardMapper(false);
 window.midi = new MidiMapper();
