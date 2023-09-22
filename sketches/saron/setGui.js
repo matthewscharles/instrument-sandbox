@@ -1,4 +1,5 @@
 function setGui(){
+    let midiNoteNames = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
     let noteDisplay = Array.from(document.styleSheets[0].rules).find(x=>x.selectorText=='.note.display');
     let noteDisplayOn = Array.from(document.styleSheets[0].rules).find(x=>x.selectorText=='.note.display.on');
     let textDisplay = Array.from(document.styleSheets[0].rules).find(x=>x.selectorText=='.text');
@@ -12,12 +13,20 @@ function setGui(){
         high_contrast:false,
         text_size:2,
         text_colour:[0,0,0],
-        text_colour_on:[255,0,0]
+        text_colour_on:[255,0,0],
+        M1:'C',
+        M2:'D',
+        M3:'E',
+        M4:'F',
+        M5:'G',
+        M6:'A'
     }
 
     window.gui = new dat.GUI();
+    
     let noteDisplayFolder = gui.addFolder('note display');
     let optionsFolder = gui.addFolder('options');
+    let midiFolder = gui.addFolder('MIDI');
 
     noteDisplayFolder.add(properties,'brightness').name('brightness (off)').min(0).max(100).onChange((x)=>{
         noteDisplay.style.filter = `brightness(${x}%)`;
@@ -44,7 +53,11 @@ function setGui(){
     optionsFolder.addColor(properties,'text_colour_on').name('text colour (on)').onChange((x)=>{
         textDisplayOn.style.backgroundColor = `rgba(${x[0]},${x[1]},${x[2]},1)`;
     })
+    
+    midiFolder.add(properties, 'M1', { C: 'C', D: 'D', E: 'E', F: 'F', G: 'G', A: 'A', B: 'B' });
+    
     gui.close();
+    gui.domElement.classList.add('allowDefault');
 }
 
 export {setGui};
