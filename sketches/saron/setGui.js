@@ -14,12 +14,24 @@ function setGui(){
         text_size:2,
         text_colour:[0,0,0],
         text_colour_on:[255,0,0],
-        M1:'C',
-        M2:'D',
-        M3:'E',
-        M4:'F',
-        M5:'G',
-        M6:'A'
+        midi_map:{
+            slendro:{
+                "1":'C#',
+                "2":'D#',
+                "3":'F#',
+                "5":'G#',
+                "6":'A#'        
+            },
+            pelog:{
+                "1":'C',
+                "2":'D',
+                "3":'E',
+                "4":'F',
+                "5":'G',
+                "6":'A',
+                "7":'B'
+           }
+        }
     }
 
     window.gui = new dat.GUI();
@@ -54,7 +66,15 @@ function setGui(){
         textDisplayOn.style.backgroundColor = `rgba(${x[0]},${x[1]},${x[2]},1)`;
     })
     
-    midiFolder.add(properties, 'M1', { C: 'C', D: 'D', E: 'E', F: 'F', G: 'G', A: 'A', B: 'B' });
+    Object.keys(properties.midi_map.slendro).forEach((note)=>{
+        midiFolder.add(properties.midi_map.slendro, note, midiNoteNames)
+            .onChange((x)=>{
+                let num = midiNoteNames.indexOf(x);
+                console.log(num, Object.keys(properties.midi_map.slendro).indexOf(note));
+                window.midiNotes[Object.keys(properties.midi_map.slendro).indexOf(note)] = num;
+                console.log('midiNotes: ',window.midiNotes)
+            });
+    })
     
     gui.close();
     gui.domElement.classList.add('allowDefault');

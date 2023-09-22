@@ -1,6 +1,6 @@
 import noteTrigger from '../note_trigger/note_trigger.js';
 
-let midiNotes = [1,3,6,8,10];
+window.midiNotes = [1,3,6,8,10];
 
 function setMidi(){
     midi.listen();

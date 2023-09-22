@@ -1,3 +1,5 @@
+import noteTrigger from '../note_trigger/note_trigger.js';
+
 export default function setTouch(){
     document.addEventListener('touch-pickup', (e)=>{
         Tone.start();
