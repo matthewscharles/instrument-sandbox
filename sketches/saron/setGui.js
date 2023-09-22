@@ -31,14 +31,31 @@ function setGui(){
                 "6":'A',
                 "7":'B'
            }
+        },
+        tuning:{
+            slendro:{
+                "1":'1',
+                "2":'2',
+                "3":'3',
+                "5":'5',
+                "6":'6'
+            }
         }
     }
-
+    
+    
+    Object.entries(properties.midi_map.slendro).forEach(([key,value],i)=>{
+        properties.tuning.slendro[key] = window.players[i].playbackRate;
+    })
+    
+    // console.table(properties.tuning.slendro);
+    
     window.gui = new dat.GUI();
     
     let noteDisplayFolder = gui.addFolder('note display');
     let optionsFolder = gui.addFolder('options');
     let midiFolder = gui.addFolder('MIDI');
+    let tuningFolder = gui.addFolder('tuning');
 
     noteDisplayFolder.add(properties,'brightness').name('brightness (off)').min(0).max(100).onChange((x)=>{
         noteDisplay.style.filter = `brightness(${x}%)`;
@@ -73,6 +90,14 @@ function setGui(){
                 console.log(num, Object.keys(properties.midi_map.slendro).indexOf(note));
                 window.midiNotes[Object.keys(properties.midi_map.slendro).indexOf(note)] = num;
                 console.log('midiNotes: ',window.midiNotes)
+            });
+    })
+    
+    Object.keys(properties.tuning.slendro).forEach((note)=>{
+        tuningFolder.add(properties.tuning.slendro, note, 0.5, 2)
+            .step(0.01)
+            .onChange((x)=>{
+                window.players[Object.keys(properties.tuning.slendro).indexOf(note)].playbackRate = x;
             });
     })
     
