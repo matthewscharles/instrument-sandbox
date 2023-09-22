@@ -16,8 +16,7 @@ export default function setSamplers(){
     window.players = [...new Array(6)].map(()=>new Tone.Player(`sounds/H3_lo.mp3`).toDestination());
     window.players.forEach((x,i)=>{
         x.playbackRate = Object.values(tuning.slendro)[i];
-        x.onstop = function(){
-        
+        x.onstop = function(){  
             window.setTimeout(()=>{
                 const event = new CustomEvent('displayNote', {
                     detail:{
@@ -29,9 +28,9 @@ export default function setSamplers(){
                 });
                 window.dispatchEvent(event);
             },1);
-        
         }
     })
+    // quick transposition: players.forEach(player=>{player.playbackRate = player.playbackRate/2})
     window.addEventListener('displayNote',noteTransition)
     
 }
