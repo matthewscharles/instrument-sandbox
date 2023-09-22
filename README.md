@@ -6,7 +6,7 @@ This repo is a break from the BtB Arts projects for now, as we were developing s
 ## Notes
 ### Installation
 ```bash
-sass --watch ./sass/main.scss ./sketches/main.css
+sass --watch ./src/sass/main.scss ./sketches/main.css
 ```
 ### Development
 - Note for gui dropdowns: https://stackoverflow.com/questions/30372761/map-dat-gui-dropdown-menu-strings-to-values

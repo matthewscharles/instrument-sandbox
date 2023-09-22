@@ -7,3 +7,9 @@ window.dat = dat;
 window.touchMapper = new MultitouchMapper();
 window.keyboardMapper = new KeyboardMapper(false);
 window.midi = new MidiMapper();
+
+window.mapper = {
+    touch: touchMapper,
+    keyboard: keyboardMapper,
+    midi: midi
+}
