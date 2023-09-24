@@ -54,7 +54,7 @@ function setGui(){
     
     
     Object.entries(properties.midi_map.slendro).forEach(([key,value],i)=>{
-        properties.tuning.slendro[key] = window.players[i].playbackRate;
+        properties.tuning.slendro[key] = window.players.slendro[i].playbackRate;
     })
     
     // console.table(properties.tuning.slendro);

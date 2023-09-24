@@ -1,32 +1,15 @@
 import noteTransition from '../note_animation/noteTransition.js';
+import tuning from './tuning.js';
 
-// tuning based on a toy saron
+tuning.toy_saron.slendro.H1 = tuning.toy_saron.slendro.M1*2;
 
-let tuning = {
-    slendro:{
-        "M1":0.73,
-        "M2":0.83,
-        "M3":0.96,
-        "M5":1.09,
-        "M6":1.27
-    },
-    pelog:{
-        "M1":0.8,
-        "M2":0.85,
-        "M3":0.94,
-        "M4":1.12,
-        "M5":1.21,
-        "M6":1.27,
-        "M7":1.398                
-    }
-}
-
-tuning.slendro.H1 = tuning.slendro.M1*2;
-
-export default function setSamplers(){
-    window.players = [...new Array(6)].map(()=>new Tone.Player(`sounds/H3_lo.mp3`).toDestination());
-    window.players.forEach((x,i)=>{
-        x.playbackRate = Object.values(tuning.slendro)[i];
+export default function setSamplers(laras="slendro", source="toy_saron"){
+    let numberOfNotes = Object.keys(tuning[source][laras]).length;
+    window.players = window.players || {};
+    window.players[laras] = [...new Array(numberOfNotes)]
+        .map(()=>new Tone.Player(`sounds/H3_lo.mp3`).toDestination());
+    window.players[laras].forEach((x,i)=>{
+        x.playbackRate = Object.values(tuning[source][laras])[i];
         x.onstop = function(){  
             /**
              * note: this has been removed because the sampler retriggering causes a note off event to be triggered
@@ -47,6 +30,6 @@ export default function setSamplers(){
         }
     })
     // quick transposition: players.forEach(player=>{player.playbackRate = player.playbackRate/2})
-    window.addEventListener('displayNote',noteTransition)
+    
     
 }

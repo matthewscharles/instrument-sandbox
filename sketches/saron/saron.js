@@ -18,12 +18,15 @@ function init(){
     assignClasses();
     setSamplers();
     window.addEventListener('note', noteTransition);
+    // displayNote is a temporary event that is triggered by the sampler, see setSamplers.js
+    // window.addEventListener('displayNote',noteTransition);
     mapper.touch
         .setAction('.hc')
         .setAction('.options')
     setTouch();
     setGui();
     setKeyboard();
+    // midi is disabled for the time being...
     // setMidi();
     
     let params = new URLSearchParams(location.search);
@@ -40,9 +43,9 @@ function init(){
         let {type, pitch, instrument} = e.detail;
         let index = availableNotes.indexOf(pitch);
         if(type=='on'){
-            window.players[index].start(Tone.immediate(),0.1);    
+            window.players.slendro[index].start(Tone.immediate(),0.1);    
         } else {
-            if(window.auto_off) window.players[index].stop();
+            if(window.auto_off) window.players.slendro[index].stop();
         }
     });
     
