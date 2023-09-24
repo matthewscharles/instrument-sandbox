@@ -4,7 +4,6 @@
 <script>
     function replaceSvgObject(objectElement) {
         const newSvgElement = objectElement.contentDocument.querySelector('svg');
-        console.log(newSvgElement);
         objectElement.classList.forEach(className => {
             newSvgElement.classList.add(className);
         });

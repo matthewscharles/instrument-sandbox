@@ -18,3 +18,20 @@
 
 <script src="../main.js"></script>
 <script src="saron.js" type="module"></script>
+<script>
+   function replaceSvgObject(objectElement) {
+        const newSvgElement = objectElement.contentDocument.querySelector('svg');
+        console.log(newSvgElement)
+        objectElement.classList.forEach(className => {
+            newSvgElement.classList.add(className);
+        });
+        
+        newSvgElement.classList.replace('svg-import', 'svg-imported');
+        newSvgElement.id = objectElement.id;
+        objectElement.replaceWith(newSvgElement);
+    }
+    
+    window.addEventListener('load',()=>{
+        replaceSvgObject(document.getElementById('instrument_saron'));
+    })
+</script>

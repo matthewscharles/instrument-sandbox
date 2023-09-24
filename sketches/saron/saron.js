@@ -16,8 +16,8 @@ function init(){
     Tone.start();
     assignClasses();
     setSamplers();
-    mapper.touch.setAction('.hc');
     window.addEventListener('note', noteTransition);
+    mapper.touch.setAction('.hc');
     setTouch();
     setGui();
     setKeyboard();
@@ -39,26 +39,15 @@ function init(){
     });
 }
 
-function replaceAllSvg(){
-    return new Promise((resolve, reject) => {
+window.addEventListener('load', () => {
+    if(convertFromObjects){
+        replaceAllSvg().then(init);
+    } else {
         document.querySelectorAll('.svg-import').forEach(element => {
-            // I'm not sure how this will work with loading the SVGs from the server, so here's a first attempt.
-            if(element.contentDocument) {
-                replaceSvgObject(element);
-            } else {
-                element.addEventListener('load', () => {
-                    replaceSvgObject(element);
-                    resolve();
-                });
-            }
+            replaceSvgObject(element);
         });
-        resolve();
-    });
-}
+        init();
+    }
+});
 
-if(convertFromObjects){
 
-    replaceAllSvg().then(init);
-} else {
-    init();
-}
