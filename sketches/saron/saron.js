@@ -19,11 +19,15 @@ function init(){
         let instrumentLaras = element.classList.contains('pelog')?'pelog':'slendro';
         assignClasses(element, instrumentLaras);
     })
-    // assignClasses();
+    
     setSamplers('slendro');
     setSamplers('pelog');
+    
     window.addEventListener('note', noteTransition);
-    addNotation(window.laras, document.querySelector('.notation'));
+    document.querySelectorAll('.notation').forEach(element=>{
+        addNotation(element.classList.contains('pelog')?'pelog':'slendro', element);
+    })
+    // addNotation(window.laras, document.querySelector('.notation'));
     
     mapper.touch
         .setAction('.hc')
@@ -44,12 +48,12 @@ function init(){
     Tone.context.lookahead = 0;
 
     window.addEventListener('note', (e)=>{
-        let {type, pitch, instrument} = e.detail;
-        let index = availableNotes[window.laras].indexOf(pitch);
+        let {type, pitch, instrument, laras} = e.detail;
+        let index = availableNotes[laras].indexOf(pitch);
         if(type=='on'){
-            window.players[window.laras][index].start(Tone.immediate(),0.1);    
+            window.players[laras][index].start(Tone.immediate(),0.1);    
         } else {
-            if(window.auto_off) window.players[window.laras][index].stop();
+            if(window.auto_off) window.players[laras][index].stop();
         }
     });
     

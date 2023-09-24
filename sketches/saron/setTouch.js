@@ -3,7 +3,7 @@ import noteTrigger from '../note_trigger/note_trigger.js';
 const actions = {
     '.hc': function(element,type,query){
         if(!['start','enter','end','leave'].includes(type)) return;
-        noteTrigger(element.dataset.instrument,element.dataset.note,type=='start'||type=='enter'?'on':'off');        
+        noteTrigger(element.dataset.instrument,element.dataset.note,type=='start'||type=='enter'?'on':'off',element.classList.contains('pelog')?'pelog':'slendro');      
     },
     '.options': function(element,type,query){
         let paths = document.querySelectorAll(`.${element.id} path`);
