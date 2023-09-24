@@ -4,6 +4,10 @@ const actions = {
     '.hc': function(element,type,query){
         if(!['start','enter','end','leave'].includes(type)) return;
         noteTrigger(element.dataset.instrument,element.dataset.note,type=='start'||type=='enter'?'on':'off');        
+    },
+    '.options': function(element,type,query){
+        if(!['end'].includes(type)) return;
+        document.querySelector(`.${element.id} path`).classList.toggle('on');
     }
 }
 

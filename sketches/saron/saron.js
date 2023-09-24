@@ -18,7 +18,9 @@ function init(){
     assignClasses();
     setSamplers();
     window.addEventListener('note', noteTransition);
-    mapper.touch.setAction('.hc');
+    mapper.touch
+        .setAction('.hc')
+        .setAction('.options')
     setTouch();
     setGui();
     setKeyboard();
