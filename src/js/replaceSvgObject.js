@@ -4,10 +4,7 @@
  */
 
 function replaceSvgObject(objectElement) {
-    const svgContent = objectElement.contentDocument.documentElement.outerHTML;
-    
-    objectElement.insertAdjacentHTML('afterend', svgContent);
-    let newSvgElement = objectElement.nextElementSibling;
+    const newSvgElement = objectElement.contentDocument.querySelector('svg');
     
     objectElement.classList.forEach(className => {
         newSvgElement.classList.add(className);
@@ -15,7 +12,8 @@ function replaceSvgObject(objectElement) {
     
     newSvgElement.classList.replace('svg-import', 'svg-imported');
     newSvgElement.id = objectElement.id;
-    objectElement.remove();
+    objectElement.replaceWith(newSvgElement);
 }
+
 
 export { replaceSvgObject }

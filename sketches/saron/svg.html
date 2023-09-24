@@ -1,3 +1,21 @@
 <object id="instrument_saron" class="svg-import instrument saron barung background" data="toy_saron.svg" type="image/svg+xml"></object>
-<script type="module" src="replaceAllSvg.js"></script>
+<!-- <script type="module" src="replaceAllSvg.js"></script> -->
 
+<script>
+    function replaceSvgObject(objectElement) {
+        const newSvgElement = objectElement.contentDocument.querySelector('svg');
+        console.log(newSvgElement);
+        objectElement.classList.forEach(className => {
+            newSvgElement.classList.add(className);
+        });
+        
+        newSvgElement.classList.replace('svg-import', 'svg-imported');
+        newSvgElement.id = objectElement.id;
+        objectElement.replaceWith(newSvgElement);
+    }
+    window.addEventListener('load',()=>{
+        replaceSvgObject(document.getElementById('instrument_saron'));
+    })
+    
+    
+</script>
