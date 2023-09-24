@@ -4,18 +4,25 @@
  */
 
 function replaceSvgObject(objectElement) {
-    const svgContent = objectElement.contentDocument.documentElement.outerHTML;
-    
-    objectElement.insertAdjacentHTML('afterend', svgContent);
-    let newSvgElement = objectElement.nextElementSibling;
+    let newSvgElement = objectElement.contentDocument.querySelector('svg');
+    if (!newSvgElement) {
+        
+        setTimeout(() => {
+            console.log('svg not loaded, waiting.to try again..')
+            replaceSvgObject(objectElement);
+        }, 100);
+        return;
+    }
     
     objectElement.classList.forEach(className => {
         newSvgElement.classList.add(className);
     });
     
     newSvgElement.classList.replace('svg-import', 'svg-imported');
+    
     newSvgElement.id = objectElement.id;
-    objectElement.remove();
+    objectElement.replaceWith(newSvgElement);
 }
+
 
 export { replaceSvgObject }
