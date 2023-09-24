@@ -10,8 +10,6 @@ import setSamplers from './setSamplers.js';
 // -----------
 const availableNotes = ['M1','M2','M3','M5','M6','H1'];
 
-const convertFromObjects = false;
-
 function init(){
     
     Tone.start();
@@ -43,14 +41,20 @@ function init(){
             if(window.auto_off) window.players[index].stop();
         }
     });
+    
+    Tone.loaded().then(()=>{
+        // document.querySelector('#loading').style.display = 'none';
+        document.querySelectorAll('.awaitLoad').forEach(element=>element.classList.remove('disabled', 'awaitLoad'));
+    });
+    
 }
 
 window.addEventListener('load', () => {
-        document.querySelectorAll('.svg-import').forEach(element => {
-            replaceSvgObject(element);
-        });
-        
-        init();
+    document.querySelectorAll('.svg-import').forEach(element => {
+        replaceSvgObject(element);
+    });
+    
+    init();
 });
 
 

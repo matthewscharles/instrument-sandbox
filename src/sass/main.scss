@@ -20,4 +20,13 @@
     width: 100px;
     height: 100px;
     pointer-events: none;
-  }
+    
+    path{
+        fill: #777;
+    }
+}
+
+.disabled{
+    opacity:0.5;
+    pointer-events:none;
+}

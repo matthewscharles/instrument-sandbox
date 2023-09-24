@@ -20,5 +20,13 @@
   height: 100px;
   pointer-events: none;
 }
+.icon path {
+  fill: #777;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
 
 /*# sourceMappingURL=main.css.map */
