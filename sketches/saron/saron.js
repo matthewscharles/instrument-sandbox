@@ -40,14 +40,11 @@ function init(){
 }
 
 window.addEventListener('load', () => {
-    if(convertFromObjects){
-        replaceAllSvg().then(init);
-    } else {
         document.querySelectorAll('.svg-import').forEach(element => {
             replaceSvgObject(element);
         });
+        
         init();
-    }
 });
 
 
