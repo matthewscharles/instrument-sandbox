@@ -6,8 +6,24 @@ const actions = {
         noteTrigger(element.dataset.instrument,element.dataset.note,type=='start'||type=='enter'?'on':'off');        
     },
     '.options': function(element,type,query){
-        if(!['end'].includes(type)) return;
-        document.querySelector(`.${element.id} path`).classList.toggle('on');
+        let paths = document.querySelectorAll(`.${element.id} path`);
+        let actions = {
+            'start':function(){
+                paths.forEach(path=>path.classList.add('active'));
+            },
+            'enter': function(){
+                paths.forEach(path=>path.classList.add('active'));
+            },
+            'leave': function(){
+                paths.forEach(path=>path.classList.remove('active'));
+            },
+            'end': function(){
+                paths.forEach(path=>path.classList.remove('active'));
+                paths.forEach(path=>path.classList.toggle('on'));
+            }
+        }
+        
+        if(actions[type]) actions[type]();
     }
 }
 

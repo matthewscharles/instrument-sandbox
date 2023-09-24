@@ -45,6 +45,11 @@
     path.on{
         fill: #fff;
     }
+    
+    path.active{
+        transform:translateY(10px);
+      }
+      
 }
 
 button.options{
@@ -55,7 +60,7 @@ button.options{
     height: 100px;
     margin:10px;
     background-color:transparent;
-        
+    border:none;
 }
 
 .disabled{

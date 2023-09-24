@@ -38,6 +38,9 @@
 .icon path.on {
   fill: #fff;
 }
+.icon path.active {
+  transform: translateY(10px);
+}
 
 button.options {
   position: absolute;
@@ -47,6 +50,7 @@ button.options {
   height: 100px;
   margin: 10px;
   background-color: transparent;
+  border: none;
 }
 
 .disabled {
