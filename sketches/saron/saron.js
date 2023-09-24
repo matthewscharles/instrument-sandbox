@@ -1,4 +1,6 @@
 // Imports ---
+import availableNotes from './availableNotes.js';
+import addNotation from './addNotation.js';
 import { replaceSvgObject } from './replaceSvgObject.js';
 import noteTransition from './noteTransition.js';
 import {setGui} from './setGui.js';
@@ -10,14 +12,14 @@ import setSamplers from './setSamplers.js';
 import transitionDisplay from './transitionOut.js';
 // -----------
 
-const availableNotes = ['M1','M2','M3','M5','M6','H1'];
-
 function init(){
-    
+    window.laras = 'slendro';
     Tone.start();
     assignClasses();
-    setSamplers();
+    setSamplers('slendro');
+    setSamplers('pelog');
     window.addEventListener('note', noteTransition);
+    addNotation('slendro', document.querySelector('.notation'));
     // displayNote is a temporary event that is triggered by the sampler, see setSamplers.js
     // window.addEventListener('displayNote',noteTransition);
     mapper.touch
@@ -41,11 +43,11 @@ function init(){
 
     window.addEventListener('note', (e)=>{
         let {type, pitch, instrument} = e.detail;
-        let index = availableNotes.indexOf(pitch);
+        let index = availableNotes[window.laras].indexOf(pitch);
         if(type=='on'){
-            window.players.slendro[index].start(Tone.immediate(),0.1);    
+            window.players[window.laras][index].start(Tone.immediate(),0.1);    
         } else {
-            if(window.auto_off) window.players.slendro[index].stop();
+            if(window.auto_off) window.players[window.laras][index].stop();
         }
     });
     

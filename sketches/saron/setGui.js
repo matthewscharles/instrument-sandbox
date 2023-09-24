@@ -59,7 +59,7 @@ function setGui(){
     
     // console.table(properties.tuning.slendro);
     
-    window.gui = new dat.GUI();
+    window.gui = new dat.GUI({hideable:false});
     
     let noteDisplayFolder = gui.addFolder('note display');
     let optionsFolder = gui.addFolder('options');
