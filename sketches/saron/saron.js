@@ -13,6 +13,7 @@ const availableNotes = ['M1','M2','M3','M5','M6','H1'];
 const convertFromObjects = false;
 
 function init(){
+    
     Tone.start();
     assignClasses();
     setSamplers();
@@ -22,6 +23,11 @@ function init(){
     setGui();
     setKeyboard();
     // setMidi();
+    
+    let params = new URLSearchParams(location.search);
+    if(!params.has('dev')){
+      gui.hide();
+    }
 
     window.auto_off = false;
     window.midiNotes = [1,3,6,8,10];
