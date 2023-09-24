@@ -14,6 +14,8 @@ function replaceSvgObject(objectElement) {
         return;
     }
     
+    console.log(`loaded from ${objectElement.id}`)
+    
     objectElement.classList.forEach(className => {
         newSvgElement.classList.add(className);
     });

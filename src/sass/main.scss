@@ -1,16 +1,31 @@
 /* Instrument sandbox */
 
+.body{
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 .loading{
+    
+    background: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0) 80%);
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10%;
     position: absolute;
     top: 50%;
     left: 50%;
+    height:80%;
+    width: 80%;
     transform: translate(-50%, -50%);
     font-family: 'Roboto', sans-serif;
     font-size: 2rem;
     color: #fff;
-    text-shadow: 0 0 10px #fff;
+    text-shadow: 0 0 20px #eee;
     text-align: center;
     z-index: 100;
+    transition: all 0.5s ease;
+    cursor:wait;
 }
 
 .icon{
@@ -29,4 +44,13 @@
 .disabled{
     opacity:0.5;
     pointer-events:none;
+}
+
+.noDisplay{
+    display:none;
+}
+
+.transparent{
+    transition:opacity 1s ease;
+    opacity:0;
 }
