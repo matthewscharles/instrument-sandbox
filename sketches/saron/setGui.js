@@ -39,6 +39,15 @@ function setGui(){
                 "3":0.96,
                 "5":1.09,
                 "6":1.27
+            },
+            pelog:{
+                "1":0.8,
+                "2":0.85,
+                "3":0.94,
+                "4":1.12,
+                "5":1.21,
+                "6":1.27,
+                "7":1.398                
             }
         }
     }
@@ -95,7 +104,7 @@ function setGui(){
     
     Object.keys(properties.tuning.slendro).forEach((note)=>{
         tuningFolder.add(properties.tuning.slendro, note, 0.5, 2)
-            .step(0.01)
+            .step(0.001)
             .onChange((x)=>{
                 window.players[Object.keys(properties.tuning.slendro).indexOf(note)].playbackRate = x;
             });
