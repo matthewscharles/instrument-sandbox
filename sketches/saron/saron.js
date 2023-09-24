@@ -13,13 +13,13 @@ import transitionDisplay from './transitionOut.js';
 // -----------
 
 function init(){
-    window.laras = 'slendro';
+    window.laras = window.laras || 'slendro';
     Tone.start();
     assignClasses();
     setSamplers('slendro');
     setSamplers('pelog');
     window.addEventListener('note', noteTransition);
-    addNotation('slendro', document.querySelector('.notation'));
+    addNotation(window.laras, document.querySelector('.notation'));
     // displayNote is a temporary event that is triggered by the sampler, see setSamplers.js
     // window.addEventListener('displayNote',noteTransition);
     mapper.touch

@@ -10,7 +10,7 @@ function assignClasses(){
                         'pelog'
                       ]; 
         element.classList.add('note', ...classes);
-        element.querySelectorAll('path').forEach((y,i)=>{
+        element.querySelectorAll('path,polygon,polyline').forEach((y,i)=>{
             y.classList.add('note', ...classes);
             y.id = `${'saron'}_${'pelog'}_${noteName}_hc_${i}`;
             y.dataset.note = noteName;
