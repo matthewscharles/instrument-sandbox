@@ -15,7 +15,12 @@ import transitionDisplay from './transitionOut.js';
 function init(){
     window.laras = window.laras || 'slendro';
     Tone.start();
-    assignClasses();
+    document.querySelectorAll('.playable').forEach(element=>{
+        let instrumentLaras = element.classList.contains('pelog')?'pelog':'slendro';
+        console.log(element, instrumentLaras);
+        assignClasses(element, instrumentLaras);
+    })
+    // assignClasses();
     setSamplers('slendro');
     setSamplers('pelog');
     window.addEventListener('note', noteTransition);

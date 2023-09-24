@@ -57,8 +57,6 @@ function setGui(){
         properties.tuning.slendro[key] = window.players.slendro[i].playbackRate;
     })
     
-    // console.table(properties.tuning.slendro);
-    
     window.gui = new dat.GUI({hideable:false});
     
     let noteDisplayFolder = gui.addFolder('note display');

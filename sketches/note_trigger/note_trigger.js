@@ -1,7 +1,7 @@
-function noteTrigger(instrument, pitch, type){
+function noteTrigger(instrument, pitch, type, laras=window.laras){
     const event = new CustomEvent('note',{
         detail:{
-            instrument,pitch,type   
+            instrument,pitch,type,laras   
         }
     });
     window.dispatchEvent(event);
