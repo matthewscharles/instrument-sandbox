@@ -17,7 +17,6 @@ function init(){
     Tone.start();
     document.querySelectorAll('.playable').forEach(element=>{
         let instrumentLaras = element.classList.contains('pelog')?'pelog':'slendro';
-        console.log(element, instrumentLaras);
         assignClasses(element, instrumentLaras);
     })
     // assignClasses();
@@ -25,16 +24,14 @@ function init(){
     setSamplers('pelog');
     window.addEventListener('note', noteTransition);
     addNotation(window.laras, document.querySelector('.notation'));
-    // displayNote is a temporary event that is triggered by the sampler, see setSamplers.js
-    // window.addEventListener('displayNote',noteTransition);
+    
     mapper.touch
         .setAction('.hc')
         .setAction('.options')
     setTouch();
     setGui();
     setKeyboard();
-    // midi is disabled for the time being...
-    // setMidi();
+    
     
     let params = new URLSearchParams(location.search);
     if(!params.has('dev')){
@@ -62,6 +59,14 @@ function init(){
         })
         document.querySelectorAll('.awaitLoad').forEach(element=>element.classList.remove('disabled', 'awaitLoad'));
     });
+    
+    // removed functionality for now:
+    
+    // midi is disabled for the time being...
+    // setMidi();
+    
+    // displayNote is a temporary event that is triggered by the sampler. see setSamplers.js
+    // window.addEventListener('displayNote',noteTransition);
     
 }
 

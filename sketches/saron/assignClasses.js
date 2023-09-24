@@ -1,7 +1,7 @@
 import generateSelector from './generateSelector.js';
 
 function assignClasses(element=document,laras='slendro', instrument='saron'){
-    document.querySelectorAll(generateSelector('hc')).forEach((element)=>{
+    element.querySelectorAll(generateSelector('hc')).forEach((element)=>{
         let noteName = element.id.replace('_Imageremove_hc','');
         let classes = [ noteName,
                         'note',
@@ -12,13 +12,13 @@ function assignClasses(element=document,laras='slendro', instrument='saron'){
         element.classList.add('note', ...classes);
         element.querySelectorAll('path,polygon,polyline').forEach((y,i)=>{
             y.classList.add('note', ...classes);
-            y.id = `${'saron'}_${'pelog'}_${noteName}_hc_${i}`;
+            y.id = `${instrument}_${laras}_${noteName}_hc_${i}`;
             y.dataset.note = noteName;
-            y.dataset.instrument = 'saron';
+            y.dataset.instrument = instrument;
         })
     });
     
-    document.querySelectorAll(generateSelector('Image')).forEach((element)=>{
+    element.querySelectorAll(generateSelector('Image')).forEach((element)=>{
         let noteName = element.id.replace('_Image','');
         let classes = [ noteName,
                         'note',
@@ -31,7 +31,7 @@ function assignClasses(element=document,laras='slendro', instrument='saron'){
         newSVG.classList.remove('background');
         newSVG.appendChild(element)
         container.appendChild(newSVG);
-        newSVG.classList.add('note','display','saron','pelog',noteName);
+        newSVG.classList.add('note','display',instrument,laras,noteName);
     });
 }
 
