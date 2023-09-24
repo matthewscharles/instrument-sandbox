@@ -1,20 +1,19 @@
 /**
- * Note requires the object to be loaded.
- * @param {*} objectElement 
+ * If object is not loaded, try again every 100ms
+ * @param {HTMLElement} objectElement 
  */
 
 function replaceSvgObject(objectElement) {
     let newSvgElement = objectElement.contentDocument.querySelector('svg');
     if (!newSvgElement) {
-        
         setTimeout(() => {
-            console.log('svg not loaded, waiting.to try again..')
+            console.log(`svg not loaded (${objectElement.id}), waiting.to try again..`)
             replaceSvgObject(objectElement);
         }, 100);
         return;
     }
     
-    console.log(`loaded from ${objectElement.id}`)
+    console.log(`svg loaded from ${objectElement.id}`)
     
     objectElement.classList.forEach(className => {
         newSvgElement.classList.add(className);

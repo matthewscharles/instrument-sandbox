@@ -1,14 +1,6 @@
 import noteTrigger from '../note_trigger/note_trigger.js';
 
 function setKeyboard(){
-    window.keysSaron = {
-        A: 'M1',
-        S: 'M2',
-        D: 'M3',
-        F: 'M5',
-        G: 'M6',
-        H: 'H1'
-    }
     window.saronKeys = {
         M1: 'A',
         M2: 'S',

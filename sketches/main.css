@@ -59,4 +59,8 @@
   display: none;
 }
 
+.hue {
+  filter: hue-rotate(90deg);
+}
+
 /*# sourceMappingURL=main.css.map */
