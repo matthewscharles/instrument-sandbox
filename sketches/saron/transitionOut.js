@@ -6,6 +6,7 @@
  */
 
 function transitionDisplay(element, display=false, delay = 1000) {
+    delay = display ? 0 : delay;
     let action = display ? 'remove' : 'add';
     element.classList[action]('transparent');
     setTimeout(() => {

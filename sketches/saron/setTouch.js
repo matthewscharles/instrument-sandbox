@@ -1,3 +1,4 @@
+import setLaras from './setLaras.js';
 import noteTrigger from '../note_trigger/note_trigger.js';
 
 const actions = {
@@ -7,6 +8,11 @@ const actions = {
     },
     '.options': function(element,type,query){
         let paths = document.querySelectorAll(`.${element.id} path`);
+        let items = {
+            'options__laras': function(laras){
+                setLaras(laras);
+            }
+        }
         let actions = {
             'start':function(){
                 paths.forEach(path=>path.classList.add('active'));
@@ -19,11 +25,14 @@ const actions = {
             },
             'end': function(){
                 paths.forEach(path=>path.classList.remove('active'));
+                element.classList.toggle('on');
                 paths.forEach(path=>path.classList.toggle('on'));
+                if(items[element.id]) items[element.id](element.classList.contains('on')?'pelog':'slendro');
             }
         }
         
         if(actions[type]) actions[type]();
+        
     }
 }
 

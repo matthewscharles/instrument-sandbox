@@ -8,12 +8,15 @@ import setKeyboard from './setKeyboard.js';
 import setTouch from './setTouch.js';
 import setMidi from './setMidi.js';
 import assignClasses from './assignClasses.js';
+import setLaras from './setLaras.js';
 import setSamplers from './setSamplers.js';
 import transitionDisplay from './transitionOut.js';
 // -----------
 
 function init(){
     window.laras = window.laras || 'slendro';
+    window.setLaras=setLaras;
+    
     Tone.start();
     document.querySelectorAll('.playable').forEach(element=>{
         let instrumentLaras = element.classList.contains('pelog')?'pelog':'slendro';
@@ -58,6 +61,8 @@ function init(){
     });
     
     Tone.loaded().then(()=>{
+        setLaras(window.laras);
+        
         document.querySelectorAll('.loading').forEach(element=>{
             transitionDisplay(element,false);
         })
