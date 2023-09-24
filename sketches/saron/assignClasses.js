@@ -12,7 +12,7 @@ function assignClasses(){
         element.classList.add('note', ...classes);
         element.querySelectorAll('path').forEach((y,i)=>{
             y.classList.add('note', ...classes);
-            y.id = `${'saron'}_${'pelog'}_${noteName}_hc`;
+            y.id = `${'saron'}_${'pelog'}_${noteName}_hc_${i}`;
             y.dataset.note = noteName;
             y.dataset.instrument = 'saron';
         })

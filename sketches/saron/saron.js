@@ -7,8 +7,9 @@ import setTouch from './setTouch.js';
 import setMidi from './setMidi.js';
 import assignClasses from './assignClasses.js';
 import setSamplers from './setSamplers.js';
-import transitionOut from './transitionOut.js';
+import transitionDisplay from './transitionOut.js';
 // -----------
+
 const availableNotes = ['M1','M2','M3','M5','M6','H1'];
 
 function init(){
@@ -45,7 +46,7 @@ function init(){
     
     Tone.loaded().then(()=>{
         document.querySelectorAll('.loading').forEach(element=>{
-            transitionOut(element);
+            transitionDisplay(element,false);
         })
         document.querySelectorAll('.awaitLoad').forEach(element=>element.classList.remove('disabled', 'awaitLoad'));
     });

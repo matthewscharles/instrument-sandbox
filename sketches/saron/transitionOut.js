@@ -1,9 +1,16 @@
-function transitionOut(element, delay = 1000) {
-    element.classList.add('transparent');
+/**
+ * 
+ * @param {HTMLElement} element element upon which to perform the transition
+ * @param {boolean} display trigger appearance or disappearance of element
+ * @param {number} delay transition time in ms
+ */
+
+function transitionDisplay(element, display=false, delay = 1000) {
+    let action = display ? 'remove' : 'add';
+    element.classList[action]('transparent');
     setTimeout(() => {
-        element.classList.add('nodisplay');
-        console.log('transitioned out', element);
+        element.classList[action]('nodisplay');
     }, delay);
 }
 
-export default transitionOut;
+export default transitionDisplay;
