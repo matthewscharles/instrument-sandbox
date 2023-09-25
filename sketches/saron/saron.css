@@ -11,12 +11,12 @@
 }
 
 .current{
-    /* to be used to represent current user input */
+    /* this class is to be used to represent current user input */
     opacity:1;
 }
 
 .current.on{
-    /* user is currently playing this note on screen, keyboard etc. */
+    /* this combination indicates that the user is currently playing this note on screen, keyboard etc. */
     opacity:1;
 }
 
