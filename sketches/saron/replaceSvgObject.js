@@ -35,8 +35,8 @@ function replaceSvgObject(objectElement) {
     });
     
     newSvgElement.classList.replace('svg-import', 'svg-imported');
-    console.log('classes',newSvgElement.getAttribute('class'))
-    // newSvgElement.id = objectElement.classList.entries.join('_');
+    
+    newSvgElement.id = `${objectElement.id}`;
     objectElement.replaceWith(newSvgElement);
 }
 

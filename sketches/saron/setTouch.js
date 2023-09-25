@@ -1,6 +1,10 @@
 import setLaras from './setLaras.js';
 import noteTrigger from '../note_trigger/note_trigger.js';
 
+/**
+ * this needs to be rewritten as a priority.
+ */
+
 const actions = {
     '.hc': function(element,type,query){
         if(!['start','enter','end','leave'].includes(type)) return;

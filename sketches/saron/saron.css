@@ -3,7 +3,7 @@
 
 .note.display{
     transition:filter 0.4s ease;
-    filter:brightness(90%);
+    filter:brightness(80%);
 }
 
 .note.display.on{
