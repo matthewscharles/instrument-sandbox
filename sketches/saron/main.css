@@ -80,7 +80,7 @@ button.options {
 
 /* states */
 .disabled {
-  transition: opacity 2s;
+  transition: opacity 10s;
   opacity: 0.1;
   pointer-events: none;
 }
@@ -109,6 +109,7 @@ button.options {
   right: 0;
   bottom: 0;
   margin: auto;
+  max-height: 100vh;
 }
 
 .background {

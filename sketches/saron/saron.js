@@ -30,8 +30,7 @@ function init(){
     window.addEventListener('note', noteTransition);
     document.querySelectorAll('.notation').forEach(element=>{
         addNotation(element.classList.contains('pelog')?'pelog':'slendro', element);
-    })
-    // addNotation(window.laras, document.querySelector('.notation'));
+    });
     
     mapper.touch
         .setAction('.hc')
