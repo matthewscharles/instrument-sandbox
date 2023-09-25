@@ -15,8 +15,16 @@ import transitionDisplay from './transitionOut.js';
 
 function init(){
     // window.verbose = true;
-    window.laras = window.laras || 'slendro';
+    window.laras = window.localStorage.getItem('laras') || 'slendro';
     window.setLaras=setLaras;
+    
+    // start temporary fix for demo
+    
+    document.querySelectorAll('#options__laras, .options__laras path').forEach(element=>{
+        element.classList[window.laras=='pelog'?'add':'remove']('on');
+    })
+    
+    // end temporary fix for demo
     
     Tone.start();
     document.querySelectorAll('.playable').forEach(element=>{

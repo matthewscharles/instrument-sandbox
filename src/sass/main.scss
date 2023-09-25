@@ -93,7 +93,8 @@ button.options{
 }
 
 .options__bar{
-    position: absolute;
+    // this is position:absolute for now, but no reason it couldn't be something else...
+    position: fixed;
     top: 0;
     right: 0;
     display:grid;
@@ -187,9 +188,9 @@ button.options{
     .text{
         color:white;
         font-family:'Courier', Courier, monospace;
-        /* padding:0.3em; */
         margin:none;
-        padding:none;
+        padding-left:0.3em;
+        padding-right:0.3em;
         border-radius:15%;
         transition:all 0.1s;
     }

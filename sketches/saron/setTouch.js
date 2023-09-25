@@ -27,7 +27,8 @@ const actions = {
                 paths.forEach(path=>path.classList.remove('active'));
                 element.classList.toggle('on');
                 paths.forEach(path=>path.classList.toggle('on'));
-                if(items[element.id]) items[element.id](element.classList.contains('on')?'pelog':'slendro');
+                let elementIsOn = element.classList.contains('on');
+                if(items[element.id]) items[element.id](elementIsOn?'pelog':'slendro');
             }
         }
         
