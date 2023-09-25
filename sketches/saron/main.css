@@ -7,7 +7,8 @@ body {
   -webkit-user-select: none;
   user-select: none;
 }
-body .noscroll {
+
+body.noscroll {
   overflow: hidden;
 }
 
@@ -135,7 +136,8 @@ button.options {
   transition: all 0.4s ease;
   filter: brightness(90%);
 }
-.note.display .on {
+
+.note.display.on {
   transition: all 0.1s;
   filter: brightness(120%) saturate(150%);
 }

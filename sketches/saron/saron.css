@@ -1,7 +1,7 @@
 /* uncomment code in this file to overwrite the current styles */
 
 
-/* .note.display{
+.note.display{
     transition:all 0.4s ease;
     filter:brightness(90%);
 }
@@ -9,4 +9,4 @@
 .note.display.on{
     transition:all 0.1s;
     filter:brightness(120%) saturate(150%);
-} */
+}
