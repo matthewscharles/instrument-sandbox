@@ -21,6 +21,16 @@
 }
 
 
+.instrument{
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+}
+
 .text{
     color:white;
     font-family:'Courier', Courier, monospace;
