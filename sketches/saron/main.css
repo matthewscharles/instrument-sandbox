@@ -3,10 +3,11 @@ body {
   -webkit-user-select: none;
   user-select: none;
 }
-body .noScroll {
+body .noscroll {
   overflow: hidden;
 }
 
+/* loading */
 .loading {
   background: radial-gradient(ellipse at center, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 30%, rgba(0, 0, 0, 0.2) 70%, rgba(0, 0, 0, 0) 80%);
   display: flex;
@@ -30,6 +31,22 @@ body .noScroll {
   cursor: wait;
 }
 
+.loading__progress__icon {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  animation: rotate 10s linear infinite;
+}
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* options */
 .icon {
   pointer-events: none;
   width: 100%;
@@ -46,21 +63,6 @@ body .noScroll {
   transform: translateY(10px);
 }
 
-.loading__progress__icon {
-  display: inline-block;
-  width: 100px;
-  height: 100px;
-  animation: rotate 10s linear infinite;
-}
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 button.options {
   position: absolute;
   top: 0;
@@ -72,6 +74,7 @@ button.options {
   border: none;
 }
 
+/* states */
 .disabled {
   transition: opacity 2s;
   opacity: 0.1;
@@ -93,12 +96,9 @@ button.options {
   display: none;
 }
 
+/* Currently unused */
 .hue {
   filter: hue-rotate(90deg);
-}
-
-.hc {
-  cursor: crosshair;
 }
 
 /*# sourceMappingURL=main.css.map */
