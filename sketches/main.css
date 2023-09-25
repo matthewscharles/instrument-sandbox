@@ -27,6 +27,11 @@
   cursor: wait;
 }
 
+.background {
+  -webkit-mask-image: radial-gradient(ellipse at center, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 30%, rgba(0, 0, 0, 0.2) 50% 60%, rgba(0, 0, 0, 0) 80% 70%);
+  mask-image: radial-gradient(ellipse at center, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 30%, rgba(0, 0, 0, 0.2) 50% 60%, rgba(0, 0, 0, 0) 80% 70%);
+}
+
 .icon {
   pointer-events: none;
   width: 100%;

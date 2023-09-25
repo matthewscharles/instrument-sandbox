@@ -14,6 +14,7 @@ function replaceSvgObject(objectElement) {
     newSvgElement.classList.replace('svg-import', 'svg-imported');
     newSvgElement.id = objectElement.id;
     objectElement.replaceWith(newSvgElement);
+    
 }
 
 

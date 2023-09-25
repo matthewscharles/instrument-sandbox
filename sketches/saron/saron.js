@@ -14,6 +14,7 @@ import transitionDisplay from './transitionOut.js';
 // -----------
 
 function init(){
+    // window.verbose = true;
     window.laras = window.laras || 'slendro';
     window.setLaras=setLaras;
     

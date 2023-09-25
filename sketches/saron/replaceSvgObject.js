@@ -13,7 +13,7 @@ function replaceSvgObject(objectElement) {
         return;
     }
     
-    console.log(`svg loaded from ${objectElement.id}`)
+    if(window.verbose) console.log(`svg loaded from ${objectElement.id}`);
     
     objectElement.classList.forEach(className => {
         newSvgElement.classList.add(className);
