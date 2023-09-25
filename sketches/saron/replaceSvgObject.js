@@ -22,7 +22,7 @@ function replaceSvgObject(objectElement) {
     let folder = objectElement.getAttribute('data').split('/');
     if(folder.length>1){
         folder.pop(); 
-        console.log('folder',folder)
+        folder = folder.join('/');
         newSvgElement.querySelectorAll('image').forEach(image=>{
             let href = image.getAttribute('href') || image.getAttribute('xlink:href');
             image.removeAttribute('xlink:href');

@@ -69,11 +69,18 @@ body.noscroll {
 }
 
 button.options {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  background-color: transparent;
+  border: none;
+}
+
+.options__bar {
   position: absolute;
   top: 0;
   right: 0;
-  width: 100px;
-  height: 100px;
+  display: grid;
   margin: 10px;
   background-color: transparent;
   border: none;
@@ -133,12 +140,12 @@ button.options {
 
 /* note display: this is where note events are represented */
 .note.display {
-  transition: all 0.4s ease;
+  transition: filter 0.4s ease;
   filter: brightness(90%);
 }
 
 .note.display.on {
-  transition: all 0.1s;
+  transition: filter 0.1s;
   filter: brightness(120%) saturate(150%);
 }
 
