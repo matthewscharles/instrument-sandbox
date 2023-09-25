@@ -94,4 +94,8 @@ button.options {
   filter: hue-rotate(90deg);
 }
 
+.hc {
+  cursor: crosshair;
+}
+
 /*# sourceMappingURL=main.css.map */

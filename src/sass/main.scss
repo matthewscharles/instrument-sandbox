@@ -58,8 +58,8 @@
     width:100px;
     height:100px;
     
-        animation: rotate 10s linear infinite;
-    
+    animation: rotate 10s linear infinite;
+        
 
     @keyframes rotate {
         0% {
@@ -105,4 +105,8 @@ button.options{
 
 .hue{
     filter:hue-rotate(90deg);
+}
+
+.hc{
+    cursor:crosshair;
 }
