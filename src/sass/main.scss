@@ -1,10 +1,18 @@
 /* Instrument sandbox */
 
+/* variables: colours */
+
+$background-color: #000;
 $loading-background: radial-gradient(ellipse at center, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0) 80%);
 
+/* body */
+
 body{
+    background-color: $background-color;
+    box-sizing: border-box;
     -webkit-user-select: none;
     user-select: none;
+    
     .noscroll{
         overflow:hidden;
     }
@@ -109,6 +117,84 @@ button.options{
     opacity:0;
     display:none;
 }
+
+
+/* instrument */
+
+.instrument{
+    display:block;
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    margin:auto;
+}
+
+.background{
+    transition:filter 3s;
+}
+
+.background.contrast{
+    filter:grayscale(100%) brightness(50%);
+}
+
+.current{
+    /* this class is to be used to represent current user input */
+    opacity:1;
+}
+
+.current.on{
+    /* this combination indicates that the user is currently playing this note on screen, keyboard etc. */
+    opacity:1;
+}
+
+/* note display: this is where note events are represented */
+
+.note.display{
+    transition:all 0.4s ease;
+    filter:brightness(90%);
+    
+    .on{
+        transition:all 0.1s;
+        filter:brightness(120%) saturate(150%);
+    }
+}
+
+/* notation */
+
+.notation{
+    background-color:black;
+    width:auto;
+    text-align: center;
+    display:block;
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0px;
+    margin:auto;
+    font-size:2rem;
+    padding:none;
+    
+    .text{
+        color:white;
+        font-family:'Courier', Courier, monospace;
+        /* padding:0.3em; */
+        margin:none;
+        padding:none;
+        border-radius:15%;
+        transition:all 0.1s;
+    }
+    
+    .text.on{
+        transition:all 0.1s;
+        color:beige;
+        background-color:red;
+        // padding:0.4em;
+    }
+}
+
+
 
 /* Currently unused */
 
