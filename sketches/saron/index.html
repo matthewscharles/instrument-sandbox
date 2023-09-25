@@ -1,42 +1,40 @@
-<!DOCTYPE html>
 <html lang="en">
-
+  
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saron demo</title>
+    <link rel="stylesheet" href="./main.css" />
+    <link rel="stylesheet" href="saron.css" id="styles" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <script src="../main.js"></script>
+    <script src="saron.js" type="module"></script>
+  </head>
 
+  <body class="noScroll">
+    
+    <main class="awaitLoad disabled">
+      <div class="slendro switchable">
+        <object id="instrument_saron_slendro" class="svg-import instrument playable saron barung slendro background" data="toy_saron_slendro.svg" type="image/svg+xml"></object>
+        <div class="notation slendro"></div>
+      </div>
+      <div class="pelog switchable">
+        <object id="instrument_saron_pelog" class="svg-import instrument playable saron barung pelog background" data="toy_saron_pelog.svg" type="image/svg+xml"></object>
+        <div class="notation pelog"></div>
+      </div>
+    </main>
+    
+    <menubar class="awaitLoad">
+      <button id="options__laras" type="button" aria-label="laras" class="options">
+        <object alt="options" class="svg-import icon options__laras" data="icons/noun-pie-chart-6117795-FFFFFF.svg" type="image/svg+xml"></object>
+      </button>
+    </menubar>
+    
+    <div class="loading">
+      <div class="loading__text">Loading...</div>
+      <div class="loading__progress">
+        <object id="loading__icon" class="svg-import loading__progress__icon" data="icons/noun-loading-4541151-FFFFFF.svg" type="image/svg+xml"></object>
+    </div>
+  </body>
 
-<head>
-  <title>Saron demo</title>
-  <link rel="stylesheet" href="./main.css" />
-  <link rel="stylesheet" href="./saron.css" id="styles" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
-</head>
-<body>
-  
-  <main class="awaitLoad disabled">
-    <div class="slendro switchable">
-      <object id="instrument_saron_slendro" class="svg-import instrument playable saron barung slendro background" data="toy_saron_slendro.svg" type="image/svg+xml"></object>
-      <div class="notation slendro"></div>
-    </div>
-    <div class="pelog switchable">
-      <object id="instrument_saron_pelog" class="svg-import instrument playable saron barung pelog background" data="toy_saron_pelog.svg" type="image/svg+xml"></object>
-      <div class="notation pelog"></div>
-    </div>
-  </main>
-  
-  <menubar class="awaitLoad disabled">
-    <button id="options__laras" type="button" aria-label="laras" class="options">
-      <object alt="options" class="svg-import icon options__laras" data="icons/noun-pie-chart-6117795-FFFFFF.svg" type="image/svg+xml"></object>
-    </button>
-  </menubar>
-  
-  <div class="loading">
-    <div class="loading__text">Loading...</div>
-    <div class="loading__progress">
-      <object id="loading__icon" class="svg-import loading__progress__icon" data="icons/noun-loading-4541151-FFFFFF.svg" type="image/svg+xml"></object>
-  </div>
-  
-</body>
-<script src="../main.js"></script>
-<script src="saron.js" type="module"></script>
 </html>

@@ -1,7 +1,10 @@
 /* Instrument sandbox */
-.body {
+body {
   -webkit-user-select: none;
   user-select: none;
+}
+body .noScroll {
+  overflow: hidden;
 }
 
 .loading {
