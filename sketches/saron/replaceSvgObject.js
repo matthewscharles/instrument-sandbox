@@ -1,5 +1,6 @@
 /**
- * If object is not loaded, try again every 100ms
+ * Replace an object element with its svg content, inline.
+ * If the object has not loaded yet, try again every 100ms
  * Match folders if not in root (basic implementation)
  * @param {HTMLElement} objectElement 
  */
@@ -16,6 +17,7 @@ function replaceSvgObject(objectElement) {
     
     if(window.verbose) console.log(`svg loaded from ${objectElement.id}`);
     
+    // replace SVG folder name ...
     let folder = objectElement.getAttribute('data').split('/');
     if(folder.length>1){
         folder.pop(); 

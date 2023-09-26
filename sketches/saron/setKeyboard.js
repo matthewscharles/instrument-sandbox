@@ -1,4 +1,4 @@
-import noteTrigger from '../note_trigger/note_trigger.js';
+import noteTrigger from './noteTrigger.js';
 
 function setKeyboard(){
     window.saronKeys = {

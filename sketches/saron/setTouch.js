@@ -1,5 +1,5 @@
 import setLaras from './setLaras.js';
-import noteTrigger from '../note_trigger/note_trigger.js';
+import noteTrigger from './noteTrigger.js';
 
 /**
  * this needs to be rewritten as a priority.

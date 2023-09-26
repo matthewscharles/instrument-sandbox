@@ -1,4 +1,4 @@
-import noteTransition from '../note_animation/noteTransition.js';
+import noteTransition from './noteTransition.js';
 import tuning from './tuning.js';
 
 tuning.toy_saron.slendro.H1 = tuning.toy_saron.slendro.M1*2;
