@@ -1,0 +1,22 @@
+/* uncomment code in this file to overwrite the current note styles */
+
+/* .note.display{
+    transition:filter 0.4s ease;
+    filter:brightness(80%);
+}
+
+.note.display.on{
+    transition:filter 0s;
+    filter:brightness(120%) saturate(150%);
+} */
+
+.note.display{
+    transition:opacity 1s ease;
+    opacity:1;
+    filter:brightness(150%);
+}
+
+.note.display.on{
+    transition:opacity 0s;
+    opacity:0.3;
+}
