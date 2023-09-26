@@ -73,7 +73,8 @@ function init(){
         
         document.querySelectorAll('.loading').forEach(element=>{
             transitionDisplay(element,false);
-        })
+        });
+        
         document.querySelectorAll('.awaitLoad').forEach(element=>element.classList.remove('disabled', 'awaitLoad'));
     });
     
