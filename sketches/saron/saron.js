@@ -44,13 +44,13 @@ function init(){
         .setAction('.hc')
         .setAction('.options')
     setTouch();
-    setGui();
+    
     setKeyboard();
     
     
     let params = new URLSearchParams(location.search);
-    if(!params.has('dev')){
-      gui.hide();
+    if(params.has('dev')){
+        setGui();
     }
 
     window.auto_off = false;

@@ -16,9 +16,6 @@ function replaceSvgObject(objectElement) {
     
     if(window.verbose) console.log(`svg loaded from ${objectElement.id}`);
     
-    // console.log('data',objectElement.getAttribute('data'))
-    
-    
     let folder = objectElement.getAttribute('data').split('/');
     if(folder.length>1){
         folder.pop(); 
