@@ -5,7 +5,7 @@
  * @param {HTMLElement} objectElement 
  */
 
-function replaceSvgObject(objectElement) {
+const replaceSvgObject = function(objectElement) {
     let newSvgElement = objectElement.contentDocument.querySelector('svg');
     if (!newSvgElement) {
         setTimeout(() => {
@@ -39,5 +39,17 @@ function replaceSvgObject(objectElement) {
     objectElement.replaceWith(newSvgElement);
 }
 
+/**
+ * Replace all selected object elements with their svg content, inline.
+ * @param {string} selector
+ */
 
-export { replaceSvgObject }
+const replaceSvgAll = function (selector='object.svg-import'){
+    document.querySelectorAll(selector).forEach(element => {
+        replaceSvgObject(element);
+    });
+}
+
+
+
+export { replaceSvgObject, replaceSvgAll }

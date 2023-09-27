@@ -1,6 +1,7 @@
 /**
  * Set classes for relevant elements to trigger CSS transitions
  * @param {event} e Custom note event
+ * @memberof saron
  */
 
 function noteTransition(e){

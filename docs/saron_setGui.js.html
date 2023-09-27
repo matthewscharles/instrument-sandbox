@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: saron/setGui.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: saron/setGui.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Create a custom GUI for testing and development -- specific to the current project!
+ */
+
+const setGui = function(){
+    let midiNoteNames = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+    let noteDisplay = Array.from(document.styleSheets[0].rules).find(x=>x.selectorText=='.note.display');
+    let noteDisplayOn = Array.from(document.styleSheets[0].rules).find(x=>x.selectorText=='.note.display.on');
+    let textDisplay = Array.from(document.styleSheets[0].rules).find(x=>x.selectorText=='.text');
+    let textDisplayOn = Array.from(document.styleSheets[0].rules).find(x=>x.selectorText=='.text.on');
+
+    let properties = {
+        brightness:80,
+        brightness_on:150,
+        time:3,
+        time_on:0.1,
+        high_contrast:false,
+        text_size:2,
+        text_colour:[0,0,0],
+        text_colour_on:[255,0,0],
+        midi_map:{
+            slendro:{
+                "1":'C#',
+                "2":'D#',
+                "3":'F#',
+                "5":'G#',
+                "6":'A#'        
+            },
+            pelog:{
+                "1":'C',
+                "2":'D',
+                "3":'E',
+                "4":'F',
+                "5":'G',
+                "6":'A',
+                "7":'B'
+           }
+        },
+        tuning:{
+            slendro:{
+                "1":0.73,
+                "2":0.83,
+                "3":0.96,
+                "5":1.09,
+                "6":1.27
+            },
+            pelog:{
+                "1":0.8,
+                "2":0.85,
+                "3":0.94,
+                "4":1.12,
+                "5":1.21,
+                "6":1.27,
+                "7":1.398                
+            }
+        }
+    }
+    
+    
+    Object.entries(properties.midi_map.slendro).forEach(([key,value],i)=>{
+        properties.tuning.slendro[key] = window.players.slendro[i].playbackRate;
+    })
+    
+    window.gui = new dat.GUI({hideable:false});
+    
+    let noteDisplayFolder = gui.addFolder('note display');
+    let optionsFolder = gui.addFolder('options');
+    let midiFolder = gui.addFolder('MIDI');
+    let tuningFolder = gui.addFolder('tuning');
+
+    noteDisplayFolder.add(properties,'brightness').name('brightness (off)').min(0).max(100).onChange((x)=>{
+        noteDisplay.style.filter = `brightness(${x}%)`;
+    });
+    noteDisplayFolder.add(properties,'brightness_on').name('brightness (on)').min(0).max(200).onChange((x)=>{
+        noteDisplayOn.style.filter = `brightness(${x}%)`;
+    });
+    noteDisplayFolder.add(properties,'time').name('time (off)').min(0).max(10).step(0.1).onChange((x)=>{
+        noteDisplay.style.transition = `filter ${x}s`;
+    });
+    noteDisplayFolder.add(properties,'time_on').name('time (on)').min(0).max(2).step(0.01).onChange((x)=>{
+        noteDisplayOn.style.transition = `filter ${x}s`;
+    });
+
+    optionsFolder.add(properties,'high_contrast').name('high contrast').onChange((x)=>{
+        document.querySelectorAll('.background').forEach(element=>element.classList[x?'add':'remove']('contrast'));
+    })
+    optionsFolder.add(properties,'text_size').name('text size').min(0.5).max(3.5).step(0.1).onChange((x)=>{
+        textDisplay.style.fontSize = `${x}em`;
+    })
+    optionsFolder.addColor(properties,'text_colour').name('text colour').onChange((x)=>{
+        textDisplay.style.backgroundColor = `rgba(${x[0]},${x[1]},${x[2]},1)`;
+    })
+    optionsFolder.addColor(properties,'text_colour_on').name('text colour (on)').onChange((x)=>{
+        textDisplayOn.style.backgroundColor = `rgba(${x[0]},${x[1]},${x[2]},1)`;
+    })
+    
+    Object.keys(properties.midi_map.slendro).forEach((note)=>{
+        midiFolder.add(properties.midi_map.slendro, note, midiNoteNames)
+            .onChange((x)=>{
+                let num = midiNoteNames.indexOf(x);
+                console.log(num, Object.keys(properties.midi_map.slendro).indexOf(note));
+                window.midiNotes[Object.keys(properties.midi_map.slendro).indexOf(note)] = num;
+                console.log('midiNotes: ',window.midiNotes)
+            });
+    })
+    
+    Object.keys(properties.tuning.slendro).forEach((note)=>{
+        tuningFolder.add(properties.tuning.slendro, note, 0.5, 2)
+            .step(0.001)
+            .onChange((x)=>{
+                window.players[Object.keys(properties.tuning.slendro).indexOf(note)].playbackRate = x;
+            });
+    })
+    
+    gui.close();
+    gui.domElement.classList.add('allowDefault');
+}
+
+export {setGui};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="saron.html">saron</a></li></ul><h3>Global</h3><ul><li><a href="global.html#actions">actions</a></li><li><a href="global.html#assignClasses">assignClasses</a></li><li><a href="global.html#generateSelector">generateSelector</a></li><li><a href="global.html#noteHandler">noteHandler</a></li><li><a href="global.html#noteTransition">noteTransition</a></li><li><a href="global.html#replaceSvgObject">replaceSvgObject</a></li><li><a href="global.html#setGui">setGui</a></li><li><a href="global.html#setKeyboard">setKeyboard</a></li><li><a href="global.html#setLaras">setLaras</a></li><li><a href="global.html#setMidi">setMidi</a></li><li><a href="global.html#setSamplers">setSamplers</a></li><li><a href="global.html#transitionDisplay">transitionDisplay</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Wed Sep 27 2023 10:12:54 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

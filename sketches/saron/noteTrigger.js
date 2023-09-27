@@ -4,6 +4,7 @@
  * @param {string} pitch 
  * @param {string} type 
  * @param {string} laras 
+ * @memberof saron
  */
 
 function noteTrigger(instrument, pitch, type, laras=window.laras){
