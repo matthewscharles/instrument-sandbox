@@ -2,6 +2,7 @@ import noteTrigger from './noteTrigger.js';
 
 /**
  * Set MIDI mapping for the saron
+ * @memberof saron
  */
 
 const setMidi = function(){

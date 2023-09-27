@@ -1,5 +1,6 @@
 /**
  * Create a custom GUI for testing and development -- specific to the current project!
+ * @memberof saron
  */
 
 const setGui = function(){

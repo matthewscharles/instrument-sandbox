@@ -1,5 +1,6 @@
 /**
  * @fileoverview Tuning of the saron (relative playback speeds for single note from a toy saron)
+ * @memberof saron
  */
 
 const tuning = {

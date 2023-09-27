@@ -2,6 +2,7 @@ import noteTrigger from './noteTrigger.js';
 
 /**
  * Set keyboard mapping for the saron, using the external keyboardMapper library
+ * @memberof saron
  */
 
 const setKeyboard = function(){

@@ -3,6 +3,7 @@ import transitionDisplay from "./transitionDisplay.js";
 /**
  * Set the current laras and update the display via CSS 
  * @param {string} laras 
+ * @memberof saron
  */
 
 const setLaras=function(laras){

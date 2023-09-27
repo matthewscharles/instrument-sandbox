@@ -2,6 +2,9 @@ import tuning from './tuning.js';
 
 /**
  * Set the samplers for the saron
+ * @param {string} laras
+ * @param {string} source
+ * @memberof saron
  */
 
 const setSamplers = function(laras="slendro", source="toy_saron"){

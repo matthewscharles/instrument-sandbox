@@ -1,5 +1,5 @@
 /**
- * @fileoverview This file contains the available notes for each scale.
+ * @fileoverview This file contains the available notes for each scale (slendro and pelog).
  */
 
 const availableNotes = {

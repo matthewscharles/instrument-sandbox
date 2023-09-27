@@ -13,7 +13,6 @@ import generateSelector from './generateSelector.js';
  */
 
 const addNoteOffArea = function(newSVG,laras,noteName,instrument, imageGroup, HC){
-    console.log(HC)
         let maskElement = HC[laras][noteName].querySelector('path, polygon, polyline');
 
         if(maskElement){

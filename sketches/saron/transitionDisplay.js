@@ -3,6 +3,7 @@
  * @param {HTMLElement} element element upon which to perform the transition
  * @param {boolean} display trigger appearance or disappearance of element
  * @param {number} delay transition time in ms
+ * @todo make a generic version of this
  */
 
 const transitionDisplay = function(element, display=false, delay=1000, laras='slendro') {
