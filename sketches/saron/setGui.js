@@ -1,4 +1,8 @@
-function setGui(){
+/**
+ * Create a custom GUI for testing and development -- specific to the current project!
+ */
+
+const setGui = function(){
     let midiNoteNames = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
     let noteDisplay = Array.from(document.styleSheets[0].rules).find(x=>x.selectorText=='.note.display');
     let noteDisplayOn = Array.from(document.styleSheets[0].rules).find(x=>x.selectorText=='.note.display.on');

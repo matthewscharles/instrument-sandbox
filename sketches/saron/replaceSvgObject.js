@@ -9,7 +9,7 @@ function replaceSvgObject(objectElement) {
     let newSvgElement = objectElement.contentDocument.querySelector('svg');
     if (!newSvgElement) {
         setTimeout(() => {
-            console.log(`svg not loaded (${objectElement.id}), waiting.to try again..`)
+            if(window.verbose) console.log(`svg not loaded (${objectElement.id}), waiting.to try again..`)
             replaceSvgObject(objectElement);
         }, 100);
         return;

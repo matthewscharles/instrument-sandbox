@@ -10,4 +10,4 @@ Icons from noun project used with license.
 sass --watch ./src/sass/main.scss ./sketches/main.css
 ```
 ### Development
-- Note for gui dropdowns: https://stackoverflow.com/questions/30372761/map-dat-gui-dropdown-menu-strings-to-values
+- Set window.verbose to "true" to see console messages

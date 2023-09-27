@@ -1,6 +1,10 @@
 import noteTrigger from './noteTrigger.js';
 
-function setKeyboard(){
+/**
+ * Set keyboard mapping for saron
+ */
+
+const setKeyboard = function(){
     window.saronKeys = {
         slendro:{
             M1: 'A',

@@ -7,9 +7,11 @@ import noteTrigger from './noteTrigger.js';
 
 const actions = {
     '.hc': function(element,type,query){
+        
         let gestureTypes = ['start','end','leave'];
         if(localStorage.getItem('glide')=='true') gestureTypes.push('enter');
         if(!gestureTypes.includes(type)) return;
+        
         noteTrigger(
             element.dataset.instrument,
             element.dataset.note,
@@ -17,6 +19,7 @@ const actions = {
             element.classList.contains('pelog')?'pelog':'slendro'
         );      
     },
+    
     '.options': function(element,type,query){
         let paths = document.querySelectorAll(`.${element.id} path`);
         let items = {
