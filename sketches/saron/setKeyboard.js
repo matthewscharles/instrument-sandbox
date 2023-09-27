@@ -1,7 +1,7 @@
 import noteTrigger from './noteTrigger.js';
 
 /**
- * Set keyboard mapping for saron
+ * Set keyboard mapping for the saron, using the external keyboardMapper library
  */
 
 const setKeyboard = function(){

@@ -1,9 +1,14 @@
-import noteTransition from './noteTransition.js';
 import tuning from './tuning.js';
 
-tuning.toy_saron.slendro.H1 = tuning.toy_saron.slendro.M1*2;
+/**
+ * Set the samplers for the saron
+ */
 
-export default function setSamplers(laras="slendro", source="toy_saron"){
+const setSamplers = function(laras="slendro", source="toy_saron"){
+    if(source=="toy_saron") {
+        tuning.toy_saron.slendro.H1 = tuning.toy_saron.slendro.M1*2
+    }
+    
     let numberOfNotes = Object.keys(tuning[source][laras]).length;
     window.players = window.players || {};
     window.players[laras] = [...new Array(numberOfNotes)]
@@ -12,7 +17,7 @@ export default function setSamplers(laras="slendro", source="toy_saron"){
         x.playbackRate = Object.values(tuning[source][laras])[i];
         x.onstop = function(){  
             /**
-             * note: this has been removed because the sampler retriggering causes a note off event to be triggered
+             * note: this has been removed because the sampler retriggering causes a note off event to be triggered.
              * we could possibly remove the timeOut here, but right now this is not top priority
              */
             
@@ -33,3 +38,5 @@ export default function setSamplers(laras="slendro", source="toy_saron"){
     
     
 }
+
+export default setSamplers;

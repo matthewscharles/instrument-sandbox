@@ -10,7 +10,7 @@ import setMidi from './setMidi.js';
 import assignClasses from './assignClasses.js';
 import setLaras from './setLaras.js';
 import setSamplers from './setSamplers.js';
-import transitionDisplay from './transitionOut.js';
+import transitionDisplay from './transitionDisplay.js';
 // -----------
 
 function init(){

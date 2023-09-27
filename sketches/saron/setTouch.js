@@ -2,7 +2,7 @@ import setLaras from './setLaras.js';
 import noteTrigger from './noteTrigger.js';
 
 /**
- * this needs to be rewritten as a priority.
+ * Set up actions for touch. This needs to be rewritten as a priority!
  */
 
 const actions = {

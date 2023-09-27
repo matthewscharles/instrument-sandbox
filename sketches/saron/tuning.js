@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Tuning of the saron (relative playback speeds for single note from a toy saron)
+ */
+
 const tuning = {
     toy_saron:{
         slendro:{
