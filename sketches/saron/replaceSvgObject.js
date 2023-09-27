@@ -37,6 +37,10 @@ const replaceSvgObject = function(objectElement) {
     
     newSvgElement.id = `${objectElement.id}`;
     objectElement.replaceWith(newSvgElement);
+    
+    
+    
+    
 }
 
 /**

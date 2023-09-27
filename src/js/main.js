@@ -10,6 +10,8 @@ Object.assign(window, {
     dat
 });
 
+Tone.start();
+
 window.touchMapper = new MultitouchMapper();
 window.keyboardMapper = new KeyboardMapper(false);
 window.midi = new MidiMapper();

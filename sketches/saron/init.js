@@ -13,6 +13,7 @@ import transitionDisplay from './transitionDisplay.js';
 // -----------
 
 const init = function(){
+    
     // window.verbose = true;
     window.laras = window.localStorage.getItem('laras') || 'slendro';
     window.setLaras=setLaras;
@@ -25,7 +26,6 @@ const init = function(){
     
     // end temporary fix for demo
     
-    Tone.start();
     document.querySelectorAll('.playable').forEach(element=>{
         let instrumentLaras = element.classList.contains('pelog')?'pelog':'slendro';
         assignClasses(element, instrumentLaras);
