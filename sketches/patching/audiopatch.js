@@ -27,12 +27,13 @@ svg.selectAll("rect")
     .attr("x", 10)
     .attr("width", 80)
     .attr("height", 80)
-    .attr("fill", "white")
-    .attr("stroke", "black")
-    .attr("stroke-width", 1)
-    .attr("rx", 10)
-    .attr("ry", 10)
+    // .attr("fill", "white")
+    // .attr("stroke", "black")
+    // .attr("stroke-width", 1)
+    // .attr("rx", 10)
+    // .attr("ry", 10)
     .attr("class", function(d, i) { return Object.keys(patch)[i]; })
+    .classed("box", true)
     .on("click", function(d, i) { 
         if (Object.keys(patch)[i] == 'oscillator') {
             patch[Object.keys(patch)[i]].start();
@@ -57,9 +58,7 @@ svg.selectAll("line")
     .attr("y1", function(d, i) { return parseInt(svg.selectAll("rect").filter("." + d[0]).attr("y")) + 80; })
     .attr("x2", function(d, i) { return parseInt(svg.selectAll("rect").filter("." + d[1]).attr("x")) + 40; })
     .attr("y2", function(d, i) { return parseInt(svg.selectAll("rect").filter("." + d[1]).attr("y")); })
-    .attr("stroke", "black")
-    .attr("stroke-width", 1)
-    .attr("marker-end", "url(#arrowhead)");
+    .classed("cable", true);
     
 const drag = d3.drag()
     .on("start", dragstarted)
@@ -67,6 +66,7 @@ const drag = d3.drag()
     .on("end", dragended);
     
 svg.selectAll("rect").call(drag);
+
 let Δxy = [0, 0];
 
 function dragstarted(d) {
@@ -76,20 +76,11 @@ function dragstarted(d) {
     console.log('Δ', Δxy)
 }
 
-
-// let dragHandler = d3.drag()
-//     .on("drag",  function() {
-//         d3.select(this)
-//             .attr("cx", d3.event.x)
-//             .attr("cy", d3.event.y)
-        
-//     })
-
 function dragged(d) {
     d3.select(this)
         .attr("x", d3.event.x + Δxy[0])
         .attr("y", d3.event.y + Δxy[1]);
-    // lines should follow the dragged node
+    // todo: lines should follow the dragged node, not the cursor!
     svg.selectAll("line").filter(function(e, i) { return e[0] == d; })
         .attr("x1", d3.event.x).attr("y1", d3.event.y);
     svg.selectAll("line").filter(function(e, i) { return e[1] == d; })

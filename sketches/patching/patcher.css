@@ -1,0 +1,19 @@
+.cable{
+    stroke: black;
+    stroke-width: 2;
+    transition: all 1s ease-in-out;
+}
+
+.cable:hover{
+    stroke: red;
+    stroke-width: 4;
+}
+
+.box{
+    stroke: black;
+    stroke-width: 2;
+    fill: white;
+    rx: 5;
+    ry: 10;
+    
+}
