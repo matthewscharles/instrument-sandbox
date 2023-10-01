@@ -67,28 +67,29 @@ const drag = d3.drag()
     .on("end", dragended);
     
 svg.selectAll("rect").call(drag);
-let delta = [0, 0];
+let Δxy = [0, 0];
 
 function dragstarted(d) {
     d3.select(this).raise().classed("active", true);
     svg.selectAll("text").filter(function(e, i) { return e == d; }).raise();
-    delta = [parseFloat(d3.select(this).attr("x")) - d3.event.x, parseFloat(d3.select(this).attr("y")) - d3.event.y]
-    console.log('delta', delta)
+    Δxy = [parseFloat(d3.select(this).attr("x")) - d3.event.x, parseFloat(d3.select(this).attr("y")) - d3.event.y]
+    console.log('Δ', Δxy)
 }
 
 
-let dragHandler = d3.drag()
-    .on("drag",  function() {
-        d3.select(this)
-            .attr("cx", d3.event.x)
-            .attr("cy", d3.event.y)
+// let dragHandler = d3.drag()
+//     .on("drag",  function() {
+//         d3.select(this)
+//             .attr("cx", d3.event.x)
+//             .attr("cy", d3.event.y)
         
-    })
+//     })
 
 function dragged(d) {
     d3.select(this)
-        .attr("x", d3.event.x - 40 - delta[0])
-        .attr("y", d3.event.y - 40 - delta[1]);
+        .attr("x", d3.event.x + Δxy[0])
+        .attr("y", d3.event.y + Δxy[1]);
+    // lines should follow the dragged node
     svg.selectAll("line").filter(function(e, i) { return e[0] == d; })
         .attr("x1", d3.event.x).attr("y1", d3.event.y);
     svg.selectAll("line").filter(function(e, i) { return e[1] == d; })
