@@ -1,7 +1,7 @@
 .cable{
     stroke: black;
     stroke-width: 2;
-    transition: all 1s ease-in-out;
+    transition: all 0.4s ease-in-out;
 }
 
 .cable:hover{
@@ -9,11 +9,39 @@
     stroke-width: 4;
 }
 
+.box:hover{
+    /* stroke: purple; */
+    stroke-width: 4;
+}
+
 .box{
     stroke: black;
     stroke-width: 2;
-    fill: white;
+    fill: beige;
+    transition: stroke-width 0.1s ease-in-out;
+    /* svg properties */
     rx: 5;
     ry: 10;
     
+}
+
+.box.oscillator{
+    fill: #e9dba0;
+}
+
+.box.output{
+    fill: #a1daa1;
+}
+
+.box.gain, .box.filter, .box.delay{
+    fill: #ffccaa;
+}
+
+.box__text{
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+    fill: black;
+    font-size: 14px;
 }

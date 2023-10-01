@@ -27,11 +27,6 @@ svg.selectAll("rect")
     .attr("x", 10)
     .attr("width", 80)
     .attr("height", 80)
-    // .attr("fill", "white")
-    // .attr("stroke", "black")
-    // .attr("stroke-width", 1)
-    // .attr("rx", 10)
-    // .attr("ry", 10)
     .attr("class", function(d, i) { return Object.keys(patch)[i]; })
     .classed("box", true)
     .on("click", function(d, i) { 
@@ -46,8 +41,7 @@ svg.selectAll("text")
     .append("text")
     .attr("y", function(d, i) { return i * 100 + 60; })
     .attr("x", 50)
-    .attr("text-anchor", "middle")
-    .attr("fill", "black")
+    .classed("box__text", true)
     .text(function(d, i) { return Object.keys(patch)[i]; })
     
 svg.selectAll("line")
@@ -73,7 +67,6 @@ function dragstarted(d) {
     d3.select(this).raise().classed("active", true);
     svg.selectAll("text").filter(function(e, i) { return e == d; }).raise();
     Δxy = [parseFloat(d3.select(this).attr("x")) - d3.event.x, parseFloat(d3.select(this).attr("y")) - d3.event.y]
-    console.log('Δ', Δxy)
 }
 
 function dragged(d) {
