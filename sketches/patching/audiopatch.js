@@ -6,8 +6,6 @@ let patch = {
     output: new Tone.Gain(0)
 }
 
-
-
 let connections = [['oscillator', 'gain'], ['gain', 'filter'], ['filter', 'delay'], ['delay', 'output']];
 
 connections.forEach(function (connection) {
@@ -17,7 +15,6 @@ connections.forEach(function (connection) {
     } else {
         patch[connection[0]].connect(patch[connection[1]]);    
     }
-    
 })
 
 const svg = d3.select("svg");
@@ -73,17 +70,31 @@ svg.selectAll("rect").call(drag);
 
 function dragstarted(d) {
     d3.select(this).raise().classed("active", true);
+    svg.selectAll("text").filter(function(e, i) { return e == d; }).raise();
 }
 
+let dragHandler = d3.drag()
+    .on("drag",  function() {
+        d3.select(this)
+            .attr("cx", d3.event.x)
+            .attr("cy", d3.event.y);
+    })
+
 function dragged(d) {
-    console.log(d3.event.x, d3.event.y)
-    d3.select(this).attr("x", d3.event.x - 40).attr("y", d3.event.y - 40);
+    console.log(this)
+    console.log(d3.select(this).attr("x"))
+    // console.log(d3.event.x)
+    d3.select(this)
+        .attr("x", d3.event.x - 40)
+        .attr("y", d3.event.y - 40);
     svg.selectAll("line").filter(function(e, i) { return e[0] == d; })
         .attr("x1", d3.event.x).attr("y1", d3.event.y);
     svg.selectAll("line").filter(function(e, i) { return e[1] == d; })
         .attr("x2", d3.event.x).attr("y2", d3.event.y);
     svg.selectAll("text").filter(function(e, i) { return e == d; })
-        .attr("x", d3.event.x + 40).attr("y", d3.event.y + 40);
+        .attr("x", parseFloat(d3.select(this).attr("x")) + 40)
+        .attr("y", parseFloat(d3.select(this).attr("y")) + 50)
+        .raise();
 }
 
 function dragended(d) {
