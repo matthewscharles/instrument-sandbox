@@ -14,6 +14,8 @@ The outline may be too rough to use as-is (especially for the high contrast opti
 #### Patching
 The script may leave some white areas depending on the shading of the instrument, and possibly generate multiple paths. Dragging over these will create gaps in the user's touch pickup, leading to retriggering. 
 
+
+
 - Select the largest shape within the generated sillhouette, and use the "blob brush" tool to fill in any white areas.  
 - Make sure other paths have been deleted, unless there is a good reason for including multiple retriggers on the same note. You may need to go into the layers view to select these manually.
 
@@ -30,6 +32,13 @@ After patching (single path):
 ```html
  <path d="M767.32,469.9c-.25-4.73-1.11-9.47-.92-14.18.4-10.54,1.84-21.06,1.84-31.59,0-16.2-1.21-32.41-1.27-48.62-.08-20.68.65-41.37.67-62.06,0-9.14-.93-18.28-1.25-27.43-.12-3.38-1.43-5.28-4.81-5.85q-20.93-3.53-41.84-7.14c-13.13-2.28-26.37-2.81-39.67-2.87-4.05,0-5.37,1.73-5,5.45s.85,7.63.87,11.44c.09,13.17,0,26.35,0,39.52q0,23.83.15,47.68c0,3.14.17,6.28.16,9.42,0,8.47-.25,16.94,0,25.4a5.11,5.11,0,0,0,.92,2.44q-1,18.86-2,37.7-.71,4.56-1.57,9.11a5.46,5.46,0,0,0,.85,4.23l-1.62,29.7a4.29,4.29,0,0,0,1.3,3.32l-.2,1.47-.3-.16c-.16,2.1-.35,3.65-.4,5.17-.15,1.12-.31,2.24-.46,3.37a5.62,5.62,0,0,0,.34,2.9c-.37,18.89-.65,37.77-1.17,56.65-.4,14.44-1.19,28.87-1.83,43.31-.26,5.8.24,6.41,5.84,6.47,8.38.09,16.76.25,25.14.18,4.43,0,8.86-.53,13.3-.77,8.66-.48,17.38-.48,26-1.52,6-.72,11.85-3.13,17.86-4.22,3.53-.64,4.83-2.35,4.93-5.61q1.5-50.05,3-100.12c.08-2.62-1.47-5.73-.51-7.81C769.27,486.66,767.75,478.28,767.32,469.9Z"/>
 ```
+
+
+### Combining paths
+In some cases, the path may be broken into separate elements due to differences in shading.
+
+Try selecting all contained paths and using object->compound path-> make. Then group the resulting path (this is a requirement of my current scripts but should be fixed soon).
+
 
 Note: paths do not need to have the class hc -- these will be added automatically when the web app launches.
 ### Manual method
