@@ -34,3 +34,6 @@ After patching (single path):
 Note: paths do not need to have the class hc -- these will be added automatically when the web app launches.
 ### Manual method
 Draw a single path underneath the desired note shape in the SVG.
+
+## Photoshop notes
+https://www.adobe.com/products/photoshop/vectorize-image.html
