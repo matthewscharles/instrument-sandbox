@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Layout test</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <main>
+            
+        </main>
+        <div class="modal">
+            <div class="modal__content">
+                <p id="message"></p>
+            </div>
+        </div>
+    </body>
+    <script>
+        let content = document.querySelector('#message');
+        let message = 'the quick brown fox jumps over the lazy dog';
+        let scrambledMessage = scramble(message);
+        for(let i=0;i<100;i++) {
+            scrambledMessage = scramble(scrambledMessage)+'<br>';
+            content.innerHTML += scrambledMessage;
+        }
+        
+        
+        function scramble(message) {
+            let scrambled = '';
+            let chars = message.split('');
+            while(chars.length > 0) {
+                let randomIndex = Math.floor(Math.random() * chars.length);
+                scrambled += chars[randomIndex];
+                chars.splice(randomIndex, 1);
+            }
+            return scrambled;
+        }
+        
+        document.querySelector('.modal').addEventListener('click', function() {
+            scrambledMessage = scramble(message);
+            content.innerHTML = scrambledMessage;
+        });
+    </script>
+</html>
+            
