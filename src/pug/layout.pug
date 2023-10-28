@@ -1,0 +1,26 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Layout test
+        link(rel="stylesheet", href="style.css")
+        script(src="window.js", defer)
+    body
+        main
+            nav
+            svg.playable(viewbox="0 0 100 100", width="100%")
+                circle(cx="50", cy="50", r="50", fill="darkgreen")
+        footer.footer
+            div.footer__content
+                p Footer
+        div.modal
+            div.modal__bg
+            div.modal__content
+                p testing
+                p#message
+            div.modal__banner
+                h1 Modal
+            footer.footer.modal__footer
+                div.footer__content
+                    p Footer for modal content
