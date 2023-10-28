@@ -24,7 +24,7 @@ main{
 }
 
 .modal{
-    
+    z-index: 1;
 }
 
 .modal__banner{
