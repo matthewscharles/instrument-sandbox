@@ -1,9 +1,12 @@
 <mxfile host="65bd71144e">
     <diagram id="h9nil-DB28QWxsspg305" name="Page-1">
-        <mxGraphModel dx="627" dy="1080" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="697" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
+                <mxCell id="18" value="body" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
+                    <mxGeometry x="90" y="80" width="440" height="660" as="geometry"/>
+                </mxCell>
                 <mxCell id="2" value="main" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
                     <mxGeometry x="120" y="120" width="380" height="280" as="geometry"/>
                 </mxCell>
@@ -36,6 +39,15 @@
                 </mxCell>
                 <mxCell id="15" value=".modal__content" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;" vertex="1" parent="1">
                     <mxGeometry x="172.5" y="510" width="270" height="120" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="no restrictions&amp;nbsp; on overflow" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FFCCCC;" vertex="1" parent="1">
+                    <mxGeometry x="240" y="90" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="overflow: hidden;" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FFCCCC;" vertex="1" parent="1">
+                    <mxGeometry x="254" y="260" width="160" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="overflow-wrap: break-word;" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FFCCCC;" vertex="1" parent="1">
+                    <mxGeometry x="230" y="555" width="160" height="30" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
