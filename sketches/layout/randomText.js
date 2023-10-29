@@ -1,14 +1,14 @@
 function randomText(){
-    
-}
-
-let content = document.querySelector('#message');
+    let content = document.querySelector('#message');
     let message = 'the quick brown fox jumps over the lazy dog';
     let scrambledMessage = scramble(message);
     for(let i=0;i<1000;i++) {
         scrambledMessage = scramble(scrambledMessage);
         content.innerHTML += scrambledMessage + '<br>';
     }
+}
+
+
     
     
     function scramble(message) {

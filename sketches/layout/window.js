@@ -3,6 +3,7 @@ import randomText from './randomText.js';
 window.addEventListener('load',()=>{
    randomText();
    document.querySelector('.modal__close').addEventListener('click',()=>{
+        // contents of these containers must be set to position: absolute or fixed to avoid tacky animations
          $('.modal').hide(1000);
          $('.main').show(1000);
     });
@@ -13,7 +14,8 @@ window.addEventListener('load',()=>{
 })
         
 window.addEventListener('resize',()=>{
-    document.querySelector('.modal__content').style.marginTop = document.querySelector('.modal__banner').offsetHeight + 10 + 'px';
+    let offset = document.querySelector('.modal__banner').offsetHeight + 10;
+    document.querySelector('.modal__content').style.marginTop = `${offset}px`;
 })
 
 
