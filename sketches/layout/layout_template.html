@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layout test</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="window.js" type="module" defer></script>
+  </head>
+  <body>
+    <div class="fullpage">
+      <main>
+        <div class="playable"></div>
+      </main>
+      <banner class="fullpage__banner">
+        <div class="banner__content"></div>
+        <button class="modal__open">Open modal</button>
+      </banner>
+      <footer class="footer fullpage__footer">
+        <div class="footer__content"></div>
+      </footer>
+    </div>
+    <div class="modal">
+      <div class="modal__bg"></div>
+      <div class="modal__content"><ul>
+<li>testing</li>
+<li>testing</li>
+</ul>
+
+      </div>
+      <div class="modal__banner">
+        <button class="modal__close">x</button>
+      </div>
+      <footer class="modal__footer">
+        <div class="modal__footer__content"></div>
+      </footer>
+    </div>
+  </body>
+</html>

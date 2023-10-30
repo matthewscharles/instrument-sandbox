@@ -5,21 +5,25 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title Layout test
         link(rel="stylesheet", href="style.css")
-        script(src="window.js", defer)
+        script(src="https://code.jquery.com/jquery-3.7.1.min.js")
+        script(src="window.js", type="module" defer)
     body
         .fullpage
             main
                 .playable
             banner.fullpage__banner
                 .banner__content
+                button.modal__open Open modal
             footer.footer.fullpage__footer
                 .footer__content
             
         .modal
             .modal__bg
             .modal__content
-                p#message
+                include:markdown-it modal_content.md
+                //- p#message
             .modal__banner
+                button.modal__close x
             footer.modal__footer
                 .modal__footer__content
                     
