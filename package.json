@@ -20,7 +20,8 @@
   },
   "homepage": "https://github.com/matthewscharles/instrument-sandbox#readme",
   "devDependencies": {
-    "@matthewscharles/cm-toolbox": "^1.1.24",
+    "@matthewscharles/cm-toolbox": "^1.1.20",
+    "@matthewscharles/layout": "^0.0.4",
     "@matthewscharles/multitouch-mapper": "^1.0.1",
     "dat.gui": "^0.7.9",
     "jsdoc": "^4.0.2",
