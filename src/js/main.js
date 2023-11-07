@@ -6,6 +6,9 @@ import MidiMapper from "midi-mapper";
 // import CM from "@matthewscharles/cm-toolbox"
 import { Layout } from "@matthewscharles/layout"
 
+window.touchMapper = new MultitouchMapper();
+window.keyboardMapper = new KeyboardMapper(false);
+window.midi = new MidiMapper();
 
 Object.assign(window, {
     Layout,
@@ -14,10 +17,6 @@ Object.assign(window, {
 });
 
 Tone.start();
-
-window.touchMapper = new MultitouchMapper();
-window.keyboardMapper = new KeyboardMapper(false);
-window.midi = new MidiMapper();
 
 window.mapper = {
     touch: touchMapper,
