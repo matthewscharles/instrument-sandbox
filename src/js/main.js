@@ -1,6 +1,6 @@
 import * as Tone from "tone";
 import * as dat from "dat.gui";
-import MultitouchMapper from "@matthewscharles/multitouch-mapper";
+import { MultitouchMapper } from "@matthewscharles/multitouch-mapper";
 import KeyboardMapper from "keyboard-mapper";
 import MidiMapper from "midi-mapper";
 // import CM from "@matthewscharles/cm-toolbox"
