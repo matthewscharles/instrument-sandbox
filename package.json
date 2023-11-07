@@ -22,7 +22,7 @@
   "devDependencies": {
     "@matthewscharles/cm-toolbox": "^1.1.20",
     "@matthewscharles/layout": "^0.0.4",
-    "@matthewscharles/multitouch-mapper": "^1.0.1",
+    "@matthewscharles/multitouch-mapper": "^1.2.0",
     "dat.gui": "^0.7.9",
     "jsdoc": "^4.0.2",
     "jstransformer-markdown-it": "^3.0.0",
