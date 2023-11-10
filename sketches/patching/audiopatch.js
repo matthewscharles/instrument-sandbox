@@ -1,3 +1,7 @@
+/*
+ Testing a patching interface with D3
+*/
+
 let patch = {
     oscillator: new Tone.Oscillator(440, "sawtooth").start(),
     gain: new Tone.Gain(0),
