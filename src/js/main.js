@@ -4,7 +4,6 @@ import  {MultitouchMapper }  from "@matthewscharles/multitouch-mapper";
 import {KeyboardMapper} from "keyboard-mapper";
 import {MidiMapper} from "midi-mapper";
 // import CM from "@matthewscharles/cm-toolbox"
-import { Layout } from "@matthewscharles/layout"
 
 window.touchMapper = new MultitouchMapper();
 window.keyboardMapper = new KeyboardMapper(false);
