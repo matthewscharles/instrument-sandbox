@@ -37,3 +37,6 @@ Draw a single path underneath the desired note shape in the SVG.
 
 ## Photoshop notes
 https://www.adobe.com/products/photoshop/vectorize-image.html
+
+## Inkscape notes
+This seems to be possible with Inkscape, but I haven't had a chance to try it properly yet.

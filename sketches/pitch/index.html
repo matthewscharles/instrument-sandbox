@@ -1,0 +1,183 @@
+<!-- adapted from https://ianjohnson.dev/pitchy/playground.html -->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pitchy playground</title>
+
+    <style>
+      body {
+        background: #eee;
+        color: #111;
+        font-family:
+          system-ui,
+          -apple-system;
+        margin: 1rem auto;
+        max-width: 80ch;
+      }
+
+      canvas {
+        display: block;
+        margin: auto;
+
+        border: 1px solid #777;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
+
+        margin-top: 0.5rem;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Pitchy playground</h1>
+    
+    <p>
+      This page is a playground for experimenting with different audio-related
+      configurations in relation to Pitchy. It is useful for experimenting with
+      ways to get the best pitch detection quality for your application.
+    </p>
+
+    <p>
+      Use your microphone to collect pitches for the graph below, and use the
+      controls below the graph to tweak the configuration.
+    </p>
+
+    <p>
+      If no input is being recorded, you may have to click this button to reset
+      the AudioContext, since some browsers (such as Chrome) will not allow an
+      AudioContext to start unless it is in response to a user action:
+      <button id="reset-audio-context">Reset audio context</button>
+    </p>
+
+    <canvas
+      id="pitch-graph"
+      aria-label="Recorded pitch graph"
+      width="500"
+      height="500"
+      >No pitches recorded</canvas
+    >
+
+    <div>
+      <div class="row">
+        <button id="clear-history">Clear history</button>
+      </div>
+
+      <fieldset>
+        <legend>Data collection</legend>
+
+        <div class="row">
+          <label
+            >Refresh interval (ms):
+            <input id="refresh-interval" type="number" min="10" value="50"
+          /></label>
+        </div>
+
+        <div class="row">
+          <label
+            >History length:
+            <input id="history-length" type="number" min="1" value="100"
+          /></label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Audio</legend>
+
+        <div class="row">
+          <label
+            >Override default sample rate:
+            <input id="override-sample-rate" type="checkbox"
+          /></label>
+
+          <label
+            >Sample rate (Hz):
+            <input
+              id="sample-rate"
+              type="number"
+              min="8000"
+              max="96000"
+              value="44100"
+              disabled
+          /></label>
+
+          <div>
+            <label for="actual-sample-rate">Actual sample rate:</label>
+            <span id="actual-sample-rate"></span>
+          </div>
+        </div>
+
+        <div class="row">
+          <label
+            >Input buffer size:
+            <input
+              id="input-buffer-size"
+              type="number"
+              min="32"
+              max="32768"
+              value="2048"
+          /></label>
+
+          <div>
+            <label for="actual-input-buffer-size">Actual buffer size:</label>
+            <span id="actual-input-buffer-size"></span>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Data quality</legend>
+
+        <div class="row">
+          <label
+            >Minimum volume (dB):
+            <input id="min-volume-decibels" type="number" max="0" value="-10"
+          /></label>
+        </div>
+
+        <div class="row">
+          <label
+            >Minimum clarity (%):
+            <input
+              id="min-clarity-percent"
+              type="number"
+              min="0"
+              max="100"
+              value="95"
+          /></label>
+        </div>
+
+        <div class="row">
+          <label
+            >Minimum detectable pitch (Hz):
+            <input id="min-pitch" type="number" min="20" max="20000" value="60"
+          /></label>
+          <label
+            >Maximum detectable pitch (Hz):
+            <input
+              id="max-pitch"
+              type="number"
+              min="20"
+              max="20000"
+              value="10000"
+          /></label>
+        </div>
+      </fieldset>
+    </div>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@matthewscharles/cm-toolbox@1.2.1/dist/cm-toolbox.es.js"></script> -->
+    <!-- tonejs -->
+    <script src="https://cdn.jsdelivr.net/npm/tone"></script>
+    <script type="module" src="./pitch.js"></script>
+  </body>
+</html>
