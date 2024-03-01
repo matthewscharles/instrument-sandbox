@@ -1,0 +1,46 @@
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/tone"></script>
+    <script src="pitch-detect-tone.js" defer></script>
+    
+</head>
+<body>
+
+<h1>Pitch Detector Comparison</h1>
+  <h4 id="permission">This application requires the devices microphone.</h4>
+
+  <div class="container">
+
+    <div class="tone-container">
+
+      <div class="button-container">
+        <button class="on-off-btn start" id="tone-io">START</button>
+      </div>
+
+      <div class="pitch">
+        <h2>Tone.js FFT Analysis</h2>
+        <span id="pitch">000.000</span> Hz
+      </div>
+
+      <div class="note">
+        <h2>Note</h2>
+        <span id="note">00</span>
+      </div>
+
+    </div>
+
+   
+
+  </div>
+  
+  <div class="text">
+    <p>The above application is used to compare two methods of detecting a devices microphone frequency.</p>
+    <p>
+      The tone.js library is used to measure the input dB level. 
+      The signal is analysed using FFT to give an approximation of the pitch detected.
+      This is then converted to a note using the Tone.js Tone.Frequency function.
+    </p>
+   
+  </div>
+    
+
+</body>
