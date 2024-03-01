@@ -5,11 +5,14 @@ let freqDisplay = document.querySelector("#pitch");
 let noteDisplay = document.querySelector("#note");
 const fftBins = 2048;
 
+window.threshold=-46;
+
 document.querySelectorAll(".start").forEach(x=>{x.addEventListener("click", async () => {
   await Tone.start();
   console.log("audio is ready");
   if (x.innerText === "START") {
     readPitch();
+    
   } else if (x.innerText === "STOP") {
     stopPitch();
   }
@@ -31,7 +34,9 @@ function readPitch() {
     // read input level
     inputIsBeingRead = setInterval(() => {
       //   readAudioInputLevel();
-      frequencyOfInput();
+    //   updateChart();
+    //   frequencyOfInputMono();
+    frequencyOfInput();
     }, 50);
   });
 }
@@ -57,30 +62,29 @@ function clearAudioInputLevel() {
 }
 
 // read frequency of input
-// function frequencyOfInput() {
-//   let fftValues = micFFT.getValue();
-//   console.log("The FFT values are:", fftValues);
+function frequencyOfInputMono() {
+  let fftValues = micFFT.getValue();
+  console.log("The FFT values are:", fftValues);
 
-//   let max = -Infinity;
-//   let maxIndex = -1;
-//   for (let i = 0; i < fftValues.length; i++) {
-//     if (fftValues[i] > max) {
-//       max = fftValues[i];
-//       maxIndex = i;
-//       // console.log("maxIndex is:", maxIndex);
-//     }
-//   }
+  let max = -Infinity;
+  let maxIndex = -1;
+  for (let i = 0; i < fftValues.length; i++) {
+    if (fftValues[i] > max) {
+      max = fftValues[i];
+      maxIndex = i;
+      // console.log("maxIndex is:", maxIndex);
+    }
+  }
 
+  let freq = ((maxIndex * (Tone.context.sampleRate / 2)) / fftBins).toFixed(3);
+  // let freq = ((maxIndex * (44100 / 2)) / fftBins).toFixed(3);
+  console.log("tone.js frequency is:", freq, "Hz");
 
+  freqDisplay.innerHTML = freq;
+  noteDisplay.innerText = Tone.Frequency(freq, "hz").toNote();
+}
 
-
-//   let freq = ((maxIndex * (Tone.context.sampleRate / 2)) / fftBins).toFixed(3);
-//   // let freq = ((maxIndex * (44100 / 2)) / fftBins).toFixed(3);
-//   console.log("tone.js frequency is:", freq, "Hz");
-
-//   freqDisplay.innerHTML = freq;
-//   noteDisplay.innerText = Tone.Frequency(freq, "hz").toNote();
-// }
+//* works
 
 // function frequencyOfInput() {
 //     let fftValues = micFFT.getValue();
@@ -117,8 +121,10 @@ function clearAudioInputLevel() {
 //                             Tone.Frequency(freq2, "hz").toNote() + ', ' + 
 //                             Tone.Frequency(freq3, "hz").toNote();
 //   }
-
-function frequencyOfInput(numVoices=4) {
+  
+  // * polyphonic
+  
+  function frequencyOfInput(numVoices = 4) {
     let fftValues = micFFT.getValue();
     console.log("The FFT values are:", fftValues);
   
@@ -144,9 +150,49 @@ function frequencyOfInput(numVoices=4) {
       }
     }
   
-    let freqs = maxIndices.map(index => ((index * (Tone.context.sampleRate / 2)) / fftBins).toFixed(3));
+    let freqs = maxIndices.map((index, i) => maxValues[i] < window.threshold ? -1 : ((index * (Tone.context.sampleRate / 2)) / fftBins).toFixed(3));
     console.log("tone.js frequencies are:", freqs, "Hz");
   
-    freqDisplay.innerHTML = freqs.join(', ');
-    noteDisplay.innerText = freqs.map(freq => Tone.Frequency(freq, "hz").toNote()).join(', ');
+    for (let i = 0; i < numVoices; i++) {
+      document.getElementById('freqDisplay' + (i + 1)).innerHTML = freqs[i];
+      document.getElementById('noteDisplay' + (i + 1)).innerText = freqs[i] === -1 ? 'Note Off' : Tone.Frequency(freqs[i], "hz").toNote();
+    }
   }
+  
+  document.querySelector("#threshold").addEventListener("input", (e) => {
+    window.threshold = e.target.value;
+    document.querySelector("#threshold__display").innerText = window.threshold;
+  })
+  
+  
+  
+  // * chart
+//   let fftValues;
+//   let ctx = document.getElementById('fftChart').getContext('2d');
+// let fftChart = new Chart(ctx, {
+//     type: 'bar',
+//     data: {
+//         labels: Array.from({length: fftValues.length}, (_, i) => i + 1),
+//         datasets: [{
+//             label: 'FFT Values',
+//             data: fftValues,
+//             backgroundColor: 'rgba(75, 192, 192, 0.2)',
+//             borderColor: 'rgba(75, 192, 192, 1)',
+//             borderWidth: 1
+//         }]
+//     },
+//     options: {
+//         scales: {
+//             y: {
+//                 beginAtZero: true
+//             }
+//         }
+//     }
+// });
+
+// // Update the chart with new FFT data
+// function updateChart() {
+//     let fftValues = micFFT.getValue();
+//     fftChart.data.datasets[0].data = fftValues;
+//     fftChart.update();
+// }

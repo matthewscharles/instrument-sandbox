@@ -1,7 +1,7 @@
 <head>
     <script src="https://cdn.jsdelivr.net/npm/tone"></script>
     <script src="pitch-detect-tone.js" defer></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -27,20 +27,23 @@
       </div>
 
     </div>
-
+    <canvas id="fftChart"></canvas>
    
 
   </div>
   
   <div class="text">
-    <p>The above application is used to compare two methods of detecting a devices microphone frequency.</p>
-    <p>
-      The tone.js library is used to measure the input dB level. 
-      The signal is analysed using FFT to give an approximation of the pitch detected.
-      This is then converted to a note using the Tone.js Tone.Frequency function.
-    </p>
-   
+
+   <div id="freqDisplay1"></div>
+   <div id="freqDisplay2"></div>
+   <div id="freqDisplay3"></div>
+    <div id="freqDisplay4"></div>
+    <div id="noteDisplay1"></div>
+    <div id="noteDisplay2"></div>
+    <div id="noteDisplay3"></div>
+    <div id="noteDisplay4"></div>
   </div>
-    
+ <input type="range" id="threshold" min="-100" max="0" step="0.01" value="-46"></input>
+ <div id="threshold__display">-46</div>
 
 </body>
