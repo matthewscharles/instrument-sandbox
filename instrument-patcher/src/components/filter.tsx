@@ -7,7 +7,7 @@ import { useCallback, useState } from 'react';
 const leftStyle = { left: 10 };
 const rightStyle = { right: 10 };
 
-export function OscillatorInit({
+export function FilterInit({
             id,
             data:{ frequency, label },
         }:NodeProps<{ frequency: number, label:string }>) {
@@ -16,15 +16,16 @@ export function OscillatorInit({
 
             const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
                 const cappedNumber = Math.round( 
-                    Math.min(10000, Math.max(0, Number(e.target.value))));
+                    Math.min(10000, Math.max(0, Number(e.target.value)))
+                );
                 setNumber(cappedNumber);
-                console.log(cappedNumber);
             }, []);
+            
     return (
         <Box bg="white" border="1px solid gray">
             <Box bg="beige">
                 <Text fontSize="small" color="black">
-                    oscillator
+                    filter
                 </Text> 
             </Box>
             <Box p={2} bg="white">
@@ -48,19 +49,3 @@ export function OscillatorInit({
         </Box>
     )
 }
-
-// interface OscillatorProps {
-//     data: {
-//         frequency: number;
-//     }
-// }
-
-// export default function OscillatorInit({
-//             data:{ frequency },
-//         }: OscillatorProps) {
-//     return (
-//         <div>
-//             <h1>oscillator</h1>
-//         </div>
-//     )
-// }

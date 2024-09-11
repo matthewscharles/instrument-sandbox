@@ -44,3 +44,5 @@
 .handle{
   position:relative;
 }
+
+.react-flow{--handle-background-color-default: green;}
