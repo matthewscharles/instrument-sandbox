@@ -1,36 +1,39 @@
-import ReactFlow, { Node, Edge } from 'reactflow';
+import ReactFlow, { Node, Edge, Controls, Background, MiniMap, useNodesState, useEdgesState, Connection, addEdge, } from 'reactflow';
+import { useCallback } from 'react';
 import "reactflow/dist/style.css";
 import { Box } from "@chakra-ui/react";
+import { initialNodes, initialEdges } from './initial';
 
-const nodes : Node[] = [
-  {
-    id: '1',
-    type: 'input',
-    data: { label: 'input node' },
-    position: { x: 250, y: 25 },
-  },
-  // you can also pass a React component as a label
-  {
-    id: '2',
-    type: 'output',
-    data: { label: <div>output node</div> },
-    position: { x: 250, y: 100 },
-  },
-  // { id: 'e1-2', source: '1', target: '2', animated: true },
-]
+const proOptions : {hideAttribution: boolean} = {hideAttribution: true}
 
-const edges : Edge[] = [
-  { id: 'e1-2', source: '1', target: '2', animated: true },
-]
-
-function App() {
+const App = ()=> {
+  
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node[]>(initialNodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
+  
+  const onConnect = useCallback((connection:Connection) => {
+    const edge = {...connection, animated: false, id:`${edges.length + 1}`};
+    setEdges((prevEdges)=>addEdge(edge, prevEdges));
+  },[])
+  
   return (
     <Box height="500px" width="500px" border="1px solid black" backgroundColor="white">
-      <ReactFlow nodes={nodes} edges={edges} />
+      <ReactFlow 
+        nodes={nodes} 
+        edges={edges} 
+        fitView 
+        nodesDraggable 
+        proOptions={proOptions} 
+        onNodesChange={onNodesChange} 
+        onEdgesChange={onEdgesChange}
+        onConnect = {onConnect}
+      >
+        <Controls />
+        <Background />
+        {/* <MiniMap /> */}
+      </ReactFlow>
     </Box>
   );
 }
-
-
 
 export default App
