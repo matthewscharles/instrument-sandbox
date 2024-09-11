@@ -19,6 +19,8 @@ export function FilterInit({
                     Math.min(10000, Math.max(0, Number(e.target.value)))
                 );
                 setNumber(cappedNumber);
+                let patcher = (window as any).patch;
+                patcher[id].frequency.rampTo(cappedNumber, 0.1);
             }, []);
             
     return (

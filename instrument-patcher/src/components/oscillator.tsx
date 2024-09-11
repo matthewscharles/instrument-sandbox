@@ -18,7 +18,10 @@ export function OscillatorInit({
                 const cappedNumber = Math.round( 
                     Math.min(10000, Math.max(0, Number(e.target.value))));
                 setNumber(cappedNumber);
+                console.log(id, cappedNumber);
                 console.log(cappedNumber);
+                let patcher = (window as any).patch;
+                patcher[id].frequency.rampTo(cappedNumber, 0.1);
             }, []);
     return (
         <Box bg="white" border="1px solid gray">

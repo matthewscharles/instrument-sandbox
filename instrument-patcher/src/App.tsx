@@ -35,13 +35,13 @@ const App = ()=> {
   const onConnect = useCallback((connection:Connection) => {
     const edge = {...connection, animated: false, id:`${edges.length + 1}`};
     setEdges((prevEdges)=>addEdge(edge, prevEdges));
+    (window as any).getState();
     },
     []
   );
   
   (window as any).patch = {};
 
-  
   (window as any).getState = function(){
     console.log({nodes, edges});
     nodes.forEach((value)=>{
@@ -53,7 +53,6 @@ const App = ()=> {
         obj = new Tone.Oscillator(value.data.frequency, "sawtooth");
         obj.start();
         obj.volume.value = -20;
-        // console.log(value.data)
       }
       if(value.type === "filter"){
         obj = new Tone.Filter(value.data.frequency, "lowpass");
@@ -68,6 +67,7 @@ const App = ()=> {
     edges.forEach((value)=>{
       console.log(value.source, value.target);
       (window as any).patch[value.source].connect((window as any).patch[value.target]);
+      // disconnections ? compare with a saved state
     })
     Tone.start();
   }
