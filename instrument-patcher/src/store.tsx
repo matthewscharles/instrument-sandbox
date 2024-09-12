@@ -9,10 +9,20 @@ export interface StoreState {
     onNodesChange: (changes: NodeChange[]) => void;
     onEdgesChange: (changes: EdgeChange[]) => void;
     addEdge: (data: Omit<Edge, 'id'>) => void;
+    addNode: (type: string, position: { x: number, y: number }) => void;
 }
 
-(window as any).patch = {};
-(window as any).connections = {};
+interface CustomNodeData {
+    frequency: number;
+    label: string;
+}
+  
+  interface CustomNode extends Node {
+    data: CustomNodeData;
+}
+
+(window as any).patch =(window as any).patch || {};
+(window as any).connections = (window as any).connections || {};
 
 
 export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
@@ -76,5 +86,17 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         
         Tone.start();
     },
+    
+    addNode(type, position) {
+        const id = (get().nodes.length + 1).toString();
+        const newNode: CustomNode = {
+            id,
+            type,
+            position,
+            data: { frequency: 440, label: type }
+        };
+        set({ nodes: [...get().nodes, newNode] });
+        // setNodes((prevNodes) => [...prevNodes, newNode]);
+      }
 })
 );

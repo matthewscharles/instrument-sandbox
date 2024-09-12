@@ -1,4 +1,4 @@
-import ReactFlow, { Node, Edge, Controls, Background, MiniMap, useNodesState, useEdgesState, Connection, addEdge } from 'reactflow';
+import ReactFlow, { Node, Edge, Controls, Background, MiniMap, useNodesState, useEdgesState, Connection, addEdge, ReactFlowInstance } from 'reactflow';
 import { useCallback, useState } from 'react';
 import "reactflow/dist/style.css";
 import { Box } from "@chakra-ui/react";
@@ -16,6 +16,7 @@ const selector = (store: StoreState) => ({
   onNodesChange: store.onNodesChange,
   onEdgesChange: store.onEdgesChange,
   addEdge: store.addEdge,
+  addNode: store.addNode
 })
 
 const proOptions : {hideAttribution: boolean} = {hideAttribution: true};
@@ -41,29 +42,18 @@ const nodeTypes = {
 
 const App = ()=> {
   const store = useStore(selector, shallow);
-  // const [nodes, setNodes, onNodesChange] = useNodesState<CustomNode[]>(initialNodes);
-  // const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
-  const [rfInstance, setRfInstance] = useState(null);
+  const [rfInstance, setRfInstance] = useState<ReactFlowInstance | null>(null);
   
-  // const createNode = useCallback((type: string, position: { x: number, y: number }) => {
-  //   const newNode: CustomNode = {
-  //     id: `${nodes.length + 1}`,
-  //     type,
-  //     position,
-  //     data: { frequency: 440, label: type } // Default data, can be customized
-  //   };
-  //   setNodes((prevNodes) => [...prevNodes, newNode]);
-  // }, [nodes, setNodes]);
-  
-  // (window as any).createNode = createNode;
-  
-  // const onConnect = useCallback((connection:Connection) => {
-  //     const edge = {...connection, animated: false, id:`${edges.length + 1}`};
-  //     setEdges((prevEdges)=>addEdge(edge, prevEdges));
-  //     (window as any).getState();
-  //   },
-  //   []
-  // );
+  const handlePaneClick = useCallback((event: MouseEvent<Element,MouseEvent>) => {
+    if (!rfInstance) return;
+    const { clientX, clientY } = event;
+    const position = rfInstance.project({ x: clientX, y: clientY });
+    store.addNode('oscillator', position); // Add a new node of type 'oscillator' at the clicked position
+  }, [rfInstance, store]);
+
+  const onInit = useCallback((instance: ReactFlowInstance) => {
+    setRfInstance(instance);
+  }, []);
   
   return (
     <Box height="500px" width="500px" border="1px solid black" backgroundColor="white">
@@ -77,6 +67,8 @@ const App = ()=> {
         onEdgesChange={store.onEdgesChange}
         onConnect = {store.addEdge}
         nodeTypes = {nodeTypes}
+        onPaneClick = {handlePaneClick}
+        onInit = {onInit}
       >
         <Controls />
         <Background />
