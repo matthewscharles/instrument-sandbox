@@ -24,7 +24,6 @@ interface CustomNodeData {
 (window as any).patch =(window as any).patch || {};
 (window as any).connections = (window as any).connections || {};
 
-
 export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
     nodes: initialNodes,
     edges: initialEdges,
@@ -73,7 +72,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         });
         get().edges.forEach((value)=>{
             // console.log(value.source, value.target);
-            console.log('edgesChange', value);
+            // console.log('edgesChange', value);
             (window as any).patch[value.source].connect((window as any).patch[value.target]);
             // disconnections ? compare with a saved state
           });
@@ -83,7 +82,13 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
     addEdge(data) {
         const id = (get().edges.length + 1).toString();
         const edge = { id, ...data };
-        
+        set({ edges: [edge, ...get().edges] });
+        get().edges.forEach((value)=>{
+            // console.log(value.source, value.target);
+            // console.log('edgesChange', value);
+            (window as any).patch[value.source].connect((window as any).patch[value.target]);
+            // disconnections ? compare with a saved state
+          });
         Tone.start();
     },
     
