@@ -36,6 +36,9 @@ const nodeTypes = {
   // output: OutputInit,
 }
 
+
+
+
 const App = ()=> {
   const store = useStore(selector, shallow);
   // const [nodes, setNodes, onNodesChange] = useNodesState<CustomNode[]>(initialNodes);
@@ -54,45 +57,13 @@ const App = ()=> {
   
   // (window as any).createNode = createNode;
   
-  const onConnect = useCallback((connection:Connection) => {
-      const edge = {...connection, animated: false, id:`${edges.length + 1}`};
-      setEdges((prevEdges)=>addEdge(edge, prevEdges));
-      (window as any).getState();
-    },
-    []
-  );
-  
-  (window as any).patch = {};
-
-  (window as any).getState = function(){
-    console.log({nodes, edges});
-    nodes.forEach((value)=>{
-      console.log(value.type, value.id);
-      let obj;
-      if(!(value.id in (window as any).patch)){  
-        if(value.type === "oscillator"){
-          obj = new Tone.Oscillator(value.data.frequency, "sawtooth");
-          obj.start();
-          obj.volume.value = -20;
-        }
-        
-        if(value.type === "filter"){
-          obj = new Tone.Filter(value.data.frequency, "lowpass");
-        }
-        if(value.type === "output"){
-          obj = Tone.Destination;
-        }
-        
-        (window as any).patch[value.id] = obj;
-      }
-    })
-    edges.forEach((value)=>{
-      console.log(value.source, value.target);
-      (window as any).patch[value.source].connect((window as any).patch[value.target]);
-      // disconnections ? compare with a saved state
-    })
-    Tone.start();
-  }
+  // const onConnect = useCallback((connection:Connection) => {
+  //     const edge = {...connection, animated: false, id:`${edges.length + 1}`};
+  //     setEdges((prevEdges)=>addEdge(edge, prevEdges));
+  //     (window as any).getState();
+  //   },
+  //   []
+  // );
   
   return (
     <Box height="500px" width="500px" border="1px solid black" backgroundColor="white">
@@ -104,7 +75,7 @@ const App = ()=> {
         // proOptions={proOptions} 
         onNodesChange={store.onNodesChange} 
         onEdgesChange={store.onEdgesChange}
-        onConnect = {onConnect}
+        onConnect = {store.addEdge}
         nodeTypes = {nodeTypes}
       >
         <Controls />
