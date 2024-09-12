@@ -32,10 +32,22 @@ const App = ()=> {
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge[]>(initialEdges);
   const [rfInstance, setRfInstance] = useState(null);
   
+  const createNode = useCallback((type: string, position: { x: number, y: number }) => {
+    const newNode: CustomNode = {
+      id: `${nodes.length + 1}`,
+      type,
+      position,
+      data: { frequency: 440, label: type } // Default data, can be customized
+    };
+    setNodes((prevNodes) => [...prevNodes, newNode]);
+  }, [nodes, setNodes]);
+  
+  (window as any).createNode = createNode;
+  
   const onConnect = useCallback((connection:Connection) => {
-    const edge = {...connection, animated: false, id:`${edges.length + 1}`};
-    setEdges((prevEdges)=>addEdge(edge, prevEdges));
-    (window as any).getState();
+      const edge = {...connection, animated: false, id:`${edges.length + 1}`};
+      setEdges((prevEdges)=>addEdge(edge, prevEdges));
+      (window as any).getState();
     },
     []
   );
