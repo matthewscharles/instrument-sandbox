@@ -67,7 +67,8 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         get().edges.forEach((value)=>{
             // console.log(value);
             // console.log(value.source, value.target);
-            (window as any).patch[value.source].connect((window as any).patch[value.target]);
+            // (window as any).patch[value.source].connect((window as any).patch[value.target]);
+            (window as any).patch[value.source][value.sourceHandle].connect((window as any).patch[value.target][value.targetHandle]);
             (window as any).connections[value.id] = value;
             // disconnections ? compare with a saved state
           });
@@ -82,7 +83,8 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         get().edges.forEach((value)=>{
             // console.log('onEdgesChange',value, value.source, value.target);
             // console.log('edgesChange', value);
-            (window as any).patch[value.source].connect((window as any).patch[value.target]);
+            // (window as any).patch[value.source].connect((window as any).patch[value.target]);
+            (window as any).patch[value.source][value.sourceHandle].connect((window as any).patch[value.target][value.targetHandle]);
             // disconnections ? compare with a saved state
           });
           Tone.start();
