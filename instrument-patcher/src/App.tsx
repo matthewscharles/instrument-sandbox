@@ -15,13 +15,13 @@ const selector = (store: StoreState) => ({
   edges: store.edges,
   onNodesChange: store.onNodesChange,
   onEdgesChange: store.onEdgesChange,
+  onEdgesDelete: store.deleteEdge,
   addEdge: store.addEdge,
   addNode: store.addNode
 })
 
 const proOptions : {hideAttribution: boolean} = {hideAttribution: true};
 
-// Define custom node type
 interface CustomNodeData {
   frequency: number;
   label: string;
@@ -55,6 +55,10 @@ const App = ()=> {
     setRfInstance(instance);
   }, []);
   
+  const dbl = function(){
+    console.log("double click");
+  }
+  
   return (
     <Box height="500px" width="500px" border="1px solid black" backgroundColor="white">
       <ReactFlow 
@@ -65,6 +69,9 @@ const App = ()=> {
         // proOptions={proOptions} 
         onNodesChange={store.onNodesChange} 
         onEdgesChange={store.onEdgesChange}
+        onNodesDelete={store.deleteNode}
+        onNodeDoubleClick={dbl}
+        onEdgesDelete={store.onEdgesDelete}
         onConnect = {store.addEdge}
         nodeTypes = {nodeTypes}
         onPaneClick = {handlePaneClick}

@@ -10,6 +10,8 @@ export interface StoreState {
     onEdgesChange: (changes: EdgeChange[]) => void;
     addEdge: (data: Omit<Edge, 'id'>) => void;
     addNode: (type: string, position: { x: number, y: number }) => void;
+    deleteEdge: (data: Edge) => void;
+    deleteNode: (data: Node) => void;
 }
 
 interface CustomNodeData {
@@ -38,7 +40,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         });
         
         get().nodes.forEach((value)=>{
-            console.log(value.type, value.id);
+            // console.log(value.type, value.id);
             let obj;
             if(!(value.id in (window as any).patch)){  
               if(value.type === "oscillator"){
@@ -58,8 +60,10 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
             }
         });
         get().edges.forEach((value)=>{
+            // console.log(value);
             // console.log(value.source, value.target);
             (window as any).patch[value.source].connect((window as any).patch[value.target]);
+            (window as any).connections[value.id] = value;
             // disconnections ? compare with a saved state
           });
           
@@ -71,7 +75,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
             edges: applyEdgeChanges(changes, get().edges),
         });
         get().edges.forEach((value)=>{
-            // console.log(value.source, value.target);
+            // console.log('onEdgesChange',value, value.source, value.target);
             // console.log('edgesChange', value);
             (window as any).patch[value.source].connect((window as any).patch[value.target]);
             // disconnections ? compare with a saved state
@@ -92,6 +96,20 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         Tone.start();
     },
     
+    deleteEdge(data) {
+        if(Array.isArray(data) && data.length > 0){
+            let id = data[0].id;
+            console.log('deleteEdge', id, data);
+            let patcher = (window as any).patch;
+            // assume only one handle for now
+            console.log('delete', patcher[(window as any).connections[id].source], patcher[(window as any).connections[id].target]);    
+            patcher[(window as any).connections[id].source].disconnect(patcher[(window as any).connections[id].target]);
+        } else {
+            console.error('data is not an array or is empty');
+        }
+        
+    },
+    
     addNode(type, position) {
         const id = (get().nodes.length + 1).toString();
         const newNode: CustomNode = {
@@ -101,7 +119,9 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
             data: { frequency: 440, label: type }
         };
         set({ nodes: [...get().nodes, newNode] });
-        // setNodes((prevNodes) => [...prevNodes, newNode]);
-      }
+    },
+    deleteNode(data) {
+        console.log('deleteNode', data);
+    }
 })
 );
