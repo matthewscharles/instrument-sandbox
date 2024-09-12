@@ -7,12 +7,12 @@ import { useCallback, useState } from 'react';
 const leftStyle = { left: 10 };
 const rightStyle = { right: 10 };
 
-export function FilterInit({
+export function GainInit({
             id,
-            data:{ frequency, label },
-        }:NodeProps<{ frequency: number, label:string }>) {
+            data:{ gain, label },
+        }:NodeProps<{ gain: number, label:string }>) {
             
-            const [number, setNumber] = useState(frequency);
+            const [number, setNumber] = useState(gain);
 
             const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
                 const cappedNumber = Math.round( 
@@ -20,7 +20,7 @@ export function FilterInit({
                 );
                 setNumber(cappedNumber);
                 let patcher = (window as any).patch;
-                patcher[id].frequency.rampTo(cappedNumber, 0.1);
+                patcher[id].volume.rampTo(cappedNumber, 0.1);
             }, []);
             
     return (
@@ -32,7 +32,7 @@ export function FilterInit({
             </Box>
             <Box p={2} bg="white">
                 <Text fontSize="small" color="black">
-                    frequency: 
+                amplitude: 
                     <input
                         id={`number-${id}`} 
                         onChange={onChange} 
@@ -44,10 +44,9 @@ export function FilterInit({
                         className="nodrag"></input>
                 </Text>
             </Box>
-            <Handle id="a" type="target" className="handle" position={Position.Top} style={leftStyle} />
-            <Handle id="b" type="target" className="handle" position={Position.Top} style={rightStyle} />
-            <Handle id="c" type="source" className="handle" position={Position.Bottom} />
-            <Handle id="d" type="source" className="handle" position={Position.Bottom} />
+            <Handle id="input" type="target" className="handle" position={Position.Top} style={leftStyle} />
+            <Handle id="volume" type="target" className="handle" position={Position.Top} style={rightStyle} />
+            <Handle id="output" type="source" className="handle" position={Position.Bottom} />
         </Box>
     )
 }

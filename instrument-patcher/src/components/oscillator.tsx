@@ -44,26 +44,9 @@ export function OscillatorInit({
                         className="nodrag"></input>
                 </Text>
             </Box>
-            <Handle id="a" type="target" className="handle" position={Position.Top} style={leftStyle} />
-            <Handle id="b" type="target" className="handle" position={Position.Top} style={rightStyle} />
-            <Handle id="c" type="source" className="handle" position={Position.Bottom} />
-            <Handle id="d" type="source" className="handle" position={Position.Bottom} />
+            <Handle id="frequency" type="target" className="handle" position={Position.Top} style={leftStyle} />
+            <Handle id="phase" type="target" className="handle" position={Position.Top} style={rightStyle} />
+            <Handle id="output" type="source" className="handle" position={Position.Bottom} />
         </Box>
     )
 }
-
-// interface OscillatorProps {
-//     data: {
-//         frequency: number;
-//     }
-// }
-
-// export default function OscillatorInit({
-//             data:{ frequency },
-//         }: OscillatorProps) {
-//     return (
-//         <div>
-//             <h1>oscillator</h1>
-//         </div>
-//     )
-// }

@@ -5,9 +5,12 @@ import { Box } from "@chakra-ui/react";
 import { initialNodes, initialEdges } from './initial';
 import { OscillatorInit } from './components/oscillator';
 import { FilterInit } from './components/filter';
-import * as Tone from 'tone';
+import { GainInit } from './components/gain';
+import { OutputInit } from './components/output';
 import { useStore, StoreState } from './store';
 import { shallow } from 'zustand/shallow';
+
+import * as Tone from 'tone';
 (window as any).Tone = Tone;
 
 const selector = (store: StoreState) => ({
@@ -17,7 +20,8 @@ const selector = (store: StoreState) => ({
   onEdgesChange: store.onEdgesChange,
   onEdgesDelete: store.deleteEdge,
   addEdge: store.addEdge,
-  addNode: store.addNode
+  addNode: store.addNode,
+  deleteNode: store.deleteNode
 })
 
 const proOptions : {hideAttribution: boolean} = {hideAttribution: true};
@@ -33,12 +37,10 @@ interface CustomNode extends Node {
 
 const nodeTypes = {
   oscillator: OscillatorInit,
-  filter: FilterInit
-  // output: OutputInit,
+  filter: FilterInit,
+  gain: GainInit,
+  output: OutputInit,
 }
-
-
-
 
 const App = ()=> {
   const store = useStore(selector, shallow);
@@ -73,6 +75,7 @@ const App = ()=> {
         onNodeDoubleClick={dbl}
         onEdgesDelete={store.onEdgesDelete}
         onConnect = {store.addEdge}
+        
         nodeTypes = {nodeTypes}
         onPaneClick = {handlePaneClick}
         onInit = {onInit}

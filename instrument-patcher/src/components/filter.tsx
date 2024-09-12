@@ -5,7 +5,7 @@ import { Box, Text } from "@chakra-ui/react";
 import { useCallback, useState } from 'react';
 
 const leftStyle = { left: 10 };
-const rightStyle = { right: 10 };
+const rightStyle = { left: 40 };
 
 export function FilterInit({
             id,
@@ -44,10 +44,10 @@ export function FilterInit({
                         className="nodrag"></input>
                 </Text>
             </Box>
-            <Handle id="a" type="target" className="handle" position={Position.Top} style={leftStyle} />
-            <Handle id="b" type="target" className="handle" position={Position.Top} style={rightStyle} />
-            <Handle id="c" type="source" className="handle" position={Position.Bottom} />
-            <Handle id="d" type="source" className="handle" position={Position.Bottom} />
+            <Handle id="input" type="target" className="handle" position={Position.Top} style={leftStyle} />
+            <Handle id="frequency" type="target" className="handle" position={Position.Top} style={rightStyle} />
+            <Handle id="Q" type="target" className="handle" position={Position.Top} />
+            <Handle id="output" type="source" className="handle" position={Position.Bottom} />
         </Box>
     )
 }

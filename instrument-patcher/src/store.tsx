@@ -52,6 +52,11 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
               if(value.type === "filter"){
                 obj = new Tone.Filter(value.data.frequency, "lowpass");
               }
+              
+              if(value.type === "gain"){
+                obj = new Tone.Volume(value.data.gain);
+              }
+              
               if(value.type === "output"){
                 obj = Tone.Destination;
               }
@@ -89,8 +94,9 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         set({ edges: [edge, ...get().edges] });
         get().edges.forEach((value)=>{
             // console.log(value.source, value.target);
-            // console.log('edgesChange', value);
-            (window as any).patch[value.source].connect((window as any).patch[value.target]);
+            console.log('~~~edgesChange', value, value.sourceHandle, value.targetHandle);
+            console.log('~~~patch', (window as any).patch[value.source], (window as any).patch[value.target]);
+            (window as any).patch[value.source][value.sourceHandle].connect((window as any).patch[value.target][value.targetHandle]);
             // disconnections ? compare with a saved state
           });
         Tone.start();
@@ -122,6 +128,15 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
     },
     deleteNode(data) {
         console.log('deleteNode', data);
+        if(Array.isArray(data) && data.length > 0){
+            let id = data[0].id;
+            console.log('deleteNode', id, data);
+            let patcher = (window as any).patch;
+            console.log('delete', patcher[id]);    
+            patcher[id].dispose();
+            delete patcher[id];
+        }
+        
     }
 })
 );
