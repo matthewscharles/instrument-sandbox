@@ -65,9 +65,6 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
             }
         });
         get().edges.forEach((value)=>{
-            // console.log(value);
-            // console.log(value.source, value.target);
-            // (window as any).patch[value.source].connect((window as any).patch[value.target]);
             (window as any).patch[value.source][value.sourceHandle].connect((window as any).patch[value.target][value.targetHandle]);
             (window as any).connections[value.id] = value;
             // disconnections ? compare with a saved state
@@ -80,12 +77,9 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         set({
             edges: applyEdgeChanges(changes, get().edges),
         });
+        
         get().edges.forEach((value)=>{
-            // console.log('onEdgesChange',value, value.source, value.target);
-            // console.log('edgesChange', value);
-            // (window as any).patch[value.source].connect((window as any).patch[value.target]);
             (window as any).patch[value.source][value.sourceHandle].connect((window as any).patch[value.target][value.targetHandle]);
-            // disconnections ? compare with a saved state
           });
           Tone.start();
     },
@@ -95,11 +89,9 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         const edge = { id, ...data };
         set({ edges: [edge, ...get().edges] });
         get().edges.forEach((value)=>{
-            // console.log(value.source, value.target);
             console.log('~~~edgesChange', value, value.sourceHandle, value.targetHandle);
             console.log('~~~patch', (window as any).patch[value.source], (window as any).patch[value.target]);
             (window as any).patch[value.source][value.sourceHandle].connect((window as any).patch[value.target][value.targetHandle]);
-            // disconnections ? compare with a saved state
           });
         Tone.start();
     },
@@ -109,7 +101,6 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
             let id = data[0].id;
             console.log('deleteEdge', id, data);
             let patcher = (window as any).patch;
-            // assume only one handle for now
             console.log('delete', patcher[(window as any).connections[id].source], patcher[(window as any).connections[id].target]);    
             patcher[(window as any).connections[id].source].disconnect(patcher[(window as any).connections[id].target]);
         } else {
@@ -128,6 +119,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         };
         set({ nodes: [...get().nodes, newNode] });
     },
+    
     deleteNode(data) {
         console.log('deleteNode', data);
         if(Array.isArray(data) && data.length > 0){
