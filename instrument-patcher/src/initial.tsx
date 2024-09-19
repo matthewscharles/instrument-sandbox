@@ -32,6 +32,12 @@ export const initialNodes : Node[] = [
         data: { label: <div>gain</div>, gain: 0 },
         position: { x: 550, y: 350 },
     },
+  //   {
+  //     id: '6',
+  //     type: 'delay',
+  //     data: { label: <div>delay</div>, gain: 0 },
+  //     position: { x: 550, y: 250 },
+  // },
     // { id: 'e1-2', source: '1', target: '2', animated: true },
 ]
 

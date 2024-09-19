@@ -2,9 +2,11 @@ const context = new AudioContext();
 const osc = context.createOscillator();
 const amp = context.createGain();
 
+const middleC = 261.625565;
+
 osc.type = 'sawtooth';
 // middle C
-osc.frequency.value = 261.625565;
+osc.frequency.value = middleC;
 // modulate in cents: one octave down
 osc.detune.value = -1200;
 

@@ -7,6 +7,7 @@ import { OscillatorInit } from './components/oscillator';
 import { FilterInit } from './components/filter';
 import { GainInit } from './components/gain';
 import { OutputInit } from './components/output';
+import { DelayComponent } from './nodes/delayInit';
 import { useStore, StoreState } from './store';
 import { shallow } from 'zustand/shallow';
 
@@ -39,6 +40,7 @@ const nodeTypes = {
   oscillator: OscillatorInit,
   filter: FilterInit,
   gain: GainInit,
+  // delay: DelayComponent,
   output: OutputInit,
 }
 
