@@ -13,30 +13,29 @@ export const initialNodes : Node[] = [
     position: { x: 550, y: 0 },
     data: { label: "oscillator", frequency: 400 },
   },
-  // you can also pass a React component as a label
   {
       id: '3',
       type: 'filter',
       data: { label: "filter", frequency: 100 },
       position: { x: 300, y: 200 },
-    },
-    {
-        id: '2',
-        type: 'output',
-        data: { label: <div>output</div> },
-        position: { x: 250, y: 350 },
-    },
-    {
-        id: '5',
-        type: 'gain',
-        data: { label: <div>gain</div>, gain: 0 },
-        position: { x: 550, y: 350 },
-    },
-    {
-      id: '6',
-      type: 'delay',
-      data: { label: <span>delay</span>, gain: 0 },
-      position: { x: 550, y: 250 },
+  },
+  {
+      id: '2',
+      type: 'output',
+      data: { label: <div>output</div> },
+      position: { x: 250, y: 350 },
+  },
+  {
+      id: '5',
+      type: 'gain',
+      data: { label: <div>gain</div>, gain: 0 },
+      position: { x: 550, y: 350 },
+  },
+  {
+    id: '6',
+    type: 'delay',
+    data: { label: <span>delay</span>, gain: 0 },
+    position: { x: 550, y: 250 },
   },
 ]
 

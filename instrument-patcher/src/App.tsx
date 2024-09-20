@@ -47,11 +47,13 @@ const App = ()=> {
   const store = useStore(selector, shallow);
   const [rfInstance, setRfInstance] = useState<ReactFlowInstance | null>(null);
   
-  const handlePaneClick = useCallback((event: MouseEvent<Element,MouseEvent>) => {
+  const handlePaneClick = useCallback((event: React.MouseEvent<Element, MouseEvent>) => {
+    
     if (!rfInstance) return;
     const { clientX, clientY } = event;
     const position = rfInstance.project({ x: clientX, y: clientY });
     store.addNode('oscillator', position); // Add a new node of type 'oscillator' at the clicked position
+ 
   }, [rfInstance, store]);
 
   const onInit = useCallback((instance: ReactFlowInstance) => {

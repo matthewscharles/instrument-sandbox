@@ -10,8 +10,8 @@ export interface StoreState {
     onEdgesChange: (changes: EdgeChange[]) => void;
     addEdge: (data: Omit<Edge, 'id'>) => void;
     addNode: (type: string, position: { x: number, y: number }) => void;
-    deleteEdge: (data: Edge) => void;
-    deleteNode: (data: Node) => void;
+    deleteEdge: (data: Edge[]) => void;
+    deleteNode: (data: Node[]) => void;
 }
 
 interface CustomNodeData {
