@@ -1,7 +1,7 @@
 import React from 'react';
-import { NodeProps } from 'reactflow';
+import { NodeProps, Position } from 'reactflow';
 import { withAudioNode } from './withAudioNode';
-// import { useAudioNode } from './useAudioNode';
+import { useAudioNode } from './useAudioNode';
 import { HandleConfig } from './types';
 import { Text } from "@chakra-ui/react";
 

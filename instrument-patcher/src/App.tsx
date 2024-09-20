@@ -2,12 +2,11 @@ import ReactFlow, { Node, Edge, Controls, Background, MiniMap, useNodesState, us
 import { useCallback, useState } from 'react';
 import "reactflow/dist/style.css";
 import { Box } from "@chakra-ui/react";
-import { initialNodes, initialEdges } from './initial';
 import { OscillatorInit } from './components/oscillator';
 import { FilterInit } from './components/filter';
 import { GainInit } from './components/gain';
 import { OutputInit } from './components/output';
-import { DelayComponent } from './nodes/delayInit';
+import { DelayInit } from './nodes/delayInit';
 import { useStore, StoreState } from './store';
 import { shallow } from 'zustand/shallow';
 
@@ -40,7 +39,7 @@ const nodeTypes = {
   oscillator: OscillatorInit,
   filter: FilterInit,
   gain: GainInit,
-  // delay: DelayComponent,
+  delay: DelayInit,
   output: OutputInit,
 }
 

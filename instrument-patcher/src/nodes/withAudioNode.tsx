@@ -5,23 +5,22 @@ import { HandleConfig } from './types';
 
 type AudioNodeProps<T> = NodeProps<T & { label: string }>;
 
-interface WithAudioNodeProps<T> extends AudioNodeProps<T> {
-  handles: HandleConfig[];
-}
+interface WithAudioNodeProps<T> extends AudioNodeProps<T> {}
 
-export function withAudioNode<T>(Component: React.ComponentType<AudioNodeProps<T>>) {
+export function withAudioNode<T>(
+  Component: React.ComponentType<AudioNodeProps<T>>,
+  handles: HandleConfig[]
+) {
   return function WrappedComponent(props: WithAudioNodeProps<T>) {
-    const { handles, ...componentProps } = props; // Extract 'handles'
-
     return (
       <Box bg="white" border="1px solid gray">
         <Box bg="beige">
           <Text fontSize="small" color="black">
-            {componentProps.data.label}
+            {props.data.label}
           </Text>
         </Box>
         <Box p={2} bg="white">
-          <Component {...componentProps} /> {/* Pass only the expected props */}
+          <Component {...props} /> {/* Pass only the expected props */}
         </Box>
         {handles.map(handle => (
           <Handle

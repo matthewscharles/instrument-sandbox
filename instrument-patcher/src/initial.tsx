@@ -32,17 +32,15 @@ export const initialNodes : Node[] = [
         data: { label: <div>gain</div>, gain: 0 },
         position: { x: 550, y: 350 },
     },
-  //   {
-  //     id: '6',
-  //     type: 'delay',
-  //     data: { label: <div>delay</div>, gain: 0 },
-  //     position: { x: 550, y: 250 },
-  // },
-    // { id: 'e1-2', source: '1', target: '2', animated: true },
+    {
+      id: '6',
+      type: 'delay',
+      data: { label: <span>delay</span>, gain: 0 },
+      position: { x: 550, y: 250 },
+  },
 ]
 
 export const initialEdges : Edge[] = [
-  // { id: 'e1-2', source: '1', target: '2', animated: true },
   { id: 'e1-3', source: '1', target: '3', animated: false, sourceHandle: 'output', targetHandle:'input' },
   { id: 'e3-2', source: '3', target: '2', animated: false, sourceHandle: 'output', targetHandle:'input' },
   { id: 'e4-2', source: '4', target: '3', animated: false, sourceHandle: 'output', targetHandle:'input' },
