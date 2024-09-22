@@ -10,7 +10,7 @@ import addNoteOffArea from './addNoteOffArea.js';
  */
 
 function assignClasses(element=document,laras='slendro', instrument='saron'){
-    let HC = {slendro:{},pelog:{}};
+    const HC = {slendro:{},pelog:{}};
     element.querySelectorAll(generateSelector('hc')).forEach((element)=>{
         let noteName = element.id.replace('_Imageremove_hc','');
         let classes = [noteName,'note','hc',instrument,laras]; 
@@ -37,7 +37,11 @@ function assignClasses(element=document,laras='slendro', instrument='saron'){
         newSVG.classList.remove('background');
         newSVG.appendChild(imageGroup);
 
-        if(newSVG.classList.contains('playable')) addNoteOffArea(newSVG, laras, noteName, instrument, imageGroup, HC);
+        ///* disable note off areas for the time being
+        
+        // if(newSVG.classList.contains('playable')) {
+        //     addNoteOffArea(newSVG, laras, noteName, instrument, imageGroup, HC);
+        // }
         
         container.appendChild(newSVG);
         newSVG.classList.add('note','display',instrument,laras,noteName);

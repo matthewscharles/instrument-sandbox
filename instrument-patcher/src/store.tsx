@@ -23,8 +23,11 @@ interface CustomNodeData {
     data: CustomNodeData;
 }
 
+///* put the patch and connections in the global scope for debugging purposes */
+
 (window as any).patch =(window as any).patch || {};
 (window as any).connections = (window as any).connections || {};
+
 
 export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
     nodes: initialNodes,
@@ -41,7 +44,9 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         
         get().nodes.forEach((value)=>{
             let obj;
+            
             if(!(value.id in (window as any).patch)){  
+                
               if(value.type === "oscillator"){
                 obj = new Tone.Oscillator(value.data.frequency, "sawtooth");
                 obj.start();
@@ -50,6 +55,10 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
               
               if(value.type === "filter"){
                 obj = new Tone.Filter(value.data.frequency, "lowpass");
+              }
+              
+              if(value.type ==="delay"){
+                obj = new Tone.FeedbackDelay(value.data.delay, 0.5);
               }
               
               if(value.type === "gain"){

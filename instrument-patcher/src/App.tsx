@@ -1,4 +1,4 @@
-import ReactFlow, { Node, Edge, Controls, Background, MiniMap, useNodesState, useEdgesState, Connection, addEdge, ReactFlowInstance } from 'reactflow';
+import ReactFlow, { Node, Edge, Controls, Background, BackgroundVariant, MiniMap, useNodesState, useEdgesState, Connection, addEdge, ReactFlowInstance } from 'reactflow';
 import { useCallback, useState } from 'react';
 import "reactflow/dist/style.css";
 import { Box } from "@chakra-ui/react";
@@ -84,7 +84,8 @@ const App = ()=> {
         onInit = {onInit}
       >
         <Controls />
-        <Background />
+        {/* <Background color="#ccc" /> */}
+        <Background variant={BackgroundVariant.Lines} />
         {/* <MiniMap /> */}
       </ReactFlow>
     </Box>
