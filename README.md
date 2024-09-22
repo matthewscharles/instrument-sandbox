@@ -13,8 +13,6 @@ Icons from noun project used with license.
 Run the build script, then try out the sketches in the sketches folder.
 
 ```bash
-
-```bash
 sass --watch ./src/sass/main.scss ./sketches/main.css
 ```
 
