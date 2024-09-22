@@ -19,7 +19,7 @@ I'm trying to get a better handle on these libraries and how they can be used in
 
 Run the build script, then try out the sketches in the sketches folder.
 
-For the React demo, navigate to the patcher subfolder and run dev.
+For the React demo, navigate to the instrument patcher subfolder and run *dev*.
 
 Styles:
 
