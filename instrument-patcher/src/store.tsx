@@ -40,7 +40,6 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         });
         
         get().nodes.forEach((value)=>{
-            // console.log(value.type, value.id);
             let obj;
             if(!(value.id in (window as any).patch)){  
               if(value.type === "oscillator"){
@@ -64,6 +63,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
               (window as any).patch[value.id] = obj;
             }
         });
+        
         get().edges.forEach((value)=>{
             (window as any).patch[value.source][value.sourceHandle].connect((window as any).patch[value.target][value.targetHandle]);
             (window as any).connections[value.id] = value;
@@ -88,6 +88,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         const id = (get().edges.length + 1).toString();
         const edge = { id, ...data };
         set({ edges: [edge, ...get().edges] });
+        
         get().edges.forEach((value)=>{
             console.log('~~~edgesChange', value, value.sourceHandle, value.targetHandle);
             console.log('~~~patch', (window as any).patch[value.source], (window as any).patch[value.target]);
