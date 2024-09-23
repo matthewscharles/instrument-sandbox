@@ -65,7 +65,7 @@ const App = ()=> {
   }
   
   return (
-    <Box height="500px" width="500px" border="1px solid black" backgroundColor="white" className="patcher">
+    <Box height="800px" width="800px" border="1px solid black" backgroundColor="white" className="patcher">
       <ReactFlow 
         nodes={store.nodes} 
         edges={store.edges} 

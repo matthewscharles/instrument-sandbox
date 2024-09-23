@@ -50,7 +50,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
               if(value.type === "oscillator"){
                 obj = new Tone.Oscillator(value.data.frequency, "sawtooth");
                 obj.start();
-                obj.volume.value = -20;
+                // obj.volume.value = -20;
               }
               
               if(value.type === "filter"){

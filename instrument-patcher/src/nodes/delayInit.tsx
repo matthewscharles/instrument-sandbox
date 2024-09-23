@@ -27,6 +27,7 @@ function DelayComponent({ id, data }: NodeProps<DelayNodeData>) {
         value={number}
         min="0"
         max="10000"
+        // step="0.01"
         className="nodrag"
       />
     </Text>
