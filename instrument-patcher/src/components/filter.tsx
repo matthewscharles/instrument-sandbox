@@ -5,7 +5,7 @@ import { Box, Text } from "@chakra-ui/react";
 import { useCallback, useState } from 'react';
 
 const leftStyle = { left: 10 };
-const rightStyle = { left: 40 };
+const rightStyle = { left: 40 }; 
 
 export function FilterInit({
             id,
@@ -26,7 +26,7 @@ export function FilterInit({
     return (
         <Box bg="white" border="1px solid gray">
             <Box bg="beige">
-                <Text fontSize="small" color="black">
+                <Text fontSize="small" color="black" className="obj__title">
                     filter
                 </Text> 
             </Box>

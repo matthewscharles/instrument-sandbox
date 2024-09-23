@@ -34,7 +34,7 @@ export const initialNodes : Node[] = [
   {
     id: '6',
     type: 'delay',
-    data: { label: <span>delay</span>, gain: 0 },
+    data: { label: <span>delay</span>, time: 10 },
     position: { x: 550, y: 250 },
   },
 ]

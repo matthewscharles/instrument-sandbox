@@ -15,7 +15,7 @@ export function withAudioNode<T>(
     return (
       <Box bg="white" border="1px solid gray">
         <Box bg="beige">
-          <Text fontSize="small" color="black">
+          <Text fontSize="small" color="black" className="obj__title">
             {props.data.label}
           </Text>
         </Box>

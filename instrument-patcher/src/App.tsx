@@ -1,7 +1,7 @@
 import ReactFlow, { Node, Edge, Controls, Background, BackgroundVariant, MiniMap, useNodesState, useEdgesState, Connection, addEdge, ReactFlowInstance } from 'reactflow';
 import { useCallback, useState } from 'react';
 import "reactflow/dist/style.css";
-import { Box } from "@chakra-ui/react";
+import { Box, Button, VStack } from "@chakra-ui/react";
 import { OscillatorInit } from './components/oscillator';
 import { FilterInit } from './components/filter';
 import { GainInit } from './components/gain';
@@ -46,26 +46,37 @@ const nodeTypes = {
 const App = ()=> {
   const store = useStore(selector, shallow);
   const [rfInstance, setRfInstance] = useState<ReactFlowInstance | null>(null);
+  const [mousePosition, setMousePosition] = useState<{ x: number, y: number } | null>(null);
   
   const handlePaneClick = useCallback((event: React.MouseEvent<Element, MouseEvent>) => {
-    
-    if (!rfInstance) return;
     const { clientX, clientY } = event;
-    const position = rfInstance.project({ x: clientX, y: clientY });
-    store.addNode('oscillator', position); // Add a new node of type 'oscillator' at the clicked position
- 
-  }, [rfInstance, store]);
+    setMousePosition({ x: clientX -200, y: clientY -200 });
+  }, []);
 
   const onInit = useCallback((instance: ReactFlowInstance) => {
     setRfInstance(instance);
   }, []);
+  
+  const addNode = useCallback((type: string) => {
+    if (!rfInstance || !mousePosition) return;
+    const position = rfInstance.project(mousePosition);
+    store.addNode(type, position);
+  }, [rfInstance, mousePosition, store]);
   
   const dbl = function(){
     console.log("double click");
   }
   
   return (
+
     <Box height="800px" width="800px" border="1px solid black" backgroundColor="white" className="patcher">
+    <VStack spacing={4} align="stretch" position="absolute" top="10px" right="10px" zIndex="10">
+        <Button onClick={() => addNode('oscillator')}>oscillator</Button>
+        <Button onClick={() => addNode('filter')}>filter</Button>
+        <Button onClick={() => addNode('gain')}>gain</Button>
+        <Button onClick={() => addNode('delay')}>delay</Button>
+        <Button onClick={() => addNode('output')}>output</Button>
+      </VStack>
       <ReactFlow 
         nodes={store.nodes} 
         edges={store.edges} 

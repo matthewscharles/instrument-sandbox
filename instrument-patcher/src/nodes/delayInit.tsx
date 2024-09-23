@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { NodeProps, Position } from 'reactflow';
 import { withAudioNode } from './withAudioNode';
-import { useAudioNode } from './useAudioNode';
 import { HandleConfig } from './types';
 import { Text } from "@chakra-ui/react";
+import { useAudioNode } from './useAudioNode';
 
-type DelayNodeData = { delay: number, label: string };
+type DelayNodeData = { time: number, label: string };
 
 const delayHandles: HandleConfig[] = [
   { id: 'input', type: 'target', position: Position.Top, style: { left: 10 } },
@@ -13,8 +13,8 @@ const delayHandles: HandleConfig[] = [
 ];
 
 function DelayComponent({ id, data }: NodeProps<DelayNodeData>) {
-  const { delay, label } = data;
-  const { number, onChange } = useAudioNode(delay, id);
+  const { time, label } = data;
+  const { number, onChange } = useAudioNode(time, id);
 
   return (
     <Text fontSize="small" color="black">
