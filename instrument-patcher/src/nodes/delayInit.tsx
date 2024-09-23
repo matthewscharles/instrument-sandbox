@@ -9,6 +9,8 @@ type DelayNodeData = { time: number, label: string };
 
 const delayHandles: HandleConfig[] = [
   { id: 'input', type: 'target', position: Position.Top, style: { left: 10 } },
+  { id: 'delayTime', type: 'target', position: Position.Top, style: { left: 50 } },
+  { id: 'feedback', type: 'target', position: Position.Top, style: { left: 80 } },
   { id: 'output', type: 'source', position: Position.Bottom }
 ];
 

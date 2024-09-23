@@ -23,7 +23,10 @@ export function useAudioNode(initialValue: number, id: string) {
         audioNode.frequency.rampTo(cappedNumber, 0.1);
       } else if (audioNode instanceof Tone.Oscillator) {
         audioNode.frequency.rampTo(cappedNumber, 0.1);
+      } else if (audioNode instanceof Tone.Signal) {
+        audioNode.rampTo(cappedNumber, 0.1);
       }
+      
     }
   }, [id]);
 

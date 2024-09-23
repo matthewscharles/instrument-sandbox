@@ -43,7 +43,7 @@ export function GainInit({
                         value={number} 
                         min="0" 
                         max="10000" 
-                        step="0.01"
+                        // step="0.01"
                         className="nodrag"></input>
                 </Text>
             </Box>

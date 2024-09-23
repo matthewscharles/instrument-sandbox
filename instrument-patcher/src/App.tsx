@@ -7,6 +7,8 @@ import { FilterInit } from './components/filter';
 import { GainInit } from './components/gain';
 import { OutputInit } from './components/output';
 import { DelayInit } from './nodes/delayInit';
+import { ConstantNode } from './nodes/constantNode';
+
 import { useStore, StoreState } from './store';
 import { shallow } from 'zustand/shallow';
 
@@ -41,6 +43,7 @@ const nodeTypes = {
   gain: GainInit,
   delay: DelayInit,
   output: OutputInit,
+  constant: ConstantNode
 }
 
 const App = ()=> {
@@ -69,9 +72,10 @@ const App = ()=> {
   
   return (
 
-    <Box height="800px" width="800px" border="1px solid black" backgroundColor="white" className="patcher">
+    <Box height="600px" width="600px" border="1px solid black" backgroundColor="white" className="patcher">
     <VStack spacing={4} align="stretch" position="absolute" top="10px" right="10px" zIndex="10">
         <Button onClick={() => addNode('oscillator')}>oscillator</Button>
+        <Button onClick={() => addNode('constant')}>constant</Button>
         <Button onClick={() => addNode('filter')}>filter</Button>
         <Button onClick={() => addNode('gain')}>gain</Button>
         <Button onClick={() => addNode('delay')}>delay</Button>

@@ -61,6 +61,10 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
                 obj = new Tone.FeedbackDelay(value.data.delay, 0.5);
               }
               
+              if(value.type ==="constant"){
+                obj = new Tone.Signal(value.data.value);
+              }
+              
               if(value.type === "gain"){
                 obj = new Tone.Volume(value.data.gain);
               }
