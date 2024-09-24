@@ -12,6 +12,7 @@ import { ShiftRegisterNode } from './nodes/ShiftRegisterNode.js';
 import { SlewRateNode } from './nodes/SlewRateNode.js';
 import { NoiseNode } from './nodes/NoiseNode.js';
 import { SampleHoldNode } from './nodes/SampleHoldNode.js';
+import { EchoNode } from './nodes/EchoNode.js';
 
 const middleC = 261.625565;
 
@@ -50,6 +51,9 @@ freqLfo.connect(freqLfoGain);
 
 freqLfoGain.gain.value=300
 freqLfoGain.connect(filter.frequency)
+
+window.echo = new EchoNode(context, { delayTime: 0.1, feedback: 0.9 });
+echo.connect(context.destination);
 
 const delayUnit = {
     delay: context.createDelay(8),
@@ -100,6 +104,7 @@ filter.connect(delayUnit.delay);
         const gain = new GainNode(context, { gain: 0.02 });
         osci.connect(gain).connect(context.destination);
         osci.start();
+        gain.connect(echo.input);
         return osci;
     });
     
