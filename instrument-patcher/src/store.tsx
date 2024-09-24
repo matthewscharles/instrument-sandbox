@@ -3,6 +3,13 @@ import { createWithEqualityFn } from 'zustand/traditional';
 import {initialNodes, initialEdges} from './initial';
 import * as Tone from 'tone';
 
+
+import { NoiseNode } from './NoiseNode';
+
+// const ctx = new AudioContext();
+// const noiseNode = new NoiseNode(ctx);
+// noiseNode.connect(ctx.destination);
+
 export interface StoreState {
     nodes: Node[];
     edges: Edge[];
