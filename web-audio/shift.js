@@ -1,9 +1,7 @@
 class ShiftRegisterProcessor extends AudioWorkletProcessor {
     constructor(options) {
       super();
-      // Get the number of stages from the options, default to 8
       this.numStages = options.processorOptions.numStages || 8;
-      // Initialize the shift register with zeros
       this.registers = new Array(this.numStages).fill(0);
       this.prevTrigger = 0;
     }
@@ -13,9 +11,7 @@ class ShiftRegisterProcessor extends AudioWorkletProcessor {
       const triggerInput = inputs[1];
       const output = outputs;
   
-      // Ensure inputs are connected
       if (input.length === 0 || triggerInput.length === 0) {
-        // Output zeros if inputs are not connected
         for (let i = 0; i < output.length; i++) {
           if (output[i][0]) {
             output[i][0].fill(this.registers[i] || 0);
@@ -24,7 +20,7 @@ class ShiftRegisterProcessor extends AudioWorkletProcessor {
         return true;
       }
   
-      const inputChannel = input[0];       
+      const inputChannel = input[0];
       const triggerChannel = triggerInput[0];
       const sampleFrames = inputChannel.length;
   
@@ -39,8 +35,11 @@ class ShiftRegisterProcessor extends AudioWorkletProcessor {
           }
           // Capture the current input sample into the first register
           this.registers[0] = inputChannel[i];
+  
+          // Send the updated register values to the main thread
+          this.port.postMessage({ registers: this.registers.slice() });
         }
-        // console.log('this.registers: ', this.registers);
+  
         // Output the register values to the outputs
         for (let j = 0; j < this.numStages; j++) {
           if (output[j] && output[j][0]) {
@@ -53,9 +52,6 @@ class ShiftRegisterProcessor extends AudioWorkletProcessor {
   
       return true;
     }
-    
-  
-    
   }
   
-  registerProcessor('shift-register', ShiftRegisterProcessor);
+  registerProcessor('shift-register-processor', ShiftRegisterProcessor);
