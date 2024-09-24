@@ -8,6 +8,7 @@ import { GainInit } from './components/gain';
 import { OutputInit } from './components/output';
 import { DelayInit } from './nodes/delayInit';
 import { ConstantNode } from './nodes/constantNode';
+import { NoiseNode } from './audio_nodes/NoiseNode';
 
 import { useStore, StoreState } from './store';
 import { shallow } from 'zustand/shallow';
@@ -43,7 +44,8 @@ const nodeTypes = {
   gain: GainInit,
   delay: DelayInit,
   output: OutputInit,
-  constant: ConstantNode
+  constant: ConstantNode, 
+  // noise: NoiseNode
 }
 
 const App = ()=> {
@@ -79,6 +81,7 @@ const App = ()=> {
         <Button onClick={() => addNode('filter')}>filter</Button>
         <Button onClick={() => addNode('gain')}>gain</Button>
         <Button onClick={() => addNode('delay')}>delay</Button>
+        <Button onClick={() => addNode('noise')}>noise</Button>
         <Button onClick={() => addNode('output')}>output</Button>
       </VStack>
       <ReactFlow 

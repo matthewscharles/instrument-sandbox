@@ -4,10 +4,9 @@ import {initialNodes, initialEdges} from './initial';
 import * as Tone from 'tone';
 
 
-import { NoiseNode } from './NoiseNode';
+import { NoiseNode } from './audio_nodes/NoiseNode';
 
-const ctx = new AudioContext();
-const noiseNode = new NoiseNode(ctx);
+// const ctx = new AudioContext();
 // noiseNode.connect(ctx.destination);
 
 export interface StoreState {
@@ -31,8 +30,8 @@ interface CustomNodeData {
 }
 
 ///* put the patch and connections in the global scope for debugging purposes */
-
-(window as any).patch =(window as any).patch || {};
+(window as any).context = new AudioContext();
+(window as any).patch = (window as any).patch || {};
 (window as any).connections = (window as any).connections || {};
 
 
@@ -60,6 +59,10 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
                 // obj.volume.value = -20;
               }
               
+              if(value.type === "noise"){
+                obj = new NoiseNode(Tone.context);
+              }
+              
               if(value.type === "filter"){
                 obj = new Tone.Filter(value.data.frequency, "lowpass");
               }
@@ -79,6 +82,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
               if(value.type === "output"){
                 obj = Tone.Destination;
               }
+              
               
               (window as any).patch[value.id] = obj;
             }

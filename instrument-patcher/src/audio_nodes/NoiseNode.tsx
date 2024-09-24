@@ -16,9 +16,8 @@ export class NoiseNode {
 
   async _init() {
     try {
-      console.log('Adding audio worklet module...');
+      
       await this.context.audioWorklet.addModule('./audio-processors/noise-processor.js');
-      console.log('Audio worklet module added successfully.');
       
       this.node = new AudioWorkletNode(this.context, 'noise-processor');
       
