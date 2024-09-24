@@ -13,11 +13,12 @@ import { SlewRateNode } from './nodes/SlewRateNode.js';
 import { NoiseNode } from './nodes/NoiseNode.js';
 import { SampleHoldNode } from './nodes/SampleHoldNode.js';
 
-const context = new AudioContext();
-const osc = context.createOscillator();
-const amp = context.createGain();
-
 const middleC = 261.625565;
+
+window.context = new AudioContext();
+window.osc = context.createOscillator();
+window.amp = context.createGain();
+
 
 osc.type = 'sawtooth';
 osc.frequency.value = middleC;
@@ -31,7 +32,6 @@ osc.connect(filter);
 filter.connect(amp);
 amp.connect(context.destination);
 
-// inputs modulate the existing value
 amp.gain.value=0;
 
 const lfo = context.createOscillator();
@@ -84,7 +84,7 @@ filter.connect(delayUnit.delay);
     sh.connect(oscillator.frequency);
     
     oscillator.connect(sh.trigger);
-    const noiseAmp = context.createGain();
+    window.noiseAmp = context.createGain();
     noiseAmp.gain.value = 1000;
 
     sh.connect(noiseAmp);

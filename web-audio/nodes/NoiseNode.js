@@ -25,11 +25,23 @@ export class NoiseNode {
       this.output.connect(destination);
     }
 
-    async disconnect() {
-      if (!this.initialized) {
-        await this.initPromise; // Wait for initialization
-      }
+    async disconnect(destination, outputIndex = 0, inputIndex = 0) {
+        if (!this.initialized) {
+          await this.initPromise; // Wait for initialization
+        }
       
-      this.output.disconnect();
+        if (!destination) {
+          // Disconnect all outputs from this node
+          this.node.disconnect();
+        } else {
+          if (destination instanceof AudioParam) {
+            // Disconnect from the AudioParam
+            this.node.disconnect(destination, outputIndex);
+          } else if (destination instanceof AudioNode) {
+            this.node.disconnect(destination, outputIndex, inputIndex);
+          } else {
+            console.error('Destination must be an AudioNode or AudioParam.');
+          }
+        }
     }
 }

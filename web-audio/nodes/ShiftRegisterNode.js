@@ -74,15 +74,25 @@ export class ShiftRegisterNode {
         }
       }
   
-   async disconnectOutput(stageIndex) {
+    async disconnectOutput(stageIndex, destination, outputIndex = 0, inputIndex = 0) {
         if (!this.initialized) {
             await this.initPromise; // Wait for initialization
-        }
-            
+          }
         if (stageIndex >= 0 && stageIndex < this.numStages) {
+          if (!destination) {
+            // Disconnect all connections from the specified output
             this.node.disconnect(stageIndex);
+          } else {
+            // Destination is specified
+            if (destination instanceof AudioNode || destination instanceof AudioParam) {
+              // Disconnect the connection from the specified output to the destination
+              this.node.disconnect(destination, stageIndex, inputIndex);
+            } else {
+              console.error('Destination must be an AudioNode or AudioParam.');
+            }
+          }
         } else {
-            console.error('Invalid stage index:', stageIndex);
+          console.error('Invalid stage index:', stageIndex);
         }
-    }
+      }
 }
