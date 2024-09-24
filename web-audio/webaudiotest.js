@@ -10,6 +10,7 @@
 
 import { ShiftRegisterNode } from './nodes/ShiftRegisterNode.js';
 import { SlewRateNode } from './nodes/SlewRateNode.js';
+import { NoiseNode } from './nodes/NoiseNode.js';
 
 const context = new AudioContext();
 const osc = context.createOscillator();
@@ -67,7 +68,7 @@ delayUnit.delay.connect(delayUnit.wet);
 filter.connect(delayUnit.delay);
     
 (async () => {
-    await context.audioWorklet.addModule('noise.js');
+    // await context.audioWorklet.addModule('noise.js');
     await context.audioWorklet.addModule('sh.js');
     
     class SampleAndHoldNode {
@@ -103,7 +104,7 @@ filter.connect(delayUnit.delay);
   
     window.sh = new SampleAndHoldNode(context);
 
-    window.noise = new AudioWorkletNode(context, 'white-noise');
+    window.noise = new NoiseNode(context);
 
     window.oscillator = new OscillatorNode(context, {
         type: 'square',
