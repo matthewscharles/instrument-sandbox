@@ -11,6 +11,7 @@
 import { ShiftRegisterNode } from './nodes/ShiftRegisterNode.js';
 import { SlewRateNode } from './nodes/SlewRateNode.js';
 import { NoiseNode } from './nodes/NoiseNode.js';
+import { SampleHoldNode } from './nodes/SampleHoldNode.js';
 
 const context = new AudioContext();
 const osc = context.createOscillator();
@@ -68,41 +69,7 @@ delayUnit.delay.connect(delayUnit.wet);
 filter.connect(delayUnit.delay);
     
 (async () => {
-    // await context.audioWorklet.addModule('noise.js');
-    await context.audioWorklet.addModule('sh.js');
-    
-    class SampleAndHoldNode {
-        constructor(context) {
-          this.context = context;
-          this.node = new AudioWorkletNode(context, 'sample-hold', {
-            numberOfInputs: 2,
-            numberOfOutputs: 1,
-            channelCount: 1, // Mono processing
-          });
-    
-          // Input proxies
-          this.source = new GainNode(context);
-          this.trigger = new GainNode(context);
-    
-          // Connect the proxies to the processor inputs
-          this.source.connect(this.node, 0, 0);  // Connect to input 0
-          this.trigger.connect(this.node, 0, 1); // Connect to input 1
-    
-          // Expose the output of the processor
-          this.output = this.node;
-        }
-    
-        connect(destination) {
-          this.output.connect(destination);
-        }
-    
-        disconnect() {
-          this.output.disconnect();
-        }
-    }
-    
-  
-    window.sh = new SampleAndHoldNode(context);
+    window.sh = new SampleHoldNode(context);
 
     window.noise = new NoiseNode(context);
 
@@ -113,9 +80,9 @@ filter.connect(delayUnit.delay);
 
     oscillator.start();
 
-    noise.connect(sh.source);
-    // sh.connect(oscillator.frequency);
-    // sh.connect(delayUnit.delay.delayTime);
+    noise.connect(sh.input);
+    sh.connect(oscillator.frequency);
+    
     oscillator.connect(sh.trigger);
     const noiseAmp = context.createGain();
     noiseAmp.gain.value = 1000;
@@ -129,7 +96,7 @@ filter.connect(delayUnit.delay);
     oscillator.connect(shift.trigger);
         
     let shiftOut = new Array(8).fill(0).map((_, i) => {
-        const osci = new OscillatorNode(context, { type: 'sine', frequency: 400 * (i+1) });
+        const osci = new OscillatorNode(context, { type: 'square', frequency: 200 * (i+1) });
         const gain = new GainNode(context, { gain: 0.02 });
         osci.connect(gain).connect(context.destination);
         osci.start();
