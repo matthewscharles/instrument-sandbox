@@ -14,6 +14,7 @@ import { NoiseNode } from './nodes/NoiseNode.js';
 import { SampleHoldNode } from './nodes/SampleHoldNode.js';
 import { EchoNode } from './nodes/EchoNode.js';
 
+
 const middleC = 261.625565;
 
 window.context = new AudioContext();
@@ -27,7 +28,7 @@ osc.frequency.value = middleC;
 osc.detune.value = -1200;
 osc.start();
 
-let filter = context.createBiquadFilter();
+window.filter = context.createBiquadFilter();
 
 osc.connect(filter);
 filter.connect(amp);
@@ -73,6 +74,28 @@ delayUnit.delay.connect(delayUnit.wet);
 filter.connect(delayUnit.delay);
     
 (async () => {
+    await context.audioWorklet.addModule('./audio-processors/smooth-delay-processor.js');
+
+    window.delayNode = new AudioWorkletNode(context, 'smooth-delay-processor', {
+        numberOfInputs: 1,
+        numberOfOutputs: 1,
+        outputChannelCount: [1],
+        parameterData: {
+            delayTime: 1,
+            feedback: 0.9,
+        },
+    });
+
+    delayNode.connect(context.destination);
+      
+    // Modulate the delay time (e.g., with an LFO)
+    window.lfoD = new OscillatorNode(context, { type: 'sine', frequency: 0.1 }); // Slow modulation
+    window.lfoDGain = new GainNode(context, { gain: 1 });
+    lfoD.connect(lfoDGain).connect(delayNode.parameters.get('delayTime'));
+    lfoD.start();
+
+    
+    
     window.sh = new SampleHoldNode(context);
 
     window.noise = new NoiseNode(context);
@@ -99,12 +122,14 @@ filter.connect(delayUnit.delay);
     noiseAmp.connect(shift.input);
     oscillator.connect(shift.trigger);
         
-    let shiftOut = new Array(8).fill(0).map((_, i) => {
-        const osci = new OscillatorNode(context, { type: 'square', frequency: 200 * (i+1) });
+    window.shiftOut = new Array(8).fill(0).map((_, i) => {
+        const osci = new OscillatorNode(context, { type: 'triangle', frequency: 200 * (i+1) });
         const gain = new GainNode(context, { gain: 0.02 });
-        osci.connect(gain).connect(context.destination);
+        osci.connect(gain);
+        // gain.connect(context.destination);
         osci.start();
-        gain.connect(echo.input);
+        // gain.connect(echo.input);
+        gain.connect(delayNode);
         return osci;
     });
     
