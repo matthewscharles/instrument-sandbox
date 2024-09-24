@@ -8,7 +8,7 @@ import { GainInit } from './components/gain';
 import { OutputInit } from './components/output';
 import { DelayInit } from './nodes/delayInit';
 import { ConstantNode } from './nodes/constantNode';
-import { NoiseNode } from './audio_nodes/NoiseNode';
+import { NoiseNode } from './nodes/noiseInit';
 
 import { useStore, StoreState } from './store';
 import { shallow } from 'zustand/shallow';
@@ -45,7 +45,7 @@ const nodeTypes = {
   delay: DelayInit,
   output: OutputInit,
   constant: ConstantNode, 
-  // noise: NoiseNode
+  noise: NoiseNode
 }
 
 const App = ()=> {

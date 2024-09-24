@@ -1,6 +1,8 @@
 // alternative approach (otherwise we have to place the audio-processors folder in the public folder)
 // import noiseProcessor from './audio-processors/noise-processor.js?raw';
 
+import { ToneAudioNode } from 'tone';
+
 export class NoiseNode {
   context: AudioContext;
   initialized: boolean;
@@ -23,7 +25,7 @@ export class NoiseNode {
       
       // Expose the output of the processor
       this.output = this.node;
-      
+      console.log('NoiseNode initialized');
       this.initialized = true; // Mark as initialized
     } catch (error) {
       console.error('Error during initialization:', error);
@@ -33,15 +35,25 @@ export class NoiseNode {
   
   async connect(destination: AudioNode | AudioParam) {
     if (!this.initialized) {
+      console.log('NoiseNode not initialized');
       await this.initPromise; // Wait for initialization
     }
-    
+    console.log('destination', destination);
     if (destination instanceof AudioNode) {
       this.output.connect(destination);
     } else if (destination instanceof AudioParam) {
       this.output.connect(destination);
+    } else if (destination instanceof ToneAudioNode) {
+      console.log('destination is ToneAudioNode');
+      // this.output.connect(destination.input);
+      
+      //** there seems to be an issue connecting between my custom objects and Tone that I don't understand yet */
+      
+      (window as any).context.filter = (window as any).context.createBiquadFilter();
+      this.output.connect((window as any).context.filter);
+      
     } else {
-      console.error('Destination must be an AudioNode or AudioParam.');
+      console.error('Destination must be an AudioNode, AudioParam, or ToneAudioNode.');
     }
   }
 
@@ -59,8 +71,10 @@ export class NoiseNode {
         this.node.disconnect(destination, outputIndex);
       } else if (destination instanceof AudioNode) {
         this.node.disconnect(destination, outputIndex, inputIndex);
+      } else if (destination instanceof ToneAudioNode) {
+        this.node.disconnect(destination.input, outputIndex, inputIndex);
       } else {
-        console.error('Destination must be an AudioNode or AudioParam.');
+        console.error('Destination must be an AudioNode, AudioParam, or ToneAudioNode.');
       }
     }
   }

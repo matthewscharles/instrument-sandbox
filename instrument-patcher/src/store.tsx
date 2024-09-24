@@ -1,12 +1,15 @@
+//* react-flow */
 import { applyNodeChanges, applyEdgeChanges, Node, Edge, NodeChange, EdgeChange } from 'reactflow';
 import { createWithEqualityFn } from 'zustand/traditional';
 import {initialNodes, initialEdges} from './initial';
+
+//* tone  */
 import * as Tone from 'tone';
 
+//* custom nodes */
+import { NoiseNode } from './audio_nodes/NoiseNode.tsx';
 
-import { NoiseNode } from './audio_nodes/NoiseNode';
-
-// const ctx = new AudioContext();
+// (window as any).ctx = new AudioContext();
 // noiseNode.connect(ctx.destination);
 
 export interface StoreState {
@@ -29,7 +32,7 @@ interface CustomNodeData {
     data: CustomNodeData;
 }
 
-///* put the patch and connections in the global scope for debugging purposes */
+///* putting the patch and connections in the global scope for debugging purposes */
 (window as any).context = new AudioContext();
 (window as any).patch = (window as any).patch || {};
 (window as any).connections = (window as any).connections || {};
@@ -56,11 +59,14 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
               if(value.type === "oscillator"){
                 obj = new Tone.Oscillator(value.data.frequency, "sawtooth");
                 obj.start();
+                
                 // obj.volume.value = -20;
               }
               
               if(value.type === "noise"){
-                obj = new NoiseNode(Tone.context);
+                (window as any).Tone.setContext((window as any).context);
+                obj = new NoiseNode((window as any).context);
+                // obj.connect((window as any).context.destination);
               }
               
               if(value.type === "filter"){
@@ -114,9 +120,18 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         set({ edges: [edge, ...get().edges] });
         
         get().edges.forEach((value)=>{
-            console.log('~~~edgesChange', value, value.sourceHandle, value.targetHandle);
+            // console.log('~~~edgesChange', value, value.sourceHandle, value.targetHandle);
             console.log('~~~patch', (window as any).patch[value.source], (window as any).patch[value.target]);
-            (window as any).patch[value.source][value.sourceHandle].connect((window as any).patch[value.target][value.targetHandle]);
+            console.log('~~~patch[value.source]', (window as any).patch[value.source]);
+            console.log('value.source', value.source, 'value.sourceHandle',value.sourceHandle);
+            console.log('patch[value.source][value.sourceHandle]',(window as any).patch[value.source][value.sourceHandle]);
+            console.log('instance of AudioNode', (window as any).patch[value.target][value.targetHandle] instanceof AudioNode);
+            if((window as any).patch[value.source] instanceof NoiseNode){
+              console.log('noiseNode');
+              (window as any).patch[value.source].connect((window as any).patch[value.target][value.targetHandle]);
+            } else {
+              (window as any).patch[value.source][value.sourceHandle].connect((window as any).patch[value.target][value.targetHandle]);
+            }
           });
         Tone.start();
     },
@@ -124,9 +139,9 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
     deleteEdge(data) {
         if(Array.isArray(data) && data.length > 0){
             let id = data[0].id;
-            console.log('deleteEdge', id, data);
+            // console.log('deleteEdge', id, data);
             let patcher = (window as any).patch;
-            console.log('delete', patcher[(window as any).connections[id].source], patcher[(window as any).connections[id].target]);    
+            // console.log('delete', patcher[(window as any).connections[id].source], patcher[(window as any).connections[id].target]);    
             patcher[(window as any).connections[id].source].disconnect(patcher[(window as any).connections[id].target]);
         } else {
             console.error('data is not an array or is empty');
