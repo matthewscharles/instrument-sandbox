@@ -1,4 +1,8 @@
 class NoiseProcessor extends AudioWorkletProcessor {
+  constructor() {
+    super();
+  }
+  
   process(inputs, outputs, parameters) {
     const output = outputs[0];
     const channelCount = output.length;

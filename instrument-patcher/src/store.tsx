@@ -6,8 +6,8 @@ import * as Tone from 'tone';
 
 import { NoiseNode } from './NoiseNode';
 
-// const ctx = new AudioContext();
-// const noiseNode = new NoiseNode(ctx);
+const ctx = new AudioContext();
+const noiseNode = new NoiseNode(ctx);
 // noiseNode.connect(ctx.destination);
 
 export interface StoreState {

@@ -1,9 +1,12 @@
+// alternative approach (otherwise we have to place the audio-processors folder in the public folder)
+// import noiseProcessor from './audio-processors/noise-processor.js?raw';
+
 export class NoiseNode {
   context: AudioContext;
   initialized: boolean;
   initPromise: Promise<void>;
-  node: AudioWorkletNode;
-  output: AudioNode;
+  node!: AudioWorkletNode;
+  output!: AudioNode;
 
   constructor(context: AudioContext) {
     this.context = context;
@@ -13,7 +16,9 @@ export class NoiseNode {
 
   async _init() {
     try {
+      console.log('Adding audio worklet module...');
       await this.context.audioWorklet.addModule('./audio-processors/noise-processor.js');
+      console.log('Audio worklet module added successfully.');
       
       this.node = new AudioWorkletNode(this.context, 'noise-processor');
       
