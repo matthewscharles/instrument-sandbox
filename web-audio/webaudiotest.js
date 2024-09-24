@@ -65,6 +65,41 @@ filter.connect(delayUnit.delay);
 (async () => {
     await context.audioWorklet.addModule('noise.js');
     await context.audioWorklet.addModule('sh.js');
+    await context.audioWorklet.addModule('slew.js');
+    
+    class SlewRateNode {
+        constructor(context) {
+          this.context = context;
+    
+          // Create the AudioWorkletNode with three inputs
+          this.node = new AudioWorkletNode(context, 'slew', {
+            numberOfInputs: 3,
+            numberOfOutputs: 1,
+            channelCount: 1, // Mono processing
+          });
+    
+          // Create GainNodes to act as input proxies
+          this.signal = new GainNode(context);
+          this.rise = new GainNode(context);
+          this.fall = new GainNode(context);
+    
+          // Connect the proxies to the processor inputs
+          this.signal.connect(this.node, 0, 0); // Connect to input 0 (signal)
+          this.rise.connect(this.node, 0, 1);   // Connect to input 1 (rise)
+          this.fall.connect(this.node, 0, 2);   // Connect to input 2 (fall)
+    
+          // Expose the output of the processor
+          this.output = this.node;
+        }
+    
+        connect(destination) {
+          this.output.connect(destination);
+        }
+    
+        disconnect() {
+          this.output.disconnect();
+        }
+      }
     
     class SampleAndHoldNode {
         constructor(context) {
@@ -112,11 +147,23 @@ filter.connect(delayUnit.delay);
     // sh.connect(delayUnit.delay.delayTime);
     oscillator.connect(sh.trigger);
     const noiseAmp = context.createGain();
-    noiseAmp.gain.value = 100;
+    noiseAmp.gain.value = 1000;
 
     sh.connect(noiseAmp);
+    
+  const slew = new SlewRateNode(context);
+  
+  window.riseNode = new ConstantSourceNode(context, { offset: 0.001 }); 
+  riseNode.start();
 
-    noiseAmp.connect(osc.frequency);
+  window.fallNode = new ConstantSourceNode(context, { offset: 0.1 }); 
+  fallNode.start();
+
+  noiseAmp.connect(slew.signal);
+  riseNode.connect(slew.rise);
+  fallNode.connect(slew.fall);
+    // noiseAmp.connect(osc.frequency)
+    slew.connect(osc.frequency);
   })();
 
 // freqLfoGain.connect(osc.frequency);
