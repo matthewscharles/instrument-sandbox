@@ -1,13 +1,23 @@
+
 export class ShiftRegisterNode {
     constructor(context, options = {}) {
       this.context = context;
       this.options = options;
+      this.initialized = false;
+      this.initPromise = this._init(); // Start async init
+  
+      // input proxies created synchronously. 
+      // this way the input can be connected before the processor is ready
+      // (the signal is buffered in the gain nodes)
+      this.input = new GainNode(this.context);
+      this.trigger = new GainNode(this.context);
     }
   
-    async init() {
-      await this.context.audioWorklet.addModule('./audio-processors/shift.js');
+    async _init() {
+      await this.context.audioWorklet.addModule('./audio-processors/shift-register-processor.js');
   
       const { numStages = 8, onRegistersUpdated = null } = this.options;
+      
       this.numStages = numStages;
       this.onRegistersUpdated = onRegistersUpdated;
   
@@ -20,9 +30,6 @@ export class ShiftRegisterNode {
           numStages: this.numStages,
         },
       });
-  
-      this.input = new GainNode(this.context);
-      this.trigger = new GainNode(this.context);
   
       this.input.connect(this.node, 0, 0);
       this.trigger.connect(this.node, 0, 1);
@@ -37,35 +44,45 @@ export class ShiftRegisterNode {
           }
         }
       };
+  
+      this.initialized = true; // Mark as initialized
     }
   
     getRegisters() {
       return this.registers.slice();
     }
   
-    connectOutput(stageIndex, destination) {
-      if (stageIndex >= 0 && stageIndex < this.numStages) {
-        if (destination instanceof AudioParam) {
-          this.node.connect(destination, stageIndex);
-        } else if (destination instanceof AudioNode) {
-          if (destination.numberOfInputs > 0) {
-            this.node.connect(destination, stageIndex, 0);
+    async connectOutput(stageIndex, destination) {
+        if (!this.initialized) {
+          await this.initPromise; // Wait for initialization
+        }
+    
+        if (stageIndex >= 0 && stageIndex < this.numStages) {
+          if (destination instanceof AudioParam) {
+            this.node.connect(destination, stageIndex);
+          } else if (destination instanceof AudioNode) {
+            if (destination.numberOfInputs > 0) {
+              this.node.connect(destination, stageIndex, 0);
+            } else {
+              console.error('Destination AudioNode has no inputs.');
+            }
           } else {
-            console.error('Destination AudioNode has no inputs.');
+            console.error('Destination must be an AudioNode or AudioParam.');
           }
         } else {
-          console.error('Destination must be an AudioNode or AudioParam.');
+          console.error('Invalid stage index:', stageIndex);
         }
-      } else {
-        console.error('Invalid stage index:', stageIndex);
       }
-    }
   
-    disconnectOutput(stageIndex) {
-      if (stageIndex >= 0 && stageIndex < this.numStages) {
-        this.node.disconnect(stageIndex);
-      } else {
-        console.error('Invalid stage index:', stageIndex);
-      }
+   async disconnectOutput(stageIndex) {
+        if (!this.initialized) {
+            await this.initPromise; // Wait for initialization
+        }
+            
+        if (stageIndex >= 0 && stageIndex < this.numStages) {
+            this.node.disconnect(stageIndex);
+        } else {
+            console.error('Invalid stage index:', stageIndex);
+        }
     }
-  }
+}

@@ -69,7 +69,7 @@ filter.connect(delayUnit.delay);
     await context.audioWorklet.addModule('noise.js');
     await context.audioWorklet.addModule('sh.js');
     await context.audioWorklet.addModule('slew.js');
-    await context.audioWorklet.addModule('./audio-processors/shift.js');
+    // await context.audioWorklet.addModule('./audio-processors/shift.js');
     
     class SlewRateNode {
         constructor(context) {
@@ -229,7 +229,7 @@ filter.connect(delayUnit.delay);
     
   const slew = new SlewRateNode(context);
   window.shift = new ShiftRegisterNode(context, { numStages: 8 });
-  await shift.init();
+//   await shift.init();
   noiseAmp.connect(shift.input);
   oscillator.connect(shift.trigger);
     
