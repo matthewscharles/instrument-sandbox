@@ -8,6 +8,7 @@ import * as Tone from 'tone';
 
 //* custom nodes */
 import { NoiseNode } from './audio_nodes/NoiseNode.tsx';
+import { EchoNode } from './audio_nodes/EchoNode.tsx';
 
 // (window as any).ctx = new AudioContext();
 // noiseNode.connect(ctx.destination);
@@ -126,8 +127,9 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
             console.log('value.source', value.source, 'value.sourceHandle',value.sourceHandle);
             console.log('patch[value.source][value.sourceHandle]',(window as any).patch[value.source][value.sourceHandle]);
             console.log('instance of AudioNode', (window as any).patch[value.target][value.targetHandle] instanceof AudioNode);
-            if((window as any).patch[value.source] instanceof NoiseNode){
-              console.log('noiseNode');
+            const source = (window as any).patch[value.source];
+            if(source instanceof NoiseNode || source instanceof EchoNode){
+              console.log('custom node');
               (window as any).patch[value.source].connect((window as any).patch[value.target][value.targetHandle]);
             } else {
               (window as any).patch[value.source][value.sourceHandle].connect((window as any).patch[value.target][value.targetHandle]);
