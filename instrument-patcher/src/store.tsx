@@ -1,7 +1,7 @@
 //* react-flow */
 import { applyNodeChanges, applyEdgeChanges, Node, Edge, NodeChange, EdgeChange } from 'reactflow';
 import { createWithEqualityFn } from 'zustand/traditional';
-import {initialNodes, initialEdges} from './initial';
+import { initialNodes, initialEdges } from './initial';
 
 //* tone  */
 import * as Tone from 'tone';
@@ -10,6 +10,7 @@ import * as Tone from 'tone';
 import { NoiseNode } from './audio_nodes/NoiseNode.tsx';
 import { DustNode } from './audio_nodes/DustNode.tsx';
 import { EchoNode } from './audio_nodes/EchoNode.tsx';
+import { ConstantNode } from './audio_nodes/ConstantNode.tsx';
 
 export interface StoreState {
     nodes: Node[];
@@ -79,7 +80,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
               }
               
               if(value.type ==="constant"){
-                // obj = new Tone.Signal(value.data.value);
+                obj = new ConstantNode(context, value.data.value);
               }
               
               if(value.type === "gain"){
@@ -96,8 +97,8 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         });
         
         get().edges.forEach((value)=>{
-            (window as any).patch[value.source][value.sourceHandle].connect((window as any).patch[value.target][value.targetHandle]);
-            (window as any).connections[value.id] = value;
+            // (window as any).patch[value.source][value.sourceHandle].connect((window as any).patch[value.target][value.targetHandle]);
+            // (window as any).connections[value.id] = value;
           });
     },
     

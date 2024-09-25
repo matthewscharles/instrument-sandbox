@@ -1,52 +1,32 @@
 // import { AudioContext } from 'standardized-audio-context';
 
-interface EchoNodeOptions {
-    delayTime?: number;
-    feedback?: number;
+interface ConstantNodeOptions {
+    value?: number;
 }
 
-export class EchoNode{
+export class ConstantNode{
     context: AudioContext;
     initialized: boolean;
     node!: AudioWorkletNode;
     output!: AudioNode;
-    delay: DelayNode;
     input: GainNode;
-    delayTime: number;
-    feedbackValue: number;
-    _feedback: GainNode;
-    _time: GainNode;
+    _value: ConstantSourceNode;
     
-    constructor(context: AudioContext, options: EchoNodeOptions = {}){
+    constructor(context: AudioContext, options: ConstantNodeOptions = {}){
         
         this.context = context;
         this.initialized = false;
-        
-        if(typeof options.delayTime != 'undefined'){
-            this.delayTime = options.delayTime;
-        } else {
-            this.delayTime = 0;
-        }
-        
-        this.feedbackValue = 0;
-        
-        if(typeof options.feedback != 'undefined'){
-            this.feedbackValue = options.feedback;
-        }
-        
+
         this.input = new GainNode(context);
-        this.delay = new DelayNode(context, { delayTime:this.delayTime });
-        
-        this._time = new GainNode(context);
-        this._time.connect(this.delay.delayTime);
-        this._feedback = new GainNode(context, { gain: this.feedbackValue });
-        
         this.output = new GainNode(context);
-        
-        this.input.connect(this.delay);
-        this.delay.connect(this.feedback);
-        this._feedback.connect(this.delay);
-        this.delay.connect(this.output);
+        this._value =  new ConstantSourceNode(context, { offset: 0 });
+        this._value.start();
+        this.input.connect(this._value.offset);
+        this._value.connect(this.output);    
+    }
+    
+    get value(){
+        return this._value;
     }
     
     connect(destination: AudioNode | AudioParam | AudioDestinationNode){
@@ -61,14 +41,6 @@ export class EchoNode{
             console.error('Destination must be an AudioNode, AudioParam, or AudioDestinationNode.');
         }
         
-    }
-    
-    get time(){
-        return this._time;
-    }
-    
-    get feedback(){
-        return this._feedback.gain;
     }
     
     disconnect(destination: AudioNode | AudioParam, outputIndex:number = 0, inputIndex: number = 0){

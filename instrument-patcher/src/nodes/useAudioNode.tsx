@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Volume, FeedbackDelay, Oscillator, Signal, Filter } from 'tone';
 import { EchoNode } from '../audio_nodes/EchoNode';
+import { ConstantNode } from '../audio_nodes/ConstantNode';
 
 export function useAudioNode(initialValue: number, id: string) {
   const [number, setNumber] = useState(initialValue);
@@ -19,12 +20,14 @@ export function useAudioNode(initialValue: number, id: string) {
     const time = (window as any).context.currentTime;
     
     if (audioNode) {
-      if (audioNode instanceof FeedbackDelay) {
+      if (audioNode instanceof ConstantNode) {
+        audioNode.value.offset.value = cappedNumber;
+      } else if (audioNode instanceof EchoNode) {
+        audioNode.delay.delayTime.linearRampToValueAtTime(cappedNumber / 1000, time + 0.1);
+      } else if (audioNode instanceof FeedbackDelay) {
         audioNode.delayTime.rampTo(cappedNumber / 1000, 0.1);
       } else if (audioNode instanceof Volume) {
         audioNode.volume.rampTo(cappedNumber, 0.1);
-      } else if (audioNode instanceof EchoNode) {
-        audioNode.delay.delayTime.linearRampToValueAtTime(cappedNumber / 1000, time + 0.1);
       } else if (audioNode instanceof Filter) {
         audioNode.frequency.rampTo(cappedNumber, 0.1);
       } else if (audioNode instanceof Oscillator) {
