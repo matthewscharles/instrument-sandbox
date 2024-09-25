@@ -1,3 +1,5 @@
+//! js version
+
 export class EchoNode{
     constructor(context, options = {}){
         

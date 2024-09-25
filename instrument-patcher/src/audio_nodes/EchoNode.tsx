@@ -10,11 +10,12 @@ export class EchoNode{
     initialized: boolean;
     node!: AudioWorkletNode;
     output!: AudioNode;
-    feedback: GainNode;
     delay: DelayNode;
     input: GainNode;
     delayTime: number;
     feedbackValue: number;
+    _feedback: GainNode;
+    _time: GainNode;
     
     constructor(context: AudioContext, options: EchoNodeOptions = {}){
         
@@ -24,10 +25,10 @@ export class EchoNode{
         if(typeof options.delayTime != 'undefined'){
             this.delayTime = options.delayTime;
         } else {
-            this.delayTime = 0.5;
+            this.delayTime = 0;
         }
         
-        this.feedbackValue = 0.5;
+        this.feedbackValue = 0;
         
         if(typeof options.feedback != 'undefined'){
             this.feedbackValue = options.feedback;
@@ -35,12 +36,16 @@ export class EchoNode{
         
         this.input = new GainNode(context);
         this.delay = new DelayNode(context, { delayTime:this.delayTime });
-        this.feedback = new GainNode(context, { gain: this.feedbackValue });
+        
+        this._time = new GainNode(context);
+        this._time.connect(this.delay.delayTime);
+        this._feedback = new GainNode(context, { gain: this.feedbackValue });
+        
         this.output = new GainNode(context);
         
         this.input.connect(this.delay);
         this.delay.connect(this.feedback);
-        this.feedback.connect(this.delay);
+        this._feedback.connect(this.delay);
         this.delay.connect(this.output);
     }
     
@@ -56,6 +61,14 @@ export class EchoNode{
             console.error('Destination must be an AudioNode, AudioParam, or AudioDestinationNode.');
         }
         
+    }
+    
+    get time(){
+        return this._time;
+    }
+    
+    get feedback(){
+        return this._feedback;
     }
     
     disconnect(destination: AudioNode | AudioParam, outputIndex:number = 0, inputIndex: number = 0){

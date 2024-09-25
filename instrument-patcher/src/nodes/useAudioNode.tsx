@@ -1,32 +1,37 @@
 import { useState, useCallback } from 'react';
-import * as Tone from 'tone';
+import { Volume, FeedbackDelay, Oscillator, Signal, Filter } from 'tone';
+import { EchoNode } from '../audio_nodes/EchoNode';
 
 export function useAudioNode(initialValue: number, id: string) {
   const [number, setNumber] = useState(initialValue);
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseFloat(e.target.value);
-    if (isNaN(value)) return; // Prevent setting NaN values
+    
+    if (isNaN(value)) return;
 
     const cappedNumber = Math.min(10000, Math.max(0, value));
     setNumber(cappedNumber);
 
     const patcher = (window as any).patch;
     const audioNode = patcher ? patcher[id] : undefined;
-
+    
+    const time = (window as any).context.currentTime;
+    
     if (audioNode) {
-      if (audioNode instanceof Tone.Volume) {
-        audioNode.volume.rampTo(cappedNumber, 0.1);
-      } else if (audioNode instanceof Tone.FeedbackDelay) {
+      if (audioNode instanceof FeedbackDelay) {
         audioNode.delayTime.rampTo(cappedNumber / 1000, 0.1);
-      } else if (audioNode instanceof Tone.Filter) {
+      } else if (audioNode instanceof Volume) {
+        audioNode.volume.rampTo(cappedNumber, 0.1);
+      } else if (audioNode instanceof EchoNode) {
+        audioNode.delay.delayTime.linearRampToValueAtTime(cappedNumber / 1000, time + 0.1);
+      } else if (audioNode instanceof Filter) {
         audioNode.frequency.rampTo(cappedNumber, 0.1);
-      } else if (audioNode instanceof Tone.Oscillator) {
+      } else if (audioNode instanceof Oscillator) {
         audioNode.frequency.rampTo(cappedNumber, 0.1);
-      } else if (audioNode instanceof Tone.Signal) {
+      } else if (audioNode instanceof Signal) {
         audioNode.rampTo(cappedNumber, 0.1);
       }
-      
     }
   }, [id]);
 

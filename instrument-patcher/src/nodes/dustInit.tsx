@@ -12,8 +12,8 @@ const constantHandles: HandleConfig[] = [
 ];
 
 function DustComponent({ id, data }: NodeProps<DustNodeData>) {
-  const { value, label } = data;
-  const { number, onChange } = useAudioNode(value, id);
+//   const { value, label } = data;
+//   const { number, onChange } = useAudioNode(value, id);
 
   return (
     <Text fontSize="small" color="black">
