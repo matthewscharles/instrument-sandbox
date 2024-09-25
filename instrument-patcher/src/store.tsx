@@ -11,9 +11,6 @@ import { NoiseNode } from './audio_nodes/NoiseNode.tsx';
 import { DustNode } from './audio_nodes/DustNode.tsx';
 import { EchoNode } from './audio_nodes/EchoNode.tsx';
 
-// (window as any).ctx = new AudioContext();
-// noiseNode.connect(ctx.destination);
-
 export interface StoreState {
     nodes: Node[];
     edges: Edge[];
@@ -28,17 +25,17 @@ export interface StoreState {
 interface CustomNodeData {
     frequency: number;
     label: string;
+    data: object;
 }
   
   interface CustomNode extends Node {
     data: CustomNodeData;
 }
 
-///* putting the patch and connections in the global scope for debugging purposes */
+///* patch and connections in the global scope for debugging purposes */
 (window as any).context = new AudioContext();
 (window as any).patch = (window as any).patch || {};
 (window as any).connections = (window as any).connections || {};
-
 
 export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
     nodes: initialNodes,
@@ -63,8 +60,6 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
               if(value.type === "oscillator"){
                 obj = new Tone.Oscillator(value.data.frequency, "sawtooth");
                 obj.start();
-                
-                // obj.volume.value = -20;
               }
               
               if(value.type === "noise"){
@@ -80,7 +75,6 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
               }
               
               if(value.type ==="delay"){
-                // obj = new Tone.FeedbackDelay(value.data.delay, 0.5);
                 obj = new EchoNode((window as any).context, {delayTime: value.data.delay, feedback: 0.5});
               }
               
@@ -94,9 +88,8 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
               
               if(value.type === "output"){
                 // obj = Tone.Destination;
-                obj = (window as any).context.destination;
+                obj = context.destination;
               }
-              
               
               (window as any).patch[value.id] = obj;
             }
@@ -105,10 +98,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         get().edges.forEach((value)=>{
             (window as any).patch[value.source][value.sourceHandle].connect((window as any).patch[value.target][value.targetHandle]);
             (window as any).connections[value.id] = value;
-            // disconnections ? compare with a saved state
           });
-          
-        Tone.start();
     },
     
     onEdgesChange(changes) {
@@ -129,11 +119,11 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         
         get().edges.forEach((value)=>{
             // console.log('~~~edgesChange', value, value.sourceHandle, value.targetHandle);
-            console.log('~~~patch', (window as any).patch[value.source], (window as any).patch[value.target]);
-            console.log('~~~patch[value.source]', (window as any).patch[value.source]);
-            console.log('value.source', value.source, 'value.sourceHandle',value.sourceHandle);
-            console.log('patch[value.source][value.sourceHandle]',(window as any).patch[value.source][value.sourceHandle]);
-            console.log('instance of AudioNode', (window as any).patch[value.target][value.targetHandle] instanceof AudioNode);
+            // console.log('~~~patch', (window as any).patch[value.source], (window as any).patch[value.target]);
+            // console.log('~~~patch[value.source]', (window as any).patch[value.source]);
+            // console.log('value.source', value.source, 'value.sourceHandle',value.sourceHandle);
+            // console.log('patch[value.source][value.sourceHandle]',(window as any).patch[value.source][value.sourceHandle]);
+            // console.log('instance of AudioNode', (window as any).patch[value.target][value.targetHandle] instanceof AudioNode);
             // const source = (window as any).patch[value.source];
             const [source, target] = [(window as any).patch[value.source], (window as any).patch[value.target]];
             if(source instanceof NoiseNode || source instanceof EchoNode){
@@ -167,11 +157,24 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
     
     addNode(type, position) {
         const id = (get().nodes.length + 1).toString();
+        const defaults: {[key: string]: any} = {
+            oscillator: { frequency: 440, label: 'oscillator' },
+            filter: { frequency: 100, label: 'filter' },
+            gain: { gain: 0, label: 'gain' },
+            delay: { delay: 10, label: 'delay' },
+            output: { label: 'output' },
+            constant: { value: 0, label: 'constant' },
+            noise: { label: 'noise' },
+            dust: { label: 'dust' }
+        };
+        
+        
+        
         const newNode: CustomNode = {
             id,
             type,
             position,
-            data: { frequency: 440, label: type }
+            data: defaults[type]
         };
         set({ nodes: [...get().nodes, newNode] });
     },
