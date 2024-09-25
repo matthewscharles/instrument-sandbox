@@ -9,6 +9,7 @@ import { OutputInit } from './components/output';
 import { DelayInit } from './nodes/delayInit';
 import { ConstantNode } from './nodes/constantNode';
 import { NoiseNode } from './nodes/noiseInit';
+import { DustNode } from './nodes/dustInit';
 
 import { useStore, StoreState } from './store';
 import { shallow } from 'zustand/shallow';
@@ -45,7 +46,8 @@ const nodeTypes = {
   delay: DelayInit,
   output: OutputInit,
   constant: ConstantNode, 
-  noise: NoiseNode
+  noise: NoiseNode,
+  dust: DustNode
 }
 
 const App = ()=> {
@@ -63,8 +65,8 @@ const App = ()=> {
   }, []);
   
   const addNode = useCallback((type: string) => {
-    if (!rfInstance || !mousePosition) return;
-    const position = rfInstance.project(mousePosition);
+    if (!rfInstance) return;
+    const position = rfInstance.project(mousePosition || { x: 400, y: 400 }) ;
     store.addNode(type, position);
   }, [rfInstance, mousePosition, store]);
   
@@ -82,6 +84,7 @@ const App = ()=> {
         <Button onClick={() => addNode('gain')}>gain</Button>
         <Button onClick={() => addNode('delay')}>delay</Button>
         <Button onClick={() => addNode('noise')}>noise</Button>
+        <Button onClick={() => addNode('dust')}>dust</Button>
         <Button onClick={() => addNode('output')}>output</Button>
       </VStack>
       <ReactFlow 

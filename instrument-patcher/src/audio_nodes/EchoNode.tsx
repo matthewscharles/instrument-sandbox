@@ -44,11 +44,16 @@ export class EchoNode{
         this.delay.connect(this.output);
     }
     
-    connect(destination: AudioNode | AudioParam){
-        if (destination instanceof AudioNode || destination instanceof AudioParam) {
+    connect(destination: AudioNode | AudioParam | AudioDestinationNode){
+        if (destination instanceof AudioDestinationNode){
+            console.log('destination is AudioDestinationNode', destination);
+            this.output.connect(destination);
+        } else if (destination instanceof AudioNode){
+            this.output.connect(destination);
+        } else if (destination instanceof AudioParam){
             this.output.connect(destination);
         } else {
-            console.error('Destination must be an AudioNode or AudioParam.');
+            console.error('Destination must be an AudioNode, AudioParam, or AudioDestinationNode.');
         }
         
     }
@@ -66,4 +71,5 @@ export class EchoNode{
             }
         }
     }
+    
 }

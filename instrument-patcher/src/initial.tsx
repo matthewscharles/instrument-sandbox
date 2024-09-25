@@ -41,6 +41,6 @@ export const initialNodes : Node[] = [
 
 export const initialEdges : Edge[] = [
   // { id: 'e1-3', source: '1', target: '3', animated: false, sourceHandle: 'output', targetHandle:'input' },
-  { id: 'e3-2', source: '3', target: '2', animated: false, sourceHandle: 'output', targetHandle:'input' },
+  // { id: 'e3-2', source: '3', target: '2', animated: false, sourceHandle: 'output', targetHandle:'input' },
   // { id: 'e4-2', source: '4', target: '3', animated: false, sourceHandle: 'output', targetHandle:'input' },
 ]

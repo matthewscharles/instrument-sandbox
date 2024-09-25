@@ -88,14 +88,11 @@ filter.connect(delayUnit.delay);
 
     delayNode.connect(context.destination);
       
-    // Modulate the delay time (e.g., with an LFO)
-    window.lfoD = new OscillatorNode(context, { type: 'sine', frequency: 0.1 }); // Slow modulation
+    window.lfoD = new OscillatorNode(context, { type: 'sine', frequency: 0.1 }); 
     window.lfoDGain = new GainNode(context, { gain: 1 });
     lfoD.connect(lfoDGain).connect(delayNode.parameters.get('delayTime'));
     lfoD.start();
 
-    
-    
     window.sh = new SampleHoldNode(context);
 
     window.noise = new NoiseNode(context);
