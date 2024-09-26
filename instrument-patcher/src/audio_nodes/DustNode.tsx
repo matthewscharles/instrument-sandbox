@@ -3,8 +3,6 @@
 
 import { connect, disconnect } from './audioNodeMethods';
 
-import { ToneAudioNode } from 'tone';
-
 export class DustNode {
   context: AudioContext;
   initialized: boolean;
@@ -35,38 +33,11 @@ export class DustNode {
     }
   }
   
-  async connect(destination: AudioNode | AudioParam) {
-    if (!this.initialized) {
-      console.log('DustNode not initialized');
-      await this.initPromise; // Wait for initialization
-    }
-    console.log('destination', destination);
-    if (destination instanceof AudioNode) {
-      this.output.connect(destination);
-    } else if (destination instanceof AudioParam) {
-      this.output.connect(destination);
-    }  else {
-      console.error('Destination must be an AudioNode or  AudioParam.');
-    }
+  async connect(destination: AudioNode | AudioParam | AudioDestinationNode) {
+    await connect(this, this.output, destination);
   }
 
-  async disconnect(destination?: AudioNode | AudioParam, outputIndex = 0, inputIndex = 0) {
-    if (!this.initialized) {
-      await this.initPromise; // Wait for initialization
-    }
-    
-    if (!destination) {
-      // Disconnect all outputs from this node
-      this.node.disconnect();
-    } else {
-      if (destination instanceof AudioParam) {
-        // Disconnect from the AudioParam
-        this.node.disconnect(destination, outputIndex);
-      } else if (destination instanceof AudioNode) {
-        this.node.disconnect(destination, outputIndex, inputIndex);
-      } else {
-        console.error('Destination must be an AudioNode, AudioParam, or ToneAudioNode.');
-      }
-    }
+  async disconnect(destination?: AudioNode | AudioParam | AudioDestinationNode, outputIndex: number = 0, inputIndex: number = 0) {
+      await disconnect(this, this.output, destination, outputIndex, inputIndex);
   }
 }

@@ -127,7 +127,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
             // console.log('instance of AudioNode', (window as any).patch[value.target][value.targetHandle] instanceof AudioNode);
             // const source = (window as any).patch[value.source];
             const [source, target] = [(window as any).patch[value.source], (window as any).patch[value.target]];
-            if(source instanceof NoiseNode || source instanceof EchoNode){
+            if(source instanceof NoiseNode || source instanceof EchoNode || source instanceof DustNode){
               console.log('custom node');
               
               if(target instanceof AudioDestinationNode){
