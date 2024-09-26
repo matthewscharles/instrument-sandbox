@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="outlet" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+  <defs>
+    <style>
+      .outlet-1 {
+        stroke-width: 2px;
+      }
+
+      .outlet-1, .outlet-2 {
+        fill: none;
+        stroke: #000;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <path class="outlet-2" d="M19.5,6H5.5"/>
+  <path class="outlet-2" d="M6,5.5v14"/>
+  <path class="outlet-2" d="M19,5.5v14"/>
+  <path class="outlet-2" d="M12,23.14v-10.64"/>
+  <path class="outlet-2" d="M13,23.14v-10.64"/>
+  <path class="outlet-1" d="M12.5,24.5c0-1.66,2.24-3,5-3"/>
+  <path class="outlet-1" d="M12.5,24.5c0-1.66-2.24-3-5-3"/>
+  <path class="outlet-2" d="M19.5,19h-5"/>
+  <path class="outlet-2" d="M5.5,19h5"/>
+</svg>

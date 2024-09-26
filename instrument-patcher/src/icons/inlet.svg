@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="inlet" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25">
+  <defs>
+    <style>
+      .inlet-1 {
+        stroke-width: 2px;
+      }
+
+      .inlet-1, .inlet-2 {
+        fill: none;
+        stroke: #000;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <path class="inlet-2" d="M5.5,19h14"/>
+  <path class="inlet-2" d="M19,19.5V5.5"/>
+  <path class="inlet-2" d="M6,19.5V5.5"/>
+  <path class="inlet-2" d="M5.5,6h5"/>
+  <path class="inlet-2" d="M19.5,6h-5"/>
+  <path class="inlet-2" d="M12,11.14V.5"/>
+  <path class="inlet-2" d="M13,11.14V.5"/>
+  <path class="inlet-1" d="M12.5,12.5c0-1.66,2.24-3,5-3"/>
+  <path class="inlet-1" d="M12.5,12.5c0-1.66-2.24-3-5-3"/>
+</svg>
