@@ -1,6 +1,8 @@
 // alternative approach (otherwise we have to place the audio-processors folder in the public folder)
 // import DustProcessor from './audio-processors/dust-processor.js?raw';
 
+import { connect, disconnect } from './audioNodeMethods';
+
 import { ToneAudioNode } from 'tone';
 
 export class DustNode {
@@ -43,17 +45,8 @@ export class DustNode {
       this.output.connect(destination);
     } else if (destination instanceof AudioParam) {
       this.output.connect(destination);
-    } else if (destination instanceof ToneAudioNode) {
-      console.log('destination is ToneAudioNode');
-      // this.output.connect(destination.input);
-      
-      //** there seems to be an issue connecting between my custom objects and Tone that I don't understand yet */
-      
-      (window as any).context.filter = (window as any).context.createBiquadFilter();
-      this.output.connect((window as any).context.filter);
-      
-    } else {
-      console.error('Destination must be an AudioNode, AudioParam, or ToneAudioNode.');
+    }  else {
+      console.error('Destination must be an AudioNode or  AudioParam.');
     }
   }
 
@@ -71,8 +64,6 @@ export class DustNode {
         this.node.disconnect(destination, outputIndex);
       } else if (destination instanceof AudioNode) {
         this.node.disconnect(destination, outputIndex, inputIndex);
-      } else if (destination instanceof ToneAudioNode) {
-        this.node.disconnect(destination.input, outputIndex, inputIndex);
       } else {
         console.error('Destination must be an AudioNode, AudioParam, or ToneAudioNode.');
       }

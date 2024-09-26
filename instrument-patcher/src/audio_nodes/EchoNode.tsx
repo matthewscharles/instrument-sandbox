@@ -48,6 +48,14 @@ export class EchoNode{
         this._feedback.connect(this.delay);
         this.delay.connect(this.output);
     }
+
+    get time(){
+        return this._time;
+    }
+    
+    get feedback(){
+        return this._feedback.gain;
+    }
     
     connect(destination: AudioNode | AudioParam | AudioDestinationNode){
         if (destination instanceof AudioDestinationNode){
@@ -63,13 +71,6 @@ export class EchoNode{
         
     }
     
-    get time(){
-        return this._time;
-    }
-    
-    get feedback(){
-        return this._feedback.gain;
-    }
     
     disconnect(destination: AudioNode | AudioParam, outputIndex:number = 0, inputIndex: number = 0){
         if (!destination) {

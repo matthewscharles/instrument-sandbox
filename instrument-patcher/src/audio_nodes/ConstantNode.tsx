@@ -1,5 +1,7 @@
 // import { AudioContext } from 'standardized-audio-context';
 
+import { connect, disconnect } from './audioNodeMethods';
+
 interface ConstantNodeOptions {
     value?: number;
 }
@@ -15,7 +17,7 @@ export class ConstantNode{
     constructor(context: AudioContext, options: ConstantNodeOptions = {}){
         
         this.context = context;
-        this.initialized = false;
+        this.initialized = true;    // synchronous initialization
 
         this.input = new GainNode(context);
         this.output = new GainNode(context);
@@ -29,32 +31,12 @@ export class ConstantNode{
         return this._value;
     }
     
-    connect(destination: AudioNode | AudioParam | AudioDestinationNode){
-        if (destination instanceof AudioDestinationNode){
-            console.log('destination is AudioDestinationNode', destination);
-            this.output.connect(destination);
-        } else if (destination instanceof AudioNode){
-            this.output.connect(destination);
-        } else if (destination instanceof AudioParam){
-            this.output.connect(destination);
-        } else {
-            console.error('Destination must be an AudioNode, AudioParam, or AudioDestinationNode.');
-        }
-        
+    connect(destination: AudioNode | AudioParam | AudioDestinationNode) {
+        connect(this, this.output, destination);
     }
-    
-    disconnect(destination: AudioNode | AudioParam, outputIndex:number = 0, inputIndex: number = 0){
-        if (!destination) {
-            this.output.disconnect();
-        } else {
-            if (destination instanceof AudioParam) {
-                this.output.disconnect(destination, outputIndex);
-            } else if (destination instanceof AudioNode) {
-                this.output.disconnect(destination, outputIndex, inputIndex);
-            } else {
-                console.error('Destination must be an AudioNode or AudioParam.');
-            }
-        }
+
+    disconnect(destination?: AudioNode | AudioParam, outputIndex: number = 0, inputIndex: number = 0) {
+        disconnect(this, this.output, destination, outputIndex, inputIndex);
     }
     
 }
