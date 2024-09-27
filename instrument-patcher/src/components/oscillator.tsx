@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { NodeProps } from 'reactflow';
 import { Handle, Position } from 'reactflow';
 import { Box, Text } from "@chakra-ui/react";
+import { CustomOscillatorNode } from '../audio_nodes/OscillatorNode';
 
 const leftStyle = { left: 10 };
 const rightStyle = { right: 10 };
@@ -21,7 +22,8 @@ export function OscillatorInit({
     setNumber(cappedNumber);
 
     let patcher = (window as any).patch;
-    patcher[id].frequency.rampTo(cappedNumber, 0.1);
+    console.log(patcher[id])
+    patcher[id].frequency.linearRampToValueAtTime(cappedNumber, 0.1);
   }, [id]);
 
   const onChangeWaveform = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {

@@ -1,13 +1,11 @@
+import { CustomAudioNode } from './CustomAudioNode';
+
 interface EchoNodeOptions {
     delayTime?: number;
     feedback?: number;
 }
 
-export class EchoNode {
-    context: AudioContext;
-    initialized: boolean;
-    node!: AudioWorkletNode;
-    output!: AudioNode;
+export class EchoNode extends CustomAudioNode {
     delay: DelayNode;
     input: GainNode;
     delayTime: number;
@@ -16,9 +14,7 @@ export class EchoNode {
     _time: GainNode;
 
     constructor(context: AudioContext, options: EchoNodeOptions = {}) {
-        this.context = context;
-        this.initialized = false;
-
+        super(context);
         this.delayTime = options.delayTime ?? 0;
         this.feedbackValue = options.feedback ?? 0;
 
@@ -36,8 +32,12 @@ export class EchoNode {
         this._feedback.connect(this.delay);
         this.delay.connect(this.output);
 
-        this.initialized = true; // Mark as initialized
+        this.initialized = true;
         console.log('EchoNode initialized');
+    }
+
+    protected async _init() {
+        // No additional initialization required
     }
 
     get time() {
@@ -48,28 +48,4 @@ export class EchoNode {
         return this._feedback.gain;
     }
 
-    connect(destination: AudioNode | AudioParam | AudioDestinationNode) {
-        if (!this.initialized) {
-            console.log('Node not initialized');
-            return;
-        }
-        console.log('Connecting EchoNode to destination', destination);
-        if (destination instanceof AudioDestinationNode) {
-            console.log('Destination is AudioDestinationNode', destination);
-            this.output.connect(destination);
-        } else if (destination instanceof AudioNode) {
-            this.output.connect(destination);
-        } else if (destination instanceof AudioParam) {
-            this.output.connect(destination);
-        }
-    }
-
-    disconnect(destination?: AudioNode | AudioParam, outputIndex: number = 0, inputIndex: number = 0) {
-        if (!this.initialized) {
-            console.log('Node not initialized');
-            return;
-        }
-        console.log('Disconnecting EchoNode from destination', destination);
-        this.output.disconnect(destination, outputIndex, inputIndex);
-    }
 }

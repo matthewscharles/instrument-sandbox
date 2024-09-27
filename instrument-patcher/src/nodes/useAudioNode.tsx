@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { Volume, FeedbackDelay, Oscillator, Signal, Filter } from 'tone';
 import { EchoNode } from '../audio_nodes/EchoNode';
 import { ConstantNode } from '../audio_nodes/ConstantNode';
+import { CustomOscillatorNode } from '../audio_nodes/OscillatorNode';
 
 export function useAudioNode(initialValue: number, id: string) {
   const [number, setNumber] = useState(initialValue);
@@ -32,6 +33,8 @@ export function useAudioNode(initialValue: number, id: string) {
         audioNode.frequency.rampTo(cappedNumber, 0.1);
       } else if (audioNode instanceof Oscillator) {
         audioNode.frequency.rampTo(cappedNumber, 0.1);
+      } else if (audioNode instanceof CustomOscillatorNode) {
+        audioNode.frequency.linearRampToValueAtTime(cappedNumber, time + 0.1);
       } else if (audioNode instanceof Signal) {
         audioNode.rampTo(cappedNumber, 0.1);
       }

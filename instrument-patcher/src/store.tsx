@@ -11,6 +11,7 @@ import { NoiseNode } from './audio_nodes/NoiseNode.tsx';
 import { DustNode } from './audio_nodes/DustNode.tsx';
 import { EchoNode } from './audio_nodes/EchoNode.tsx';
 import { ConstantNode } from './audio_nodes/ConstantNode.tsx';
+import { CustomOscillatorNode } from './audio_nodes/OscillatorNode.tsx';
 import { CustomAudioNode } from './audio_nodes/CustomAudioNode.ts';
 
 export interface StoreState {
@@ -60,8 +61,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
             if(!(value.id in (window as any).patch)){  
                 
               if(value.type === "oscillator"){
-                obj = new Tone.Oscillator(value.data.frequency, "sawtooth");
-                obj.start();
+                obj = new CustomOscillatorNode(context, {frequency: value.data.frequency});
               }
               
               if(value.type === "noise"){
@@ -77,7 +77,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
               }
               
               if(value.type ==="delay"){
-                obj = new EchoNode((window as any).context, {delayTime: value.data.delay, feedback: 0.5});
+                obj = new EchoNode((window as any).context, {delayTime: value.data.delay, feedback: 0});
               }
               
               if(value.type ==="constant"){
@@ -89,7 +89,6 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
               }
               
               if(value.type === "output"){
-                // obj = Tone.Destination;
                 obj = context.destination;
               }
               
