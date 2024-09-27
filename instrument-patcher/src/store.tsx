@@ -11,6 +11,7 @@ import { NoiseNode } from './audio_nodes/NoiseNode.tsx';
 import { DustNode } from './audio_nodes/DustNode.tsx';
 import { EchoNode } from './audio_nodes/EchoNode.tsx';
 import { ConstantNode } from './audio_nodes/ConstantNode.tsx';
+import { CustomAudioNode } from './audio_nodes/CustomAudioNode.ts';
 
 export interface StoreState {
     nodes: Node[];
@@ -127,7 +128,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
             // console.log('instance of AudioNode', (window as any).patch[value.target][value.targetHandle] instanceof AudioNode);
             // const source = (window as any).patch[value.source];
             const [source, target] = [(window as any).patch[value.source], (window as any).patch[value.target]];
-            if(source instanceof NoiseNode || source instanceof EchoNode || source instanceof DustNode){
+            if(source instanceof CustomAudioNode || source instanceof ConstantNode || source instanceof NoiseNode || source instanceof EchoNode || source instanceof DustNode){
               console.log('custom node');
               
               if(target instanceof AudioDestinationNode){

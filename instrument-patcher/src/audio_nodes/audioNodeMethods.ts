@@ -4,13 +4,18 @@ export async function connect(context: any, output: AudioNode, destination: Audi
         await context.initPromise; // Wait for initialization
     }
     
+    console.log('Connecting', output, 'to', destination);
+    
     if (destination instanceof AudioDestinationNode) {
         console.log('destination is AudioDestinationNode', destination);
         output.connect(destination);
+        console.log('connected to AudioDestinationNode', context, destination);
     } else if (destination instanceof AudioNode) {
         output.connect(destination);
+        console.log('connected to AudioNode', context, destination);
     } else if (destination instanceof AudioParam) {
         output.connect(destination);
+        console.log('connected to AudioParam', context, destination);
     } else {
         console.error('Destination must be an AudioNode, AudioParam, or AudioDestinationNode.');
     }

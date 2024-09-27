@@ -79,12 +79,12 @@ const App = ()=> {
     <Box height="600px" width="600px" border="1px solid black" backgroundColor="white" className="patcher">
     <VStack spacing={4} align="stretch" position="absolute" top="10px" right="10px" zIndex="10">
         <Button onClick={() => addNode('oscillator')}>oscillator</Button>
-        <Button onClick={() => addNode('constant')}>constant</Button>
         <Button onClick={() => addNode('filter')}>filter</Button>
         <Button onClick={() => addNode('gain')}>gain</Button>
         <Button onClick={() => addNode('delay')}>delay</Button>
         <Button onClick={() => addNode('noise')}>noise</Button>
         <Button onClick={() => addNode('dust')}>dust</Button>
+        <Button onClick={() => addNode('constant')}>constant</Button>
         <Button onClick={() => addNode('output')}>output</Button>
       </VStack>
       <ReactFlow 
