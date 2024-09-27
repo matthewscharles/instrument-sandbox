@@ -13,6 +13,8 @@ import { EchoNode } from './audio_nodes/EchoNode.tsx';
 import { ConstantNode } from './audio_nodes/ConstantNode.tsx';
 import { CustomOscillatorNode } from './audio_nodes/OscillatorNode.tsx';
 import { CustomAudioNode } from './audio_nodes/CustomAudioNode.ts';
+import { CustomFilterNode } from './audio_nodes/CustomFilterNode.tsx';
+import { CustomGainNode } from './audio_nodes/CustomGainNode.tsx';
 
 export interface StoreState {
     nodes: Node[];
@@ -73,7 +75,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
               }
               
               if(value.type === "filter"){
-                obj = new Tone.Filter(value.data.frequency, "lowpass");
+                obj = new CustomFilterNode(context, {frequency: value.data.frequency});
               }
               
               if(value.type ==="delay"){
@@ -85,7 +87,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
               }
               
               if(value.type === "gain"){
-                obj = new Tone.Volume(value.data.gain);
+                obj = new CustomGainNode(context, {gain: value.data.gain});
               }
               
               if(value.type === "output"){

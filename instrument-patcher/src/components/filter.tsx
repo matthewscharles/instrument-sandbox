@@ -20,7 +20,7 @@ export function FilterInit({
                 );
                 setNumber(cappedNumber);
                 let patcher = (window as any).patch;
-                patcher[id].frequency.rampTo(cappedNumber, 0.1);
+                patcher[id].frequency.linearRampToValueAtTime(cappedNumber, 0.1);
             }, []);
             
     return (

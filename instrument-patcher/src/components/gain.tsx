@@ -3,7 +3,6 @@ import { NodeProps} from 'reactflow'
 import { Handle, Position } from 'reactflow'
 import { Box, Text } from "@chakra-ui/react";
 import { useCallback, useState } from 'react';
-import { gainToDb } from 'tone';
 
 const leftStyle = { left: 10 };
 const rightStyle = { right: 10 };
@@ -21,8 +20,9 @@ export function GainInit({
                 );
                 setNumber(cappedNumber);
                 let patcher = (window as any).patch;
-                console.log(gainToDb(cappedNumber));
-                patcher[id].volume.rampTo(gainToDb(cappedNumber), 0.01);
+                console.log(cappedNumber);
+                // patcher[id].volume.rampTo(gainToDb(cappedNumber), 0.01);
+                patcher[id].gain.linearRampToValueAtTime(cappedNumber, 0.00001);
             }, []);
             
     return (
@@ -48,7 +48,7 @@ export function GainInit({
                 </Text>
             </Box>
             <Handle id="input" type="target" className="handle" position={Position.Top} style={leftStyle} />
-            <Handle id="volume" type="target" className="handle" position={Position.Top} style={rightStyle} />
+            <Handle id="gain" type="target" className="handle" position={Position.Top} style={rightStyle} />
             <Handle id="output" type="source" className="handle" position={Position.Bottom} />
         </Box>
     )
