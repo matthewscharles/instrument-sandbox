@@ -1,5 +1,7 @@
 import { CustomAudioNode } from './CustomAudioNode';
 
+type BiquadFilterType = 'lowpass' | 'highpass' | 'bandpass' | 'lowshelf' | 'highshelf' | 'peaking' | 'notch' | 'allpass';
+
 interface FilterNodeOptions {
     type?: BiquadFilterType;
     frequency?: number;
@@ -9,11 +11,16 @@ interface FilterNodeOptions {
 export class CustomFilterNode extends CustomAudioNode {
     filter: BiquadFilterNode;
     input: GainNode;
+    //** convert to array of inputs? */
+    // inputs: GainNode[];
     output: GainNode;
 
     constructor(context: AudioContext, options: FilterNodeOptions = {}) {
         super(context);
 
+        //** convert to array of inputs? */
+        // this.inputs = [new GainNode(context)];
+        
         this.input = new GainNode(context);
         this.output = new GainNode(context);
 

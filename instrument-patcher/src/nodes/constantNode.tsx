@@ -15,14 +15,6 @@ function ConstantComponent({ id, data }: NodeProps<ConstantNodeData>) {
   const { value, label } = data;
   const { number, onChange } = useAudioNode(value, id);
 
-//   // Create a constant signal using Tone.js
-//   const constantSignal = new Tone.Signal(value);
-
-//   // Update the constant signal value when the number changes
-//   React.useEffect(() => {
-//     constantSignal.value = number;
-//   }, [number, constantSignal]);
-
   return (
     <Text fontSize="small" color="black">
       {label}:

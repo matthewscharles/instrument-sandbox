@@ -3,9 +3,6 @@ import { applyNodeChanges, applyEdgeChanges, Node, Edge, NodeChange, EdgeChange 
 import { createWithEqualityFn } from 'zustand/traditional';
 import { initialNodes, initialEdges } from './initial';
 
-//* tone  */
-import * as Tone from 'tone';
-
 //* custom nodes */
 import { NoiseNode } from './audio_nodes/NoiseNode.tsx';
 import { DustNode } from './audio_nodes/DustNode.tsx';
@@ -112,7 +109,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         get().edges.forEach((value)=>{
             (window as any).patch[value.source][value.sourceHandle].connect((window as any).patch[value.target][value.targetHandle]);
           });
-          Tone.start();
+          
     },
     
     addEdge(data) {
@@ -130,7 +127,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
             // const source = (window as any).patch[value.source];
             const [source, target] = [(window as any).patch[value.source], (window as any).patch[value.target]];
             if(source instanceof CustomAudioNode || source instanceof ConstantNode || source instanceof NoiseNode || source instanceof EchoNode || source instanceof DustNode){
-              console.log('custom node');
+              // console.log('custom node');
               
               if(target instanceof AudioDestinationNode){
                 console.log('destination is AudioDestinationNode', target);
@@ -142,7 +139,6 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
               source[value.sourceHandle].connect(target[value.targetHandle]);
             }
           });
-        Tone.start();
     },
     
     deleteEdge(data) {

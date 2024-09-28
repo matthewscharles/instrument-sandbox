@@ -14,9 +14,6 @@ import { DustNode } from './nodes/dustInit';
 import { useStore, StoreState } from './store';
 import { shallow } from 'zustand/shallow';
 
-import * as Tone from 'tone';
-(window as any).Tone = Tone;
-
 const selector = (store: StoreState) => ({
   nodes: store.nodes,
   edges: store.edges,
