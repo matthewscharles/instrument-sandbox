@@ -4,7 +4,6 @@ import { withAudioNode } from './withAudioNode';
 import { HandleConfig } from './types';
 import { Text } from "@chakra-ui/react";
 import { useAudioNode } from './useAudioNode';
-// import * as Tone from 'tone';
 
 type ConstantNodeData = { value: number, label: string };
 

@@ -5,10 +5,6 @@ export class ShiftRegisterNode {
       this.options = options;
       this.initialized = false;
       this.initPromise = this._init(); // Start async init
-  
-      // input proxies created synchronously. 
-      // this way the input can be connected before the processor is ready
-      // (the signal is buffered in the gain nodes)
       this.input = new GainNode(this.context);
       this.trigger = new GainNode(this.context);
     }

@@ -20,8 +20,7 @@ export function GainInit({
                 );
                 setNumber(cappedNumber);
                 let patcher = (window as any).patch;
-                console.log(cappedNumber);
-                // patcher[id].volume.rampTo(gainToDb(cappedNumber), 0.01);
+                // console.log(cappedNumber);
                 patcher[id].gain.linearRampToValueAtTime(cappedNumber, 0.00001);
             }, []);
             

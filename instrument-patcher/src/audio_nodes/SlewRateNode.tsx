@@ -4,12 +4,9 @@
       this.initialized = false;
       this.initPromise = this._init(); // Start async init
       
-      // Create GainNodes to act as input proxies (initialised synchronously)
       this.input = new GainNode(context);
       this.rise = new GainNode(context);
       this.fall = new GainNode(context);
-
-
     }
 
     async _init() {

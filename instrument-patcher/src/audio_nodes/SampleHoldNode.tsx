@@ -43,11 +43,9 @@ export class SampleHoldNode {
         }
       
         if (!destination) {
-          // Disconnect all outputs from this node
           this.node.disconnect();
         } else {
           if (destination instanceof AudioParam) {
-            // Disconnect from the AudioParam
             this.node.disconnect(destination, outputIndex);
           } else if (destination instanceof AudioNode) {
             this.node.disconnect(destination, outputIndex, inputIndex);

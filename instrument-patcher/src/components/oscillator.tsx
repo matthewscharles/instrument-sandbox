@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { NodeProps } from 'reactflow';
 import { Handle, Position } from 'reactflow';
 import { Box, Text } from "@chakra-ui/react";
-import { CustomOscillatorNode } from '../audio_nodes/OscillatorNode';
+// import { CustomOscillatorNode } from '../audio_nodes/OscillatorNode';
 
 const leftStyle = { left: 10 };
 const rightStyle = { right: 10 };

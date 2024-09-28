@@ -7,15 +7,15 @@ export async function connect(context: any, output: AudioNode, destination: Audi
     console.log('Connecting', output, 'to', destination);
     
     if (destination instanceof AudioDestinationNode) {
-        console.log('destination is AudioDestinationNode', destination);
+        // console.log('destination is AudioDestinationNode', destination);
         output.connect(destination);
-        console.log('connected to AudioDestinationNode', context, destination);
+        // console.log('connected to AudioDestinationNode', context, destination);
     } else if (destination instanceof AudioNode) {
         output.connect(destination);
-        console.log('connected to AudioNode', context, destination);
+        // console.log('connected to AudioNode', context, destination);
     } else if (destination instanceof AudioParam) {
         output.connect(destination);
-        console.log('connected to AudioParam', context, destination);
+        // console.log('connected to AudioParam', context, destination);
     } else {
         console.error('Destination must be an AudioNode, AudioParam, or AudioDestinationNode.');
     }
@@ -31,7 +31,7 @@ export async function disconnect(context: any, output: AudioNode, destination?: 
         output.disconnect();
     } else {
         if (destination instanceof AudioDestinationNode) {
-            console.log('destination is AudioDestinationNode', destination);
+            // console.log('destination is AudioDestinationNode', destination);
             output.disconnect(destination);
         } else if (destination instanceof AudioParam) {
             output.disconnect(destination, outputIndex);

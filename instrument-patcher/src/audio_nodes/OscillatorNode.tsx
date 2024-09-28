@@ -24,7 +24,6 @@ export class CustomOscillatorNode extends CustomAudioNode {
         this.oscillator.start();
 
         this.initialized = true;
-        // console.log('OscillatorNode initialized');
     }
 
     protected async _init() {
