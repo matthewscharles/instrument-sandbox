@@ -47,8 +47,6 @@ const nodeTypes = {
   dust: DustNode
 }
 
-
-
 const App = ()=> {
   const store = useStore(selector, shallow);
   const [rfInstance, setRfInstance] = useState<ReactFlowInstance | null>(null);
@@ -61,7 +59,7 @@ const App = ()=> {
   
   const handlePaneClick = useCallback((event: React.MouseEvent<Element, MouseEvent>) => {
     const { clientX, clientY } = event;
-    setMousePosition({ x: clientX -200, y: clientY -200 });
+    setMousePosition({ x: clientX, y: clientY});
   }, []);
 
   const onInit = useCallback((instance: ReactFlowInstance) => {
@@ -70,7 +68,7 @@ const App = ()=> {
   
   const addNode = useCallback((type: string) => {
     if (!rfInstance) return;
-    const position = rfInstance.project(mousePosition || { x: 400, y: 400 }) ;
+    const position = rfInstance.screenToFlowPosition(mousePosition || { x: 400, y: 400 });
     store.addNode(type, position);
   }, [rfInstance, mousePosition, store]);
   
@@ -82,7 +80,7 @@ const App = ()=> {
 
     <Box height="600px" width="600px" border="1px solid black" backgroundColor="white" className="patcher">
     <VStack spacing={4} align="stretch" position="absolute" top="10px" right="10px" zIndex="10">
-    <Button className="menu__ui" onClick={toggleExpand}>{isExpanded ? '↑' : '↓'}</Button>
+    <Button className="menu__collapse" onClick={toggleExpand}>{isExpanded ? '↑' : '↓'}</Button>
         {isExpanded && (
           <>
             <Button onClick={() => addNode('oscillator')}>oscillator</Button>

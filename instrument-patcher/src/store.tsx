@@ -31,6 +31,14 @@ export interface StoreState {
   deleteNode: (data: Node[]) => void;
 }
 
+interface Connection {
+  id: string;
+  source: string;
+  target: string;
+  sourceHandle?: string;
+  targetHandle?: string;
+}
+
 interface CustomNodeData {
   frequency: number;
   label: string;
@@ -112,16 +120,39 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
     });
   },
 
+  onConnect(params) {
+    const { source, sourceHandle, target, targetHandle } = params;
+    const key = `e_${source}-${sourceHandle}_${target}-${targetHandle}`;
+
+    const newConnection: Connection = {
+      source,
+      target,
+      sourceHandle,
+      targetHandle,
+    };
+
+    set({
+      edges: addEdge(params, get().edges),
+      connections: { ...get().connections, [key]: newConnection },
+    });
+
+    // Connect the nodes in the audio context
+    const patch = (window as any).patch;
+    if (patch[source] && patch[target]) {
+      patch[source][sourceHandle].connect(patch[target][targetHandle]);
+    }
+  },
+  
   onEdgesChange(changes) {
     set({
       edges: applyEdgeChanges(changes, get().edges),
     });
 
-    get().edges.forEach((value) => {
-      (window as any).patch[value.source][value.sourceHandle].connect(
-        (window as any).patch[value.target][value.targetHandle]
-      );
-    });
+    // get().edges.forEach((value) => {
+    //   (window as any).patch[value.source][value.sourceHandle].connect(
+    //     (window as any).patch[value.target][value.targetHandle]
+    //   );
+    // });
   },
 
   addEdge(data) {
@@ -141,13 +172,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         (window as any).patch[value.source],
         (window as any).patch[value.target],
       ];
-      if (
-        source instanceof CustomAudioNode ||
-        source instanceof ConstantNode ||
-        source instanceof NoiseNode ||
-        source instanceof EchoNode ||
-        source instanceof DustNode
-      ) {
+      if (source instanceof CustomAudioNode) {
         // console.log('custom node');
 
         if (target instanceof AudioDestinationNode) {
@@ -159,6 +184,9 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
       } else {
         source[value.sourceHandle].connect(target[value.targetHandle]);
       }
+      const key = `e_${value.source}-${value.sourceHandle}_${value.target}-${value.targetHandle}`;
+      (window as any).connections[id] = { ...value, id: key };
+      console.log("connections", (window as any).connections);
     });
   },
 
@@ -205,8 +233,13 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
             targetId
           );
         }
-
-        delete connections[id];
+        console.log("delete connection", connections[id]);
+        if(id in connections){
+          delete connections[id];
+        } else {
+          console.error("Connection not found for id", id);
+        }
+        // connections = connections.filter(conn => conn.id !== id);
       } else {
         console.error("Connection not found for id", id);
       }

@@ -33,7 +33,7 @@ export class CustomFilterNode extends CustomAudioNode {
         this.filter.connect(this.output);
 
         this.initialized = true;
-        console.log('CustomFilterNode initialized');
+        // console.log('CustomFilterNode initialized');
     }
 
     protected async _init() {
