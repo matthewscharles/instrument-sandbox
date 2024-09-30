@@ -47,10 +47,17 @@ const nodeTypes = {
   dust: DustNode
 }
 
+
+
 const App = ()=> {
   const store = useStore(selector, shallow);
   const [rfInstance, setRfInstance] = useState<ReactFlowInstance | null>(null);
   const [mousePosition, setMousePosition] = useState<{ x: number, y: number } | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  const toggleExpand = () => {
+    setIsExpanded(!isExpanded);
+  }
   
   const handlePaneClick = useCallback((event: React.MouseEvent<Element, MouseEvent>) => {
     const { clientX, clientY } = event;
@@ -75,14 +82,19 @@ const App = ()=> {
 
     <Box height="600px" width="600px" border="1px solid black" backgroundColor="white" className="patcher">
     <VStack spacing={4} align="stretch" position="absolute" top="10px" right="10px" zIndex="10">
-        <Button onClick={() => addNode('oscillator')}>oscillator</Button>
-        <Button onClick={() => addNode('filter')}>filter</Button>
-        <Button onClick={() => addNode('gain')}>gain</Button>
-        <Button onClick={() => addNode('delay')}>delay</Button>
-        <Button onClick={() => addNode('noise')}>noise</Button>
-        <Button onClick={() => addNode('dust')}>dust</Button>
-        <Button onClick={() => addNode('constant')}>constant</Button>
-        <Button onClick={() => addNode('output')}>output</Button>
+    <Button className="menu__ui" onClick={toggleExpand}>{isExpanded ? '↑' : '↓'}</Button>
+        {isExpanded && (
+          <>
+            <Button onClick={() => addNode('oscillator')}>oscillator</Button>
+            <Button onClick={() => addNode('filter')}>filter</Button>
+            <Button onClick={() => addNode('gain')}>gain</Button>
+            <Button onClick={() => addNode('delay')}>delay</Button>
+            <Button onClick={() => addNode('noise')}>noise</Button>
+            <Button onClick={() => addNode('dust')}>dust</Button>
+            <Button onClick={() => addNode('constant')}>constant</Button>
+            <Button onClick={() => addNode('output')}>output</Button>
+          </>
+        )}
       </VStack>
       <ReactFlow 
         nodes={store.nodes} 

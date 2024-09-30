@@ -94,3 +94,8 @@ button {
   padding: 0;
   padding-left: 10px;
 }
+
+/// button for collapsable menu
+.menu__collapse{
+  transition: all 0.25s;
+}
