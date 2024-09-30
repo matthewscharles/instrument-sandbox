@@ -33,15 +33,4 @@ classDiagram
 
     CustomAudioNode <|-- CustomOscillatorNode
     CustomAudioNode <|-- NoiseNode
-
-    class OscillatorNodeOptions {
-        +OscillatorType type
-        +number frequency
-    }
-
-    %% External utility functions
-    class ConnectDisconnect {
-        +connect(context: any, output: AudioNode, destination: AudioNode | AudioParam | AudioDestinationNode)
-        +disconnect(context: any, output: AudioNode, destination: AudioNode | AudioParam | AudioDestinationNode, outputIndex: number, inputIndex: number)
-    }
 ```
