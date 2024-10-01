@@ -1,9 +1,9 @@
 import { CustomAudioNode } from './CustomAudioNode'; // Adjust the import path as necessary
 
 class SlewRateNode extends CustomAudioNode {
-  private input: GainNode;
-  private rise: GainNode;
-  private fall: GainNode;
+  input: GainNode;
+  rise: GainNode;
+  fall: GainNode;
   output: AudioNode;
 
   constructor(context: AudioContext) {
