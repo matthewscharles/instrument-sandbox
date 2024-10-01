@@ -1,4 +1,4 @@
-import { CustomAudioNode } from './CustomAudioNode'; // Adjust the import path as necessary
+import { CustomAudioNode } from './CustomAudioNode';
 
 class SampleHoldNode extends CustomAudioNode {
   input: GainNode;

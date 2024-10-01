@@ -52,7 +52,7 @@ class ShiftRegisterNode extends CustomAudioNode {
       }
     };
 
-    this.initialized = true; // Mark as initialized
+    this.initialized = true; 
   }
 
   getRegisters(): number[] {

@@ -11,7 +11,7 @@ export class DustNode extends CustomAudioNode {
       this.node = new AudioWorkletNode(this.context, 'dust-processor');
       this.output = this.node;
       // console.log('DustNode initialized');
-      this.initialized = true; // Mark as initialized
+      this.initialized = true;
     } catch (error) {
       console.error('Error during initialization:', error);
       throw error; // Re-throw the error to ensure the promise is rejected

@@ -7,6 +7,7 @@ import { FilterInit } from './components/filter';
 import { GainInit } from './components/gain';
 import { OutputInit } from './components/output';
 import { DelayInit } from './nodes/delayInit';
+import { SampleHoldInit } from './nodes/sampleHoldInit';
 import { ConstantNode } from './nodes/constantNode';
 import { NoiseNode } from './nodes/noiseInit';
 import { DustNode } from './nodes/dustInit';
@@ -44,7 +45,8 @@ const nodeTypes = {
   output: OutputInit,
   constant: ConstantNode, 
   noise: NoiseNode,
-  dust: DustNode
+  dust: DustNode,
+  sampleandhold: SampleHoldInit
 }
 
 const App = ()=> {
@@ -80,7 +82,7 @@ const App = ()=> {
 
     <Box height="600px" width="600px" border="1px solid black" backgroundColor="white" className="patcher">
     <VStack spacing={4} align="stretch" position="absolute" top="10px" right="10px" zIndex="10">
-    <Button className="menu__collapse" onClick={toggleExpand}>{isExpanded ? '↑' : '↓'}</Button>
+    <Button className="menu__collapse" onClick={toggleExpand}>{isExpanded ? '-' : '+'}</Button>
         {isExpanded && (
           <>
             <Button onClick={() => addNode('oscillator')}>oscillator</Button>
@@ -90,6 +92,7 @@ const App = ()=> {
             <Button onClick={() => addNode('noise')}>noise</Button>
             <Button onClick={() => addNode('dust')}>dust</Button>
             <Button onClick={() => addNode('constant')}>constant</Button>
+            <Button onClick={() => addNode('sampleandhold')}>sample and hold</Button>
             <Button onClick={() => addNode('output')}>output</Button>
           </>
         )}

@@ -19,6 +19,7 @@ import { CustomOscillatorNode } from "./audio_nodes/OscillatorNode.tsx";
 import { CustomAudioNode } from "./audio_nodes/CustomAudioNode.ts";
 import { CustomFilterNode } from "./audio_nodes/CustomFilterNode.tsx";
 import { CustomGainNode } from "./audio_nodes/CustomGainNode.tsx";
+import { SampleHoldNode } from "./audio_nodes/SampleHoldNode.tsx";
 
 export interface StoreState {
   nodes: Node[];
@@ -83,6 +84,10 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 
         if (value.type === "dust") {
           obj = new DustNode(context);
+        }
+        
+        if (value.type === "sampleandhold") {
+          obj = new SampleHoldNode(context);
         }
 
         if (value.type === "filter") {
@@ -263,6 +268,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
       constant: { value: 0, label: "constant" },
       noise: { label: "noise" },
       dust: { label: "dust" },
+      sampleandhold: { label: "sampleandhold", value:0.01 },
     };
 
     const newNode: CustomNode = {

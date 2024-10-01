@@ -22,7 +22,6 @@ export function OscillatorInit({
     setNumber(cappedNumber);
 
     let patcher = (window as any).patch;
-    console.log(patcher[id])
     patcher[id].frequency.linearRampToValueAtTime(cappedNumber, 0.1);
   }, [id]);
 
