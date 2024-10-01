@@ -17,7 +17,6 @@ export class CustomGainNode extends CustomAudioNode {
         this.input.connect(this.output);
 
         this.initialized = true;
-        // console.log('CustomGainNode initialized');
     }
 
     protected async _init() {
