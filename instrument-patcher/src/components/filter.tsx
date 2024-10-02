@@ -95,13 +95,13 @@ export function FilterInit({
   );
 
   // Handle styles
-  const inputHandleStyle = { left: 10 };
-  const frequencyHandleStyle = { left: 50 };
-  const qHandleStyle = { left: 90 };
+  const inputHandleStyle = { left: 10, top: -3 };
+  const frequencyHandleStyle = { left: 50,top: -3 };
+  const qHandleStyle = { left: 90, top: -3 };
   const outputHandleStyle = { right: 10 };
 
   return (
-    <Box bg="white" border="1px solid gray">
+    <Box bg="white" border="1px solid gray" className="obj">
       <Box bg="beige">
         <Text fontSize="small" color="black" className="obj__title">
           {label}
@@ -127,7 +127,7 @@ export function FilterInit({
             name="frequency"
             type="text"
             value={freqInputValue}
-            className="nodrag"
+            className="nodrag obj__number"
           />
         </Text>
 
@@ -150,7 +150,7 @@ export function FilterInit({
             name="Q"
             type="text"
             value={qInputValue}
-            className="nodrag"
+            className="nodrag obj__number"
           />
         </Text>
       </Box>
@@ -160,24 +160,28 @@ export function FilterInit({
         type="target"
         position={Position.Top}
         style={inputHandleStyle}
+        className="obj__handle"
       />
       <Handle
         id="frequency"
         type="target"
         position={Position.Top}
         style={frequencyHandleStyle}
+        className="obj__handle"
       />
       <Handle
         id="Q"
         type="target"
         position={Position.Top}
         style={qHandleStyle}
+        className="obj__handle"
       />
       <Handle
         id="output"
         type="source"
         position={Position.Bottom}
         style={outputHandleStyle}
+        className="obj__handle"
       />
     </Box>
   );

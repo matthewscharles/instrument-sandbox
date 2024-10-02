@@ -87,6 +87,34 @@ button {
   
 }
 
+///object
+.obj{
+  background-color: #1a1a1a;
+  border-radius: 5px;
+  padding: 10px;
+  // margin: 10px;
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+/// number input
+.obj__number{
+  width: 50px;
+  height: 20px;
+  // padding: 0;
+  margin: 0;
+  border: 0;
+  background-color: #1a1a1a;
+  // color: #646cff;
+  // text-align: center;
+  font-size: 1em;
+  font-weight: 500;
+  border-radius: 5px;
+  &:focus, &:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+  }
+}
+
+/// title of object
 .obj__title{
   font-size: 1.5em;
   font-weight: 500;
@@ -98,4 +126,11 @@ button {
 /// button for collapsable menu
 .menu__collapse{
   transition: all 0.25s;
+}
+
+/// handle (input/output)
+.obj__handle{
+  background: gray;
+  border-radius:40%;
+  border: 0.5px solid black;
 }
