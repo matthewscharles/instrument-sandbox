@@ -268,7 +268,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
     const id = (get().nodes.length + 1).toString();
     const defaults: { [key: string]: any } = {
       oscillator: { frequency: 440, label: "oscillator" },
-      filter: { frequency: 100, label: "filter" },
+      filter: { frequency: 100, Q: 1, label: "filter" },
       gain: { gain: 0, label: "gain" },
       delay: { delay: 10, label: "delay" },
       output: { label: "output" },

@@ -1,53 +1,184 @@
-import React from 'react';
-import { NodeProps} from 'reactflow'
-import { Handle, Position } from 'reactflow'
-import { Box, Text } from "@chakra-ui/react";
-import { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { NodeProps } from 'reactflow';
+import { Handle, Position } from 'reactflow';
+import { Box, Text } from '@chakra-ui/react';
+import { useDraggable } from './useDraggable';
 
-const leftStyle = { left: 10 };
-const rightStyle = { left: 40 }; 
+type FilterNodeData = {
+  frequency: number;
+  Q: number;
+  label: string;
+};
 
 export function FilterInit({
-            id,
-            data:{ frequency, label },
-        }:NodeProps<{ frequency: number, label:string }>) {
-            
-            const [number, setNumber] = useState(frequency);
+  id,
+  data: { frequency, Q, label },
+}: NodeProps<FilterNodeData>) {
+  // Draggable control for frequency
+  const {
+    value: freqValue,
+    onMouseDown: onMouseDownFreq,
+    setValue: setFreqValue,
+  } = useDraggable({
+    id,
+    initialValue: frequency,
+    min: 20,
+    max: 20000,
+    step: 1,
+    onChange: (newValue) => {
+      const patcher = (window as any).patch;
+      patcher[id].frequency.linearRampToValueAtTime(newValue, 0.00001);
+    },
+  });
 
-            const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-                const cappedNumber = Math.round( 
-                    Math.min(10000, Math.max(0, Number(e.target.value)))
-                );
-                setNumber(cappedNumber);
-                let patcher = (window as any).patch;
-                patcher[id].frequency.linearRampToValueAtTime(cappedNumber, 0.1);
-            }, []);
-            
-    return (
-        <Box bg="white" border="1px solid gray">
-            <Box bg="beige">
-                <Text fontSize="small" color="black" className="obj__title">
-                    filter
-                </Text> 
-            </Box>
-            <Box p={2} bg="white">
-                <Text fontSize="small" color="black">
-                    frequency: 
-                    <input
-                        id={`number-${id}`} 
-                        onChange={onChange} 
-                        name="number"
-                        type="number" 
-                        value={number} 
-                        min="0" 
-                        max="10000" 
-                        className="nodrag"></input>
-                </Text>
-            </Box>
-            <Handle id="input" type="target" className="handle" position={Position.Top} style={leftStyle} />
-            <Handle id="frequency" type="target" className="handle" position={Position.Top} style={rightStyle} />
-            <Handle id="Q" type="target" className="handle" position={Position.Top} />
-            <Handle id="output" type="source" className="handle" position={Position.Bottom} />
-        </Box>
-    )
+  // State for frequency input
+  const [freqInputValue, setFreqInputValue] = useState<string>(String(freqValue));
+
+  useEffect(() => {
+    setFreqInputValue(String(freqValue));
+  }, [freqValue]);
+
+  const onFreqInput = useCallback(
+    (e: React.FormEvent<HTMLInputElement>) => {
+      const inputValue = e.currentTarget.value;
+      setFreqInputValue(inputValue);
+
+      const parsedValue = parseFloat(inputValue);
+      if (!isNaN(parsedValue)) {
+        setFreqValue(parsedValue);
+
+        const patcher = (window as any).patch;
+        patcher[id].frequency.linearRampToValueAtTime(parsedValue, 0.00001);
+      }
+    },
+    [id, setFreqValue]
+  );
+
+  // Draggable control for Q
+  const {
+    value: qValue,
+    onMouseDown: onMouseDownQ,
+    setValue: setQValue,
+  } = useDraggable({
+    id,
+    initialValue: Q,
+    min: 0.1,
+    max: 10,
+    step: 0.01,
+    onChange: (newValue) => {
+      const patcher = (window as any).patch;
+      patcher[id].Q.linearRampToValueAtTime(newValue, 0.00001);
+    },
+  });
+
+  // State for Q input
+  const [qInputValue, setQInputValue] = useState<string>(String(qValue));
+
+  useEffect(() => {
+    setQInputValue(String(qValue));
+  }, [qValue]);
+
+  const onQInput = useCallback(
+    (e: React.FormEvent<HTMLInputElement>) => {
+      const inputValue = e.currentTarget.value;
+      setQInputValue(inputValue);
+
+      const parsedValue = parseFloat(inputValue);
+      if (!isNaN(parsedValue)) {
+        setQValue(parsedValue);
+
+        const patcher = (window as any).patch;
+        patcher[id].Q.linearRampToValueAtTime(parsedValue, 0.00001);
+      }
+    },
+    [id, setQValue]
+  );
+
+  // Handle styles
+  const inputHandleStyle = { left: 10 };
+  const frequencyHandleStyle = { left: 50 };
+  const qHandleStyle = { left: 90 };
+  const outputHandleStyle = { right: 10 };
+
+  return (
+    <Box bg="white" border="1px solid gray">
+      <Box bg="beige">
+        <Text fontSize="small" color="black" className="obj__title">
+          {label}
+        </Text>
+      </Box>
+      <Box p={2} bg="white">
+        {/* Frequency Control */}
+        <Text fontSize="small" color="black">
+          <span
+            className="nodrag"
+            style={{
+              display: 'inline-block',
+              cursor: 'ew-resize',
+              marginLeft: '10px',
+            }}
+            onMouseDown={onMouseDownFreq}
+          >
+            frequency:
+          </span>
+          <input
+            id={`number-freq-${id}`}
+            onInput={onFreqInput}
+            name="frequency"
+            type="text"
+            value={freqInputValue}
+            className="nodrag"
+          />
+        </Text>
+
+        {/* Q Control */}
+        <Text fontSize="small" color="black" mt={2}>
+          <span
+            className="nodrag"
+            style={{
+              display: 'inline-block',
+              cursor: 'ew-resize',
+              marginLeft: '10px',
+            }}
+            onMouseDown={onMouseDownQ}
+          >
+            Q:
+          </span>
+          <input
+            id={`number-q-${id}`}
+            onInput={onQInput}
+            name="Q"
+            type="text"
+            value={qInputValue}
+            className="nodrag"
+          />
+        </Text>
+      </Box>
+      {/* Handles */}
+      <Handle
+        id="input"
+        type="target"
+        position={Position.Top}
+        style={inputHandleStyle}
+      />
+      <Handle
+        id="frequency"
+        type="target"
+        position={Position.Top}
+        style={frequencyHandleStyle}
+      />
+      <Handle
+        id="Q"
+        type="target"
+        position={Position.Top}
+        style={qHandleStyle}
+      />
+      <Handle
+        id="output"
+        type="source"
+        position={Position.Bottom}
+        style={outputHandleStyle}
+      />
+    </Box>
+  );
 }
