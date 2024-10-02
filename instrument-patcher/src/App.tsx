@@ -12,6 +12,8 @@ import { ConstantNode } from './nodes/constantNode';
 import { NoiseNode } from './nodes/noiseInit';
 import { DustNode } from './nodes/dustInit';
 import { SlewRateInit } from './nodes/slewRateInit';
+import { MidiCCNode } from './nodes/midiCC';
+
 import { useStore, StoreState } from './store';
 import { shallow } from 'zustand/shallow';
 
@@ -47,7 +49,8 @@ const nodeTypes = {
   noise: NoiseNode,
   dust: DustNode,
   sampleandhold: SampleHoldInit,
-  slewrate: SlewRateInit
+  slewrate: SlewRateInit,
+  midiCC: MidiCCNode
 }
 
 const App = ()=> {
@@ -96,6 +99,7 @@ const App = ()=> {
             <Button onClick={() => addNode('sampleandhold')}>sample and hold</Button>
             <Button onClick={() => addNode('slewrate')}>slew rate</Button>
             <Button onClick={() => addNode('output')}>output</Button>
+            <Button onClick={() => addNode('midiCC')}>midi CC</Button>
           </>
         )}
       </VStack>

@@ -75,6 +75,13 @@ export function GainInit({
         position={Position.Top}
         style={leftStyle}
       />
+       <Handle
+        id="gain"
+        type="target"
+        className="handle"
+        position={Position.Top}
+        style={rightStyle}
+      />
       <Handle
         id="output"
         type="source"

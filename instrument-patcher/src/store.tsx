@@ -21,6 +21,7 @@ import { CustomFilterNode } from "./audio_nodes/CustomFilterNode.tsx";
 import { CustomGainNode } from "./audio_nodes/CustomGainNode.tsx";
 import { SampleHoldNode } from "./audio_nodes/SampleHoldNode.tsx";
 import { SlewRateNode } from "./audio_nodes/SlewRateNode.tsx";
+import { MidiControlChangeNode } from "./audio_nodes/MidiControlChangeNode.tsx";
 
 export interface StoreState {
   nodes: Node[];
@@ -118,6 +119,10 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 
         if (value.type === "output") {
           obj = context.destination;
+        }
+        
+        if (value.type === "midiCC") {
+          obj = new MidiControlChangeNode(context);
         }
 
         (window as any).patch[value.id] = obj;
@@ -276,7 +281,8 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
       noise: { label: "noise" },
       dust: { label: "dust" },
       sampleandhold: { label: "sampleandhold", value:0.01 },
-      slewrate: { label: "slewrate", value:0.01 }
+      slewrate: { label: "slewrate", value:0.01 },
+      midiCC: { label: "midiCC" },
     };
 
     const newNode: CustomNode = {
