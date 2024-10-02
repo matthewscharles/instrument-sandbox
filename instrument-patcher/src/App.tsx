@@ -11,7 +11,7 @@ import { SampleHoldInit } from './nodes/sampleHoldInit';
 import { ConstantNode } from './nodes/constantNode';
 import { NoiseNode } from './nodes/noiseInit';
 import { DustNode } from './nodes/dustInit';
-
+import { SlewRateInit } from './nodes/slewRateInit';
 import { useStore, StoreState } from './store';
 import { shallow } from 'zustand/shallow';
 
@@ -46,7 +46,8 @@ const nodeTypes = {
   constant: ConstantNode, 
   noise: NoiseNode,
   dust: DustNode,
-  sampleandhold: SampleHoldInit
+  sampleandhold: SampleHoldInit,
+  slewrate: SlewRateInit
 }
 
 const App = ()=> {
@@ -93,6 +94,7 @@ const App = ()=> {
             <Button onClick={() => addNode('dust')}>dust</Button>
             <Button onClick={() => addNode('constant')}>constant</Button>
             <Button onClick={() => addNode('sampleandhold')}>sample and hold</Button>
+            <Button onClick={() => addNode('slewrate')}>slew rate</Button>
             <Button onClick={() => addNode('output')}>output</Button>
           </>
         )}

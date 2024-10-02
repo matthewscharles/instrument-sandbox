@@ -20,6 +20,7 @@ import { CustomAudioNode } from "./audio_nodes/CustomAudioNode.ts";
 import { CustomFilterNode } from "./audio_nodes/CustomFilterNode.tsx";
 import { CustomGainNode } from "./audio_nodes/CustomGainNode.tsx";
 import { SampleHoldNode } from "./audio_nodes/SampleHoldNode.tsx";
+import { SlewRateNode } from "./audio_nodes/SlewRateNode.tsx";
 
 export interface StoreState {
   nodes: Node[];
@@ -102,6 +103,10 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
             feedback: 0,
           });
         }
+        
+        if(value.type === "slewrate") {
+          obj = new SlewRateNode(context);
+        }
 
         if (value.type === "constant") {
           obj = new ConstantNode(context, value.data.value);
@@ -161,7 +166,9 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
   },
 
   addEdge(data) {
-    const id = (get().edges.length + 1).toString();
+    // const id = (get().edges.length + 1).toString();
+    const id = `e_${data.source}-${data.sourceHandle}_${data.target}-${data.targetHandle}`;
+    console.log(id, data);
     const edge = { id, ...data };
     set({ edges: [edge, ...get().edges] });
 
@@ -269,6 +276,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
       noise: { label: "noise" },
       dust: { label: "dust" },
       sampleandhold: { label: "sampleandhold", value:0.01 },
+      slewrate: { label: "slewrate", value:0.01 }
     };
 
     const newNode: CustomNode = {
