@@ -68,70 +68,32 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
       nodes: applyNodeChanges(changes, get().nodes),
     });
 
+    const context = (window as any).context;
+    const patch = (window as any).patch;
+
+    const nodeConstructors = {
+      oscillator: (value) => new CustomOscillatorNode(context, { frequency: value.data.frequency }),
+      noise: () => new NoiseNode(context),
+      dust: () => new DustNode(context),
+      sampleandhold: () => new SampleHoldNode(context),
+      filter: (value) => new CustomFilterNode(context, { frequency: value.data.frequency }),
+      delay: (value) => new EchoNode(context, { delayTime: value.data.delay, feedback: 0 }),
+      slewrate: () => new SlewRateNode(context),
+      constant: (value) => new ConstantNode(context,  value.data.value),
+      gain: (value) => new CustomGainNode(context, { gain: value.data.gain }),
+      midiCC: () => new MidiControlChangeNode(context),
+      output: () => context.destination,
+      // Add other node types here as needed
+    };
+
     get().nodes.forEach((value) => {
-      let obj;
-
-      const context = (window as any).context;
-
-      if (!(value.id in (window as any).patch)) {
-        if (value.type === "oscillator") {
-          obj = new CustomOscillatorNode(context, {
-            frequency: value.data.frequency,
-          });
+      if (!(value.id in patch)) {
+        const constructor = nodeConstructors[value.type];
+        if (constructor) {
+          const obj = constructor(value);
+          patch[value.id] = obj;
         }
-
-        if (value.type === "noise") {
-          obj = new NoiseNode(context);
-        }
-
-        if (value.type === "dust") {
-          obj = new DustNode(context);
-        }
-        
-        if (value.type === "sampleandhold") {
-          obj = new SampleHoldNode(context);
-        }
-
-        if (value.type === "filter") {
-          obj = new CustomFilterNode(context, {
-            frequency: value.data.frequency,
-          });
-        }
-
-        if (value.type === "delay") {
-          obj = new EchoNode((window as any).context, {
-            delayTime: value.data.delay,
-            feedback: 0,
-          });
-        }
-        
-        if(value.type === "slewrate") {
-          obj = new SlewRateNode(context);
-        }
-
-        if (value.type === "constant") {
-          obj = new ConstantNode(context, value.data.value);
-        }
-
-        if (value.type === "gain") {
-          obj = new CustomGainNode(context, { gain: value.data.gain });
-        }
-
-        if (value.type === "output") {
-          obj = context.destination;
-        }
-        
-        if (value.type === "midiCC") {
-          obj = new MidiControlChangeNode(context);
-        }
-
-        (window as any).patch[value.id] = obj;
       }
-    });
-
-    get().edges.forEach((value) => {
-      // (window as any).patch[value.source][value.sourceHandle].connect((window as any).patch[value.target][value.targetHandle]);
-      // (window as any).connections[value.id] = value;
     });
   },
 
@@ -203,7 +165,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
       }
       const key = `e_${value.source}-${value.sourceHandle}_${value.target}-${value.targetHandle}`;
       (window as any).connections[id] = { ...value, id: key };
-      console.log("connections", (window as any).connections);
+      // console.log("connections", (window as any).connections);
     });
   },
 
@@ -227,13 +189,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 
           console.log("delete", sourceNode, targetNode);
 
-          if (
-            sourceNode instanceof CustomAudioNode ||
-            sourceNode instanceof ConstantNode ||
-            sourceNode instanceof NoiseNode ||
-            sourceNode instanceof EchoNode ||
-            sourceNode instanceof DustNode
-          ) {
+          if (sourceNode instanceof CustomAudioNode) {
             if (targetNode instanceof AudioDestinationNode) {
               console.log("destination is AudioDestinationNode", targetNode);
               sourceNode.disconnect(targetNode);

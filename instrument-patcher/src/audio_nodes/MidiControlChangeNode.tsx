@@ -2,7 +2,7 @@ import { CustomAudioNode } from './CustomAudioNode';
 
 interface MidiControlChangeNodeOptions {
     value?: number;
-    cc?: number; // Add cc property to specify the MIDI CC lane
+    cc?: number;
 }
 
 export class MidiControlChangeNode extends CustomAudioNode {
@@ -10,13 +10,13 @@ export class MidiControlChangeNode extends CustomAudioNode {
     initialized: boolean;
     input: GainNode;
     output: ConstantSourceNode;
-    cc: number; // Store the cc value
+    cc: number;
 
     constructor(context: AudioContext, options: MidiControlChangeNodeOptions = {}) {
         super(context);
         this.context = context;
         this.initialized = true;
-        this.cc = options.cc || 113; // Default to CC 113 if not specified
+        this.cc = options.cc || 113; 
 
         this.input = new GainNode(context);
         this.output = new ConstantSourceNode(context, { offset: options.value || 0 });
@@ -53,6 +53,7 @@ export class MidiControlChangeNode extends CustomAudioNode {
 
     private onMIDISuccess(midiAccess: WebMidi.MIDIAccess) {
         const inputs = midiAccess.inputs.values();
+        console.log('MIDI inputs:', inputs);
         for (let input of inputs) {
             input.onmidimessage = this.getMIDIMessage.bind(this);
         }
@@ -62,9 +63,11 @@ export class MidiControlChangeNode extends CustomAudioNode {
         const [status, data1, data2] = message.data;
         const isControlChange = (status & 0xf0) === 0xb0;
         const isTargetCC = data1 === this.cc; // Use the cc value for filtering
-
+        console.log(`status: ${status}, data1: ${data1}, data2: ${data2}`);
         if (isControlChange && isTargetCC) {
-            const value = data2 / 127; // Normalize to 0-1 range
+            // const value = data2 / 127; // Normalize to 0-1 range
+            const value = data2;
+            console.log(`CC ${data1}: ${value}`);
             this.output.offset.setValueAtTime(value, this.context.currentTime);
         }
     }

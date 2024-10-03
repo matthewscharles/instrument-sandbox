@@ -24,9 +24,10 @@ function MidiCCComponent({ id, data }: NodeProps<MidiCCNodeData>) {
     const patcher = (window as any).patch;
     console.log('MidiCCComponent useEffect patcher:', patcher);
     console.log('MidiCCComponent useEffect patcher[id]:', patcher[id]);
-    console.log('MidiCCComponent useEffect patcher[id].ccValue:', patcher[id].ccValue);
-    patcher[id].ccValue = ccLane; // Update the cc lane in the MidiControlChangeNode
-    // patcher[id].ccValue = ccLane; // Update the cc lane in the MidiControlChangeNode
+    // console.log('MidiCCComponent useEffect patcher[id].ccValue:', patcher[id].ccValue);
+    if(typeof patcher[id] !== 'undefined') {
+      patcher[id].ccValue = ccLane; // Update the cc lane in the MidiControlChangeNode
+    }
   }, [ccLane, id]);
 
   const handleCcLaneChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
