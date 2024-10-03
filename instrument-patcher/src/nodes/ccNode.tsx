@@ -26,7 +26,7 @@ function ConstantComponent({ id, data }: NodeProps<ConstantNodeData>) {
 
   return (
     <Text fontSize="small" color="black">
-      {label}:
+      sensor:
       <input
         id={`number-${id}`}
         onChange={onChange}

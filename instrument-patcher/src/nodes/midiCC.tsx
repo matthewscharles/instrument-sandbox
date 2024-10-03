@@ -17,7 +17,7 @@ function MidiCCComponent({ id, data }: NodeProps<MidiCCNodeData>) {
   const { number, onChange } = useAudioNode(value, id);
 
   // State to track the MIDI CC lane
-  const [ccLane, setCcLane] = useState(113); // Default to CC 113
+  const [ccLane, setCcLane] = useState(0); // Default to CC 0
 
 
   useEffect(() => {
@@ -39,9 +39,8 @@ function MidiCCComponent({ id, data }: NodeProps<MidiCCNodeData>) {
 
   return (
     <Text fontSize="small" color="black">
-      {label}:
       <span>
-        <label htmlFor={`cc-lane-${id}`}>CC Lane:</label>
+        <label htmlFor={`cc-lane-${id}`}>Sensor</label>
         <input
           id={`cc-lane-${id}`}
           onChange={handleCcLaneChange}

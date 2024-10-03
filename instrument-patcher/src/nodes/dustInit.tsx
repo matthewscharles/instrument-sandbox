@@ -8,6 +8,7 @@ import { useAudioNode } from './useAudioNode';
 type DustNodeData = { value: number, label: string };
 
 const constantHandles: HandleConfig[] = [
+  { id: 'input', type: 'target', position: Position.Top }, // Add input handle
   { id: 'output', type: 'source', position: Position.Bottom }
 ];
 

@@ -1,29 +1,30 @@
 class DustProcessor extends AudioWorkletProcessor {
   constructor() {
     super();
-    this.lastValues = [];
+    this.lastValue = 0;
   }
 
   process(inputs, outputs, parameters) {
-    const output = outputs[0];
-    const channelCount = output.length;
+    const controlInput = inputs[0]; // Control input
+    const output = outputs[0][0]; // Single output channel
 
-    for (let channel = 0; channel < channelCount; channel++) {
-      const outputChannel = output[channel];
+    const controlChannel = controlInput.length > 0 ? controlInput[0] : null;
 
-      if (this.lastValues[channel] === undefined) {
-        this.lastValues[channel] = 0;
+    for (let i = 0; i < output.length; i++) {
+      let threshold = 0.9999; // Default threshold set very high
+      if (controlChannel) {
+        const controlValue = controlChannel[i]; // Expected range: 0 - 1
+        // Map 0-1 to 0.999999 - 0.9991
+        threshold = 0.9999 - controlValue * (0.9999 - 0.9991);
       }
 
-      for (let i = 0; i < outputChannel.length; i++) {
-        const randomValue = Math.random();
-        if (randomValue > 0.9999 && this.lastValues[channel] !== 1) {
-          outputChannel[i] = 1;
-        } else {
-          outputChannel[i] = 0;
-        }
-        this.lastValues[channel] = outputChannel[i];
+      const randomValue = Math.random(); // Generate a random value between 0 and 1
+      if (randomValue > threshold && this.lastValue !== 1) {
+        output[i] = 1;
+      } else {
+        output[i] = 0;
       }
+      this.lastValue = output[i];
     }
 
     return true; // Keep the processor alive

@@ -74,7 +74,7 @@ const App = ()=> {
   
   const addNode = useCallback((type: string) => {
     if (!rfInstance) return;
-    const position = rfInstance.screenToFlowPosition(mousePosition || { x: 400, y: 400 });
+    const position = rfInstance.screenToFlowPosition(mousePosition || { x: 1000, y: 1000 });
     store.addNode(type, position);
   }, [rfInstance, mousePosition, store]);
   
@@ -108,7 +108,7 @@ const App = ()=> {
         edges={store.edges} 
         fitView 
         nodesDraggable 
-        // proOptions={proOptions} 
+        proOptions={proOptions} 
         onNodesChange={store.onNodesChange} 
         onEdgesChange={store.onEdgesChange}
         onNodesDelete={store.deleteNode}
