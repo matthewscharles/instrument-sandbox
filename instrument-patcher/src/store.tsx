@@ -28,6 +28,7 @@ export interface StoreState {
   edges: Edge[];
   onNodesChange: (changes: NodeChange[]) => void;
   onEdgesChange: (changes: EdgeChange[]) => void;
+  onConnect: (params: Connection) => void;
   addEdge: (data: Omit<Edge, "id">) => void;
   addNode: (type: string, position: { x: number; y: number }) => void;
   deleteEdge: (data: Edge[]) => void;
@@ -52,6 +53,66 @@ interface CustomNode extends Node {
   data: CustomNodeData;
 }
 
+const nodeConfig = {
+  oscillator: {
+    defaults: { frequency: 440, label: "oscillator" },
+    constructor: (context, value) =>
+      new CustomOscillatorNode(context, { frequency: value.data.frequency }),
+  },
+  filter: {
+    defaults: { frequency: 100, Q: 1, label: "filter" },
+    constructor: (context, value) =>
+      new CustomFilterNode(context, { frequency: value.data.frequency }),
+  },
+  gain: {
+    defaults: { gain: 1, label: "gain" },
+    constructor: (context, value) =>
+      new CustomGainNode(context, { gain: value.data.gain }),
+  },
+  delay: {
+    defaults: { delay: 0.5, label: "delay" },
+    constructor: (context, value) =>
+      new EchoNode(context, {
+        delayTime: value.data.delay,
+        feedback: value.data.feedback || 0,
+      }),
+  },
+  output: {
+    defaults: { label: "output" },
+    constructor: (context) => context.destination,
+  },
+  constant: {
+    defaults: { value: 1, label: "constant" },
+    constructor: (context, value) => new ConstantNode(context, value.data.value),
+  },
+  noise: {
+    defaults: { label: "noise" },
+    constructor: (context) => new NoiseNode(context),
+  },
+  dust: {
+    defaults: { label: "dust" },
+    constructor: (context) => new DustNode(context),
+  },
+  sampleandhold: {
+    defaults: { label: "sampleandhold", value: 0.01 },
+    constructor: (context, value) =>
+      new SampleHoldNode(context, { value: value.data.value }),
+  },
+  slewrate: {
+    defaults: { label: "slewrate", value: 0.01 },
+    constructor: (context, value) =>
+      new SlewRateNode(context, { value: value.data.value }),
+  },
+  midiCC: {
+    defaults: { label: "midiCC", cc: 1, value: 0 },
+    constructor: (context, value) =>
+      new MidiControlChangeNode(context, {
+        cc: value.data.cc,
+        value: value.data.value,
+      }),
+  },
+};
+
 ///* patch and connections in the global scope for debugging purposes */
 (window as any).context = new AudioContext();
 (window as any).patch = (window as any).patch || {};
@@ -71,26 +132,12 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
     const context = (window as any).context;
     const patch = (window as any).patch;
 
-    const nodeConstructors = {
-      oscillator: (value) => new CustomOscillatorNode(context, { frequency: value.data.frequency }),
-      noise: () => new NoiseNode(context),
-      dust: () => new DustNode(context),
-      sampleandhold: () => new SampleHoldNode(context),
-      filter: (value) => new CustomFilterNode(context, { frequency: value.data.frequency }),
-      delay: (value) => new EchoNode(context, { delayTime: value.data.delay, feedback: 0 }),
-      slewrate: () => new SlewRateNode(context),
-      constant: (value) => new ConstantNode(context,  value.data.value),
-      gain: (value) => new CustomGainNode(context, { gain: value.data.gain }),
-      midiCC: () => new MidiControlChangeNode(context),
-      output: () => context.destination,
-      // Add other node types here as needed
-    };
 
     get().nodes.forEach((value) => {
       if (!(value.id in patch)) {
-        const constructor = nodeConstructors[value.type];
+        const constructor = nodeConfig[value.type].constructor;
         if (constructor) {
-          const obj = constructor(value);
+          const obj = constructor(context, value);
           patch[value.id] = obj;
         }
       }
@@ -227,25 +274,12 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 
   addNode(type, position) {
     const id = (get().nodes.length + 1).toString();
-    const defaults: { [key: string]: any } = {
-      oscillator: { frequency: 440, label: "oscillator" },
-      filter: { frequency: 100, Q: 1, label: "filter" },
-      gain: { gain: 0, label: "gain" },
-      delay: { delay: 10, label: "delay" },
-      output: { label: "output" },
-      constant: { value: 0, label: "constant" },
-      noise: { label: "noise" },
-      dust: { label: "dust" },
-      sampleandhold: { label: "sampleandhold", value:0.01 },
-      slewrate: { label: "slewrate", value:0.01 },
-      midiCC: { label: "midiCC" },
-    };
 
     const newNode: CustomNode = {
       id,
       type,
       position,
-      data: defaults[type],
+      data: nodeConfig[type].defaults,
     };
     set({ nodes: [...get().nodes, newNode] });
   },

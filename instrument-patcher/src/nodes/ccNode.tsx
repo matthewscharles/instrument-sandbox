@@ -1,9 +1,9 @@
-// import React from 'react';
 import { NodeProps, Position } from 'reactflow';
 import { withAudioNode } from './withAudioNode';
 import { HandleConfig } from './types';
 import { Text } from "@chakra-ui/react";
 import { useAudioNode } from './useAudioNode';
+import { MidiControlChangeNode } from './MidiControlChangeNode';
 
 type ConstantNodeData = { value: number, label: string };
 
@@ -14,6 +14,15 @@ const constantHandles: HandleConfig[] = [
 function ConstantComponent({ id, data }: NodeProps<ConstantNodeData>) {
   const { value, label } = data;
   const { number, onChange } = useAudioNode(value, id);
+
+  // Initialize the MidiControlChangeNode
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  const midiNode = new MidiControlChangeNode(audioContext, { value });
+
+  // Update the value when MIDI input changes
+  midiNode.output.offset.addEventListener('valuechange', (event: any) => {
+    onChange({ target: { value: event.target.value } });
+  });
 
   return (
     <Text fontSize="small" color="black">
