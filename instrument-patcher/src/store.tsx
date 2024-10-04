@@ -22,6 +22,7 @@ import { CustomGainNode } from "./audio_nodes/CustomGainNode.tsx";
 import { SampleHoldNode } from "./audio_nodes/SampleHoldNode.tsx";
 import { SlewRateNode } from "./audio_nodes/SlewRateNode.tsx";
 import { MidiControlChangeNode } from "./audio_nodes/MidiControlChangeNode.tsx";
+import { PulseNode } from "./audio_nodes/PulseNode.tsx";
 
 export interface StoreState {
   nodes: Node[];
@@ -110,6 +111,11 @@ const nodeConfig = {
         cc: value.data.cc,
         value: value.data.value,
       }),
+  },
+  pulse: {
+    defaults: { frequency: 1, pulseWidth: 0.5, label: "pulse" },
+    constructor: (context, value) =>
+      new PulseNode(context, value.data.frequency, value.data.pulseWidth),
   },
 };
 

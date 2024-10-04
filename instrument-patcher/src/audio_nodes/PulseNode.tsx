@@ -1,15 +1,25 @@
 import { CustomAudioNode } from './CustomAudioNode';
 
 export class PulseNode extends CustomAudioNode {
-  private _frequencyInput: GainNode;
-  private _pulseWidthInput: GainNode;
-  private _phaseInput: GainNode;
+  private _frequencySource: ConstantSourceNode;
+  private _pulseWidthSource: ConstantSourceNode;
+  private _phaseSource: ConstantSourceNode;
 
-  constructor(context: AudioContext) {
+  constructor(context: AudioContext, initialFrequency: number = 0, initialPulseWidth: number = 0.5) {
     super(context);
-    this._frequencyInput = context.createGain(); 
-    this._pulseWidthInput = context.createGain(); 
-    this._phaseInput = context.createGain();
+    this._frequencySource = context.createConstantSource();
+    this._pulseWidthSource = context.createConstantSource();
+    this._phaseSource = context.createConstantSource();
+
+    // Set initial values
+    this._frequencySource.offset.value = initialFrequency;
+    this._pulseWidthSource.offset.value = initialPulseWidth;
+    this._phaseSource.offset.value = 0; // Default phase to 0
+
+    // Start the constant sources
+    this._frequencySource.start();
+    this._pulseWidthSource.start();
+    this._phaseSource.start();
   }
 
   protected async _init() {
@@ -20,9 +30,9 @@ export class PulseNode extends CustomAudioNode {
         numberOfOutputs: 1,
         outputChannelCount: [1],
       });
-      this._frequencyInput.connect(this.node, 0, 0); // Connect frequency input
-      this._pulseWidthInput.connect(this.node, 0, 1); // Connect pulse width input
-      this._phaseInput.connect(this.node, 0, 2); // Connect phase input
+      this._frequencySource.connect(this.node, 0, 0); // Connect frequency source
+      this._pulseWidthSource.connect(this.node, 0, 1); // Connect pulse width source
+      this._phaseSource.connect(this.node, 0, 2); // Connect phase source
       this.output = this.node;
       this.initialized = true;
     } catch (error) {
@@ -32,14 +42,14 @@ export class PulseNode extends CustomAudioNode {
   }
 
   get frequency() {
-    return this._frequencyInput;
+    return this._frequencySource.offset;
   }
 
   get pulseWidth() {
-    return this._pulseWidthInput;
+    return this._pulseWidthSource.offset;
   }
 
   get phase() {
-    return this._phaseInput;
+    return this._phaseSource.offset;
   }
 }
