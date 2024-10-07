@@ -38,10 +38,6 @@ export class CustomOscillatorNode extends CustomAudioNode {
         return this.oscillator.type;
     }
 
-    // set frequency(value: number) {
-    //     this.oscillator.frequency.value = value;
-    // }
-
     get frequency() {
         return this.oscillator.frequency;
     }

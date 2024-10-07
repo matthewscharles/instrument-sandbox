@@ -13,7 +13,7 @@ export class NoiseNode {
       // Expose the output of the processor
       this.output = this.node;
       
-      this.initialized = true; // Mark as initialized
+      this.initialized = true;
       
     }
     

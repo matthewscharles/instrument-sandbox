@@ -26,13 +26,13 @@ class SlewRateNode extends CustomAudioNode {
     });
 
     // Connect the proxies to the processor inputs
-    this.input.connect(this.node, 0, 0); // Connect to input 0 (signal)
+    this.input.connect(this.node, 0, 0);  // Connect to input 0 (signal)
     this.rise.connect(this.node, 0, 1);   // Connect to input 1 (rise)
     this.fall.connect(this.node, 0, 2);   // Connect to input 2 (fall)
 
     this.output = this.node;
 
-    this.initialized = true; // Mark as initialized
+    this.initialized = true;
   }
 }
 

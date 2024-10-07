@@ -11,12 +11,10 @@ export class PulseNode extends CustomAudioNode {
     this._pulseWidthSource = context.createConstantSource();
     this._phaseSource = context.createConstantSource();
 
-    // Set initial values
     this._frequencySource.offset.value = initialFrequency;
     this._pulseWidthSource.offset.value = initialPulseWidth;
     this._phaseSource.offset.value = 0; // Default phase to 0
 
-    // Start the constant sources
     this._frequencySource.start();
     this._pulseWidthSource.start();
     this._phaseSource.start();

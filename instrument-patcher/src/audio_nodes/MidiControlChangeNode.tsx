@@ -67,7 +67,7 @@ export class MidiControlChangeNode extends CustomAudioNode {
         if (isControlChange && isTargetCC) {
             const value = data2 / 127; // Normalize to 0-1 range
             // const value = data2;
-            console.log(`CC ${data1}: ${value}`);
+            // console.log(`CC ${data1}: ${value}`);
             this.output.offset.setValueAtTime(value, this.context.currentTime);
         }
     }

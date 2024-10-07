@@ -45,7 +45,7 @@ export class ShiftRegisterNode {
         }
       };
   
-      this.initialized = true; // Mark as initialized
+      this.initialized = true;
     }
   
     getRegisters() {
