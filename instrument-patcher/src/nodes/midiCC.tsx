@@ -15,17 +15,28 @@ const constantHandles: HandleConfig[] = [
 function MidiCCComponent({ id, data }: NodeProps<MidiCCNodeData>) {
   const { value, label } = data;
   const { number, onChange } = useAudioNode(value, id);
-
   // State to track the MIDI CC lane
   const [ccLane, setCcLane] = useState(0); // Default to CC 0
 
+  // Polling interval to update the number state
+  useEffect(() => {
+    const patcher = window.patch;
+    const interval = setInterval(() => {
+      if (typeof patcher[id] !== 'undefined') {
+        const newValue = patcher[id].value.value;
+        if (newValue !== number) {
+          onChange(newValue);
+          
+        }
+      }
+    }, 100); // Poll every 100ms
+
+    return () => clearInterval(interval); // Cleanup interval on unmount
+  }, [id, number, onChange]);
 
   useEffect(() => {
-    const patcher = (window as any).patch;
-    console.log('MidiCCComponent useEffect patcher:', patcher);
-    console.log('MidiCCComponent useEffect patcher[id]:', patcher[id]);
-    // console.log('MidiCCComponent useEffect patcher[id].ccValue:', patcher[id].ccValue);
-    if(typeof patcher[id] !== 'undefined') {
+    const patcher = window.patch;
+    if (typeof patcher[id] !== 'undefined') {
       patcher[id].ccValue = ccLane; // Update the cc lane in the MidiControlChangeNode
     }
   }, [ccLane, id]);
@@ -54,16 +65,13 @@ function MidiCCComponent({ id, data }: NodeProps<MidiCCNodeData>) {
         />
       </span>
       <span>
-        <label htmlFor={`number-${id}`}>Value:</label>
+        <label htmlFor={`value-${id}`}>Value</label>
         <input
-          id={`number-${id}`}
-          onChange={onChange}
-          name="number"
+          id={`value-${id}`}
+          name="value"
           type="number"
           value={number}
-          min="0"
-          max="10000"
-          step="0.01"
+          readOnly
           className="nodrag"
         />
       </span>

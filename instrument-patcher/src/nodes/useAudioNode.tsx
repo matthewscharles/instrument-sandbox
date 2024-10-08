@@ -9,6 +9,7 @@ export function useAudioNode(initialValue: number, id: string) {
   const [number, setNumber] = useState(initialValue);
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    if (typeof e === 'undefined' || e === null) return;
     const value = parseFloat(e.target.value);
     
     if (isNaN(value)) return;
@@ -16,10 +17,10 @@ export function useAudioNode(initialValue: number, id: string) {
     const cappedNumber = Math.min(10000, Math.max(0, value));
     setNumber(cappedNumber);
 
-    const patcher = (window as any).patch;
+    const patcher = window.patch;
     const audioNode = patcher ? patcher[id] : undefined;
     
-    const time = (window as any).context.currentTime;
+    const time = window.context.currentTime;
     
     if (audioNode) {
       if (audioNode instanceof ConstantNode) {

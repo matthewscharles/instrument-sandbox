@@ -16,7 +16,7 @@ export function GainInit({
     initialValue: gain,
     onChange: (newValue) => {
       // Specific logic moved here
-      const patcher = (window as any).patch;
+      const patcher = window.patch;
       patcher[id].gain.linearRampToValueAtTime(newValue, 0.00001);
     },
   });
@@ -35,7 +35,7 @@ export function GainInit({
       const parsedValue = parseFloat(inputValue);
       if (!isNaN(parsedValue)) {
         setValue(parsedValue);
-        const patcher = (window as any).patch;
+        const patcher = window.patch;
         patcher[id].gain.linearRampToValueAtTime(parsedValue, 0.00001);
       }
     },

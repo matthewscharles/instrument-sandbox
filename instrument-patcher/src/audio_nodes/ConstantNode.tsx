@@ -12,7 +12,7 @@ export class ConstantNode extends CustomAudioNode{
     output: ConstantSourceNode;
     
     constructor(context: AudioContext, options: ConstantNodeOptions = {}){
-        super();
+        super(context);
         this.context = context;
         this.initialized = true;
 

@@ -26,7 +26,7 @@ export function FilterInit({
     max: 20000,
     step: 1,
     onChange: (newValue) => {
-      const patcher = (window as any).patch;
+      const patcher = window.patch;
       patcher[id].frequency.linearRampToValueAtTime(newValue, 0.00001);
     },
   });
@@ -47,7 +47,7 @@ export function FilterInit({
       if (!isNaN(parsedValue)) {
         setFreqValue(parsedValue);
 
-        const patcher = (window as any).patch;
+        const patcher = window.patch;
         patcher[id].frequency.linearRampToValueAtTime(parsedValue, 0.00001);
       }
     },
@@ -66,7 +66,7 @@ export function FilterInit({
     max: 10,
     step: 0.01,
     onChange: (newValue) => {
-      const patcher = (window as any).patch;
+      const patcher = window.patch;
       patcher[id].Q.linearRampToValueAtTime(newValue, 0.00001);
     },
   });
@@ -87,7 +87,7 @@ export function FilterInit({
       if (!isNaN(parsedValue)) {
         setQValue(parsedValue);
 
-        const patcher = (window as any).patch;
+        const patcher = window.patch;
         patcher[id].Q.linearRampToValueAtTime(parsedValue, 0.00001);
       }
     },

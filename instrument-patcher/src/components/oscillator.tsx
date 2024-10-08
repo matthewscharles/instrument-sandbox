@@ -20,7 +20,7 @@ export function OscillatorInit({
 
     setNumber(cappedNumber);
 
-    let patcher = (window as any).patch;
+    let patcher = window.patch;
     patcher[id].frequency.linearRampToValueAtTime(cappedNumber, 0.1);
   }, [id]);
 
@@ -28,7 +28,7 @@ export function OscillatorInit({
     const selectedWaveform = e.target.value;
     setWaveform(selectedWaveform);
 
-    let patcher = (window as any).patch;
+    let patcher = window.patch;
     patcher[id].type = selectedWaveform;
   }, [id]);
 

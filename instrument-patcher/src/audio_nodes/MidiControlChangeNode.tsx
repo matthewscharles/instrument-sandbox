@@ -27,7 +27,7 @@ export class MidiControlChangeNode extends CustomAudioNode {
     }
 
     get value() {
-        return this.output;
+        return this.output.offset;
     }
     
     get ccValue() {
@@ -63,11 +63,13 @@ export class MidiControlChangeNode extends CustomAudioNode {
         const [status, data1, data2] = message.data;
         const isControlChange = (status & 0xf0) === 0xb0;
         const isTargetCC = data1 === this.cc; // Use the cc value for filtering
-        console.log(`status: ${status}, data1: ${data1}, data2: ${data2}`);
+        // console.log(this.cc, data1);
+        // console.log(`status: ${status}, data1: ${data1}, data2: ${data2}`);
         if (isControlChange && isTargetCC) {
             const value = data2 / 127; // Normalize to 0-1 range
+            // console.log(value);
             // const value = data2;
-            // console.log(`CC ${data1}: ${value}`);
+            console.log(`CC ${data1}: ${value}`);
             this.output.offset.setValueAtTime(value, this.context.currentTime);
         }
     }

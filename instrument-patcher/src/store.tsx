@@ -36,6 +36,8 @@ export interface StoreState {
   deleteNode: (data: Node[]) => void;
 }
 
+
+
 interface Connection {
   id: string;
   source: string;
@@ -120,9 +122,9 @@ const nodeConfig = {
 };
 
 ///* patch and connections in the global scope for debugging purposes */
-(window as any).context = new AudioContext();
-(window as any).patch = (window as any).patch || {};
-(window as any).connections = (window as any).connections || {};
+window.context = new AudioContext();
+window.patch = window.patch || {};
+window.connections = window.connections || {};
 
 export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
   nodes: initialNodes,
@@ -135,8 +137,8 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
       nodes: applyNodeChanges(changes, get().nodes),
     });
 
-    const context = (window as any).context;
-    const patch = (window as any).patch;
+    const context = window.context;
+    const patch = window.patch;
 
 
     get().nodes.forEach((value) => {
@@ -167,7 +169,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
     });
 
     // Connect the nodes in the audio context
-    const patch = (window as any).patch;
+    const patch = window.patch;
     if (patch[source] && patch[target]) {
       patch[source][sourceHandle].connect(patch[target][targetHandle]);
     }
@@ -179,8 +181,8 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
     });
 
     // get().edges.forEach((value) => {
-    //   (window as any).patch[value.source][value.sourceHandle].connect(
-    //     (window as any).patch[value.target][value.targetHandle]
+    //   window.patch[value.source][value.sourceHandle].connect(
+    //     window.patch[value.target][value.targetHandle]
     //   );
     // });
   },
@@ -194,15 +196,15 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 
     get().edges.forEach((value) => {
       // console.log('~~~edgesChange', value, value.sourceHandle, value.targetHandle);
-      // console.log('~~~patch', (window as any).patch[value.source], (window as any).patch[value.target]);
-      // console.log('~~~patch[value.source]', (window as any).patch[value.source]);
+      // console.log('~~~patch', window.patch[value.source], window.patch[value.target]);
+      // console.log('~~~patch[value.source]', window.patch[value.source]);
       // console.log('value.source', value.source, 'value.sourceHandle',value.sourceHandle);
-      // console.log('patch[value.source][value.sourceHandle]',(window as any).patch[value.source][value.sourceHandle]);
-      // console.log('instance of AudioNode', (window as any).patch[value.target][value.targetHandle] instanceof AudioNode);
-      // const source = (window as any).patch[value.source];
+      // console.log('patch[value.source][value.sourceHandle]',window.patch[value.source][value.sourceHandle]);
+      // console.log('instance of AudioNode', window.patch[value.target][value.targetHandle] instanceof AudioNode);
+      // const source = window.patch[value.source];
       const [source, target] = [
-        (window as any).patch[value.source],
-        (window as any).patch[value.target],
+        window.patch[value.source],
+        window.patch[value.target],
       ];
       if (source instanceof CustomAudioNode) {
         // console.log('custom node');
@@ -217,8 +219,8 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
         source[value.sourceHandle].connect(target[value.targetHandle]);
       }
       const key = `e_${value.source}-${value.sourceHandle}_${value.target}-${value.targetHandle}`;
-      (window as any).connections[id] = { ...value, id: key };
-      // console.log("connections", (window as any).connections);
+      window.connections[id] = { ...value, id: key };
+      // console.log("connections", window.connections);
     });
   },
 
@@ -227,8 +229,8 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
       const id = data[0].id;
       console.log("deleteEdge", id, data);
 
-      const patcher = (window as any).patch;
-      const connections = (window as any).connections;
+      const patcher = window.patch;
+      const connections = window.connections;
 
       if (connections && connections[id]) {
         const sourceId = connections[id].source;
@@ -295,7 +297,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
     if (Array.isArray(data) && data.length > 0) {
       let id = data[0].id;
       console.log("deleteNode", id, data);
-      let patcher = (window as any).patch;
+      let patcher = window.patch;
       console.log("delete", patcher[id]);
       //** don't dispose just yet, since we may need to undo */
       // patcher[id].dispose();

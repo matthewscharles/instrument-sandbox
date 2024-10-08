@@ -9,7 +9,6 @@
       this.rise = new GainNode(context);
       this.fall = new GainNode(context);
 
-
     }
 
     async _init() {
