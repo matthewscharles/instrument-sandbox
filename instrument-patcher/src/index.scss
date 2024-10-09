@@ -114,6 +114,26 @@ button {
   }
 }
 
+.obj__contents {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Adjust the gap between items as needed */
+  width: 100%;
+}
+
+.obj__contents > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  .obj__number {
+    flex: 1;
+    text-align: right;
+  }
+}
+
+
+
 /// title of object
 .obj__title{
   font-size: 1.5em;
