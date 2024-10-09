@@ -17,27 +17,29 @@ function MidiCCComponent({ id, data }: NodeProps<MidiCCNodeData>) {
   const { number, onChange } = useAudioNode(value, id);
   // State to track the MIDI CC lane
   const [ccLane, setCcLane] = useState(0); // Default to CC 0
-
-  // Polling interval to update the number state
-  useEffect(() => {
-    const patcher = window.patch;
-    const interval = setInterval(() => {
-      if (typeof patcher[id] !== 'undefined') {
-        const newValue = patcher[id].value.value;
+  
+  // Event listener to update the number state
+    const handleMidiCCChange = (event: CustomEvent) => {
+      const patcher = window.patch;
+      const identifier = patcher[id].displayId;
+      if (event.detail.identifier === identifier) {
+        console.log('MIDI CC change', event.detail);
+        const newValue = event.detail.value;
         if (newValue !== number) {
-          onChange(newValue);
-          
+          // onChange(newValue);
+          // document.querySelector(`#value-${id}`)?.setAttribute('value', String(newValue));
         }
       }
-    }, 100); // Poll every 100ms
+    };
 
-    return () => clearInterval(interval); // Cleanup interval on unmount
-  }, [id, number, onChange]);
+    window.addEventListener('midi-cc-change', handleMidiCCChange as EventListener);
+
+  
 
   useEffect(() => {
     const patcher = window.patch;
     if (typeof patcher[id] !== 'undefined') {
-      patcher[id].ccValue = ccLane; // Update the cc lane in the MidiControlChangeNode
+      patcher[id].ccLane = ccLane; // Update the cc lane in the MidiControlChangeNode
     }
   }, [ccLane, id]);
 
