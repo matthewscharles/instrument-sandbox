@@ -11,7 +11,8 @@ const constantHandles: HandleConfig[] = [
 ];
 
 function MidiCCComponent({ id, data }: NodeProps<MidiCCNodeData>) {
-  const { value, label } = data;
+  // const { value, label } = data;
+  const { value } = data;
   const [number, setNumber] = useState(value);
   const [ccLane, setCcLane] = useState(0); // Default to CC 0
 

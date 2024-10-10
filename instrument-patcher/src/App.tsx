@@ -121,7 +121,6 @@ const App = () => {
       const reactFlowBounds = reactFlowWrapper.current?.getBoundingClientRect();
       const type = event.dataTransfer.getData('application/reactflow');
 
-      // Check if the dropped element is valid
       if (typeof type === 'undefined' || !type) {
         return;
       }
@@ -130,6 +129,7 @@ const App = () => {
         x: event.clientX - (reactFlowBounds?.left || 0),
         y: event.clientY - (reactFlowBounds?.top || 0),
       });
+      
       if (position) {
         store.addNode(type, position);
       }
@@ -138,7 +138,7 @@ const App = () => {
   );
 
   const dbl = function () {
-    console.log('double click');
+    // console.log('double click');
   };
 
   return (
@@ -154,6 +154,7 @@ const App = () => {
               onClick={() => addNode(node.type)}
               draggable
               onDragStart={(event) => onDragStart(event, node.type)}
+              className="obj__small"
             >
               {node.label}
             </Button>

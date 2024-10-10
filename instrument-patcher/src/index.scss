@@ -134,7 +134,17 @@ button {
   }
 }
 
-
+.obj__small{
+  font-size: 0.8em;
+  font-weight: 500;
+  margin: 0;
+  padding: 2px;
+  background-color:beige;
+  color: black;
+  border-radius: 2px;
+  border: solid black 1px;
+  
+}
 
 /// title of object
 .obj__title{
