@@ -33,7 +33,6 @@ export class EchoNode extends CustomAudioNode {
         this.delay.connect(this.output);
 
         this.initialized = true;
-        // console.log('EchoNode initialized');
     }
 
     protected async _init() {

@@ -13,7 +13,7 @@
 
     async _init() {
       await this.context.audioWorklet.addModule('./audio-processors/slew-rate-processor.js');
-      // Create the AudioWorkletNode with three inputs
+
       this.node = new AudioWorkletNode(this.context, 'slew-rate-processor', {
         numberOfInputs: 3,
         numberOfOutputs: 1,

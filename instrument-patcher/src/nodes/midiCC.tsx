@@ -1,9 +1,8 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { NodeProps, Position } from 'reactflow';
 import { withAudioNode } from './withAudioNode';
 import { HandleConfig } from './types';
 import { Text } from "@chakra-ui/react";
-// import { MidiControlChangeNode } from './MidiControlChangeNode';
 
 type MidiCCNodeData = { value: number, label: string };
 
@@ -16,7 +15,9 @@ function MidiCCComponent({ id, data }: NodeProps<MidiCCNodeData>) {
   const [number, setNumber] = useState(value);
   const [ccLane, setCcLane] = useState(0); // Default to CC 0
 
-  // Event listener to update the number state
+  const handleMidiCCChangeRef = useRef<(event: CustomEvent) => void>();
+
+  // Event listener to update the value state
   const handleMidiCCChange = useCallback((event: CustomEvent) => {
     const patcher = window.patch;
     console.log('MidiCCNode', id, number, event.detail.ccLane, ccLane, event.detail.value);
@@ -29,15 +30,27 @@ function MidiCCComponent({ id, data }: NodeProps<MidiCCNodeData>) {
         }
       }
     }
-  }, [id, number]);
+  }, [id, number, ccLane]);
 
+  // Store the latest version of the callback in the ref
   useEffect(() => {
-    window.addEventListener('midi-cc-change', handleMidiCCChange as EventListener);
+    handleMidiCCChangeRef.current = handleMidiCCChange;
+  }, [handleMidiCCChange]);
+
+  // Add the event listener once when the component is mounted
+  useEffect(() => {
+    const eventListener = (event: Event) => {
+      if (handleMidiCCChangeRef.current) {
+        handleMidiCCChangeRef.current(event as CustomEvent);
+      }
+    };
+
+    window.addEventListener('midi-cc-change', eventListener);
 
     return () => {
-      window.removeEventListener('midi-cc-change', handleMidiCCChange as EventListener);
+      window.removeEventListener('midi-cc-change', eventListener);
     };
-  }, [handleMidiCCChange]);
+  }, []);
 
   useEffect(() => {
     const patcher = window.patch;
@@ -81,7 +94,7 @@ function MidiCCComponent({ id, data }: NodeProps<MidiCCNodeData>) {
         />
       </span>
       <span>
-        <progress value={number * 127} max="127" style={{ width: '100%' }}></progress>
+        <progress value={number} max="127" style={{ width: '100%' }}></progress>
       </span>
     </Text>
   );
