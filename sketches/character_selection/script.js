@@ -12,13 +12,42 @@
     var bottomVisibleRow = topVisibleRow + visibleRows - 1;
     var boxes = [];
 
-    for (var i = 1; i <= totalBoxes; i++) {
+    for (var i = 0; i < totalBoxes; i++) {
         var box = document.createElement('div');
         box.className = 'box';
-        box.id = 'box' + i;
-        box.textContent = i;
+        box.id = 'box' + (i + 1);
+        box.textContent = i + 1;
+        box.style.backgroundImage = `url('characters/${i + 1}.png')`; // Set background image
+
+        // Add class for left or right column
+        if (i % cols === 0) {
+            box.classList.add('left-column');
+        } else {
+            box.classList.add('right-column');
+        }
+
         innerContainer.appendChild(box);
         boxes.push(box);
+    }
+
+    function updateBoxClasses() {
+        console.log(boxes);
+        boxes.forEach((box, index) => {
+            var row = Math.floor(index / cols);
+            var col = index % cols;
+
+            // Remove existing top or bottom classes
+            box.classList.remove('top-row', 'bottom-row');
+
+            // Add class for top or bottom row based on visibility
+            if (row >= topVisibleRow && row <= bottomVisibleRow) {
+                if (row === topVisibleRow) {
+                    box.classList.add('top-row');
+                } else if (row === bottomVisibleRow) {
+                    box.classList.add('bottom-row');
+                }
+            }
+        });
     }
 
     function selectBox(row, col) {
@@ -106,6 +135,8 @@
         }
 
         selectBox(currentRow, currentCol);
+        exitFullscreen();
+        updateBoxClasses();
     });
 
     function enterFullscreen() {
