@@ -126,7 +126,7 @@ const nodeConfig = {
       new PulseNode(context, value.data.frequency, value.data.pulseWidth),
   },
   event: {
-    defaults: { eventName: 'defaultEvent', interval: 50, label: 'Event Receiver' },
+    defaults: { eventName: 'defaultEvent', interval: 50, label: 'event' },
     constructor: (context: AudioContext, value: CustomNode) =>
       new EventReceiverNode(context, { eventName: value.data.eventName, interval: value.data.interval }),
   },

@@ -56,9 +56,11 @@ function EventReceiverComponent({ id, data }: NodeProps<EventReceiverNodeData>) 
     return (
         <Box>
             <Text>{label}</Text>
-            <Input value={eventName} onChange={(e) => setEventName(e.target.value)} placeholder="Event Name" />
-            <Input type="number" value={number} onChange={onChange} placeholder="Interval" />
-            {triggered && <Box className="triggered-indicator">ON</Box>}
+            <Input className="nodrag" value={eventName} onChange={(e) => setEventName(e.target.value)} placeholder="Event Name" />
+            <Input className="nodrag" type="number" value={number} onChange={onChange} placeholder="Interval" />
+            {/* {triggered && <Box className="triggered-indicator">ON</Box>} */}
+            {/* <Box>{triggered ? 'ON' : 'OFF'}</Box> */}
+            <Box className={triggered ? 'triggered-indicator on' : 'triggered-indicator'}>{triggered ? 'ON' : 'OFF'}</Box>
         </Box>
     );
 }

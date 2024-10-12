@@ -168,11 +168,15 @@ button {
 }
 
 .triggered-indicator{
-  background-color: red;
+  background-color: transparent;
   display:block;
   width:100%;
-  height: 5px;
-  color: transparent;
+  height: 20px;
+  border: solid 1px gray;
+  color: transparent; 
+  &.on{
+    background-color: green;
+  }
 }
 
 main{
