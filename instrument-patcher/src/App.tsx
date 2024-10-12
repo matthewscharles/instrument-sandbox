@@ -30,7 +30,7 @@ import { DustNode } from './nodes/dustInit';
 import { SlewRateInit } from './nodes/slewRateInit';
 import { MidiCCNode } from './nodes/midiCC';
 import { PulseInit } from './components/pulse';
-
+import { EventReceiverInit } from './nodes/event';
 const selector = (store: StoreState) => ({
   nodes: store.nodes,
   edges: store.edges,
@@ -57,6 +57,7 @@ const nodeTypes = {
   slewrate: SlewRateInit,
   midiCC: MidiCCNode,
   pulse: PulseInit,
+  event: EventReceiverInit,
 };
 
 // Define an array of node types for dynamic rendering
@@ -73,6 +74,7 @@ const nodeTypesList = [
   { type: 'output', label: 'Output' },
   { type: 'midiCC', label: 'MIDI CC' },
   { type: 'pulse', label: 'Pulse' },
+  { type: 'event', label: 'Event' },
 ];
 
 const App = () => {

@@ -58,9 +58,9 @@ function EventReceiverComponent({ id, data }: NodeProps<EventReceiverNodeData>) 
             <Text>{label}</Text>
             <Input value={eventName} onChange={(e) => setEventName(e.target.value)} placeholder="Event Name" />
             <Input type="number" value={number} onChange={onChange} placeholder="Interval" />
-            {triggered && <Box className="triggered-indicator">x</Box>}
+            {triggered && <Box className="triggered-indicator">ON</Box>}
         </Box>
     );
 }
 
-export const EventReceiverNode = withAudioNode(EventReceiverComponent, eventReceiverHandles);
+export const EventReceiverInit = withAudioNode(EventReceiverComponent, eventReceiverHandles);

@@ -23,6 +23,7 @@ import { SampleHoldNode } from "./audio_nodes/SampleHoldNode.tsx";
 import { SlewRateNode } from "./audio_nodes/SlewRateNode.tsx";
 import { MidiControlChangeNode } from "./audio_nodes/MidiControlChangeNode.tsx";
 import { PulseNode } from "./audio_nodes/PulseNode.tsx";
+import { EventReceiverNode } from "./audio_nodes/EventReceiverNode.ts";
 
 export interface StoreState {
   nodes: Node[];
@@ -35,8 +36,6 @@ export interface StoreState {
   deleteEdge: (data: Edge[]) => void;
   deleteNode: (data: Node[]) => void;
 }
-
-
 
 interface Connection {
   id: string;
@@ -61,6 +60,8 @@ window.context = new AudioContext();
 window.patch = window.patch || {};
 window.connections = window.connections || {};
 
+
+//* node configuration */
 const nodeConfig = {
   oscillator: {
     defaults: { frequency: 440, label: "oscillator" },
@@ -123,6 +124,11 @@ const nodeConfig = {
     defaults: { frequency: 1, pulseWidth: 0.5, label: "pulse" },
     constructor: (context: AudioContext, value: Number) =>
       new PulseNode(context, value.data.frequency, value.data.pulseWidth),
+  },
+  event: {
+    defaults: { eventName: 'defaultEvent', interval: 50, label: 'Event Receiver' },
+    constructor: (context: AudioContext, value: CustomNode) =>
+      new EventReceiverNode(context, { eventName: value.data.eventName, interval: value.data.interval }),
   },
 };
 

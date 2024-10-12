@@ -32,12 +32,15 @@ export class EventReceiverNode extends CustomAudioNode {
         if (this._previousEventName) {
             window.removeEventListener(this._previousEventName, this.eventListener);
         }
-
+        // console.log('setting up event listener', this._eventName, this.eventListener);
         window.addEventListener(this._eventName, this.eventListener);
+        var event = new CustomEvent('defaultEvent');
+        window.dispatchEvent(event);
         this._previousEventName = this._eventName;
     }
 
     private handleEvent(event: any) {
+        console.log('received event', event);
         let valueToSet = 1;
         if (event.detail && event.detail.value !== undefined) {
             valueToSet = event.detail.value;
