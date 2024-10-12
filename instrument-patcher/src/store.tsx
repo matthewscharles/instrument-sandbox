@@ -56,25 +56,30 @@ interface CustomNode extends Node {
   data: CustomNodeData;
 }
 
+///* patch and connections in the global scope for debugging purposes */
+window.context = new AudioContext();
+window.patch = window.patch || {};
+window.connections = window.connections || {};
+
 const nodeConfig = {
   oscillator: {
     defaults: { frequency: 440, label: "oscillator" },
-    constructor: (context, value) =>
+    constructor: (context: AudioContext, value: Number) =>
       new CustomOscillatorNode(context, { frequency: value.data.frequency }),
   },
   filter: {
     defaults: { frequency: 100, Q: 1, label: "filter" },
-    constructor: (context, value) =>
+    constructor: (context: AudioContext, value: Number) =>
       new CustomFilterNode(context, { frequency: value.data.frequency }),
   },
   gain: {
     defaults: { gain: 1, label: "gain" },
-    constructor: (context, value) =>
+    constructor: (context: AudioContext, value: Number) =>
       new CustomGainNode(context, { gain: value.data.gain }),
   },
   delay: {
     defaults: { delay: 0.5, label: "delay" },
-    constructor: (context, value) =>
+    constructor: (context: AudioContext, value: Number) =>
       new EchoNode(context, {
         delayTime: value.data.delay,
         feedback: value.data.feedback || 0,
@@ -82,33 +87,33 @@ const nodeConfig = {
   },
   output: {
     defaults: { label: "output" },
-    constructor: (context) => context.destination,
+    constructor: (context: AudioContext) => context.destination,
   },
   constant: {
     defaults: { value: 1, label: "constant" },
-    constructor: (context, value) => new ConstantNode(context, value.data.value),
+    constructor: (context: AudioContext, value: Number) => new ConstantNode(context, value.data.value),
   },
   noise: {
     defaults: { label: "noise" },
-    constructor: (context) => new NoiseNode(context),
+    constructor: (context: AudioContext) => new NoiseNode(context),
   },
   dust: {
     defaults: { label: "dust" },
-    constructor: (context) => new DustNode(context),
+    constructor: (context: AudioContext) => new DustNode(context),
   },
   sampleandhold: {
     defaults: { label: "sampleandhold", value: 0.01 },
-    constructor: (context, value) =>
+    constructor: (context: AudioContext, value: Number) =>
       new SampleHoldNode(context, { value: value.data.value }),
   },
   slewrate: {
     defaults: { label: "slewrate", value: 0.01 },
-    constructor: (context, value) =>
+    constructor: (context: AudioContext, value: Number) =>
       new SlewRateNode(context, { value: value.data.value }),
   },
   midiCC: {
     defaults: { label: "midiCC", cc: 1, value: 0 },
-    constructor: (context, value) =>
+    constructor: (context: AudioContext, value: Number) =>
       new MidiControlChangeNode(context, {
         cc: value.data.cc,
         value: value.data.value,
@@ -116,15 +121,10 @@ const nodeConfig = {
   },
   pulse: {
     defaults: { frequency: 1, pulseWidth: 0.5, label: "pulse" },
-    constructor: (context, value) =>
+    constructor: (context: AudioContext, value: Number) =>
       new PulseNode(context, value.data.frequency, value.data.pulseWidth),
   },
 };
-
-///* patch and connections in the global scope for debugging purposes */
-window.context = new AudioContext();
-window.patch = window.patch || {};
-window.connections = window.connections || {};
 
 export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
   nodes: initialNodes,

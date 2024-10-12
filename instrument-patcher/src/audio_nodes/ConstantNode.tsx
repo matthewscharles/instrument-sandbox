@@ -7,7 +7,6 @@ interface ConstantNodeOptions {
 export class ConstantNode extends CustomAudioNode{
     context: AudioContext;
     initialized: boolean;
-    node!: AudioWorkletNode;
     input: GainNode;
     output: ConstantSourceNode;
     
@@ -25,5 +24,4 @@ export class ConstantNode extends CustomAudioNode{
     get value(){
         return this.output;
     }
-    
 }
