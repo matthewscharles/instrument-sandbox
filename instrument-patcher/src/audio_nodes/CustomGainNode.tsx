@@ -10,7 +10,7 @@ export class CustomGainNode extends CustomAudioNode {
 
     constructor(context: AudioContext, options: GainNodeOptions = {}) {
         super(context);
-
+        console.log(options);
         this.input = new GainNode(context, {gain: 0});
         this.output = new GainNode(context);
 

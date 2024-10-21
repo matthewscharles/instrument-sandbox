@@ -5,7 +5,7 @@ import { Box, Text } from "@chakra-ui/react";
 // import { useCallback, useState } from 'react';
 
 const leftStyle = { left: 10 };
-const rightStyle = { right: 10 };
+// const rightStyle = { right: 10 };
 
 export function OutputInit({
             // id

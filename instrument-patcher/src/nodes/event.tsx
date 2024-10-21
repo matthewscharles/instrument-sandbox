@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { NodeProps, Position } from 'reactflow';
 import { withAudioNode } from './withAudioNode';
 import { HandleConfig } from './types';
@@ -16,7 +16,7 @@ const eventReceiverHandles: HandleConfig[] = [
 ];
 
 function EventReceiverComponent({ id, data }: NodeProps<EventReceiverNodeData>) {
-    const { label } = data;
+    // const { label } = data;
     const [eventName, setEventName] = useState(data.eventName || '');
     const [interval, setInterval] = useState(data.interval || 50);
     const [triggered, setTriggered] = useState(false);

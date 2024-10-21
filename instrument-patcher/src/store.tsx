@@ -85,73 +85,72 @@ window.patch = window.patch || {};
 window.connections = window.connections || {};
 
 //* node configuration */
-
-const nodeConfig: Record<string, { defaults: CustomNodeData; constructor: (context: AudioContext, value: CustomNodeData) => any }> = {
+const nodeConfig = {
   oscillator: {
-    defaults: { frequency: 440, gain: 0, feedback: 0, delay: 0, label: "oscillator", data: null, value: 0, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
-    constructor: (context: AudioContext, value: CustomNodeData) =>
+    defaults: { frequency: 440, label: "oscillator" },
+    constructor: (context: AudioContext, value: Number) =>
       new CustomOscillatorNode(context, { frequency: value.data.frequency }),
   },
   filter: {
-    defaults: { frequency: 100, gain: 0, feedback: 0, delay: 0, label: "filter", data: null, value: 0, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
-    constructor: (context: AudioContext, value: CustomNodeData) =>
+    defaults: { frequency: 100, Q: 1, label: "filter" },
+    constructor: (context: AudioContext, value: Number) =>
       new CustomFilterNode(context, { frequency: value.data.frequency }),
   },
   gain: {
-    defaults: { frequency: 0, gain: 1, feedback: 0, delay: 0, label: "gain", data: null, value: 0, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
-    constructor: (context: AudioContext, value: CustomNodeData) =>
+    defaults: { gain: 1, label: "gain" },
+    constructor: (context: AudioContext, value: Number) =>
       new CustomGainNode(context, { gain: value.data.gain }),
   },
   delay: {
-    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0.5, label: "delay", data: null, value: 0, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
-    constructor: (context: AudioContext, value: CustomNodeData) =>
+    defaults: { delay: 0.5, label: "delay" },
+    constructor: (context: AudioContext, value: Number) =>
       new EchoNode(context, {
         delayTime: value.data.delay,
         feedback: value.data.feedback || 0,
       }),
   },
   output: {
-    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0, label: "output", data: null, value: 0, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
+    defaults: { label: "output" },
     constructor: (context: AudioContext) => context.destination,
   },
   constant: {
-    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0, label: "constant", data: null, value: 1, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
-    constructor: (context: AudioContext, value: CustomNodeData) => new ConstantNode(context, value.data.value),
+    defaults: { value: 1, label: "constant" },
+    constructor: (context: AudioContext, value: Number) => new ConstantNode(context, value.data.value),
   },
   noise: {
-    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0, label: "noise", data: null, value: 0, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
+    defaults: { label: "noise" },
     constructor: (context: AudioContext) => new NoiseNode(context),
   },
   dust: {
-    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0, label: "dust", data: null, value: 0, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
+    defaults: { label: "dust" },
     constructor: (context: AudioContext) => new DustNode(context),
   },
   sampleandhold: {
-    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0, label: "sampleandhold", data: null, value: 0.01, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
-    constructor: (context: AudioContext, value: CustomNodeData) =>
+    defaults: { label: "sampleandhold", value: 0.01 },
+    constructor: (context: AudioContext, value: Number) =>
       new SampleHoldNode(context, { value: value.data.value }),
   },
   slewrate: {
-    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0, label: "slewrate", data: null, value: 0.01, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
-    constructor: (context: AudioContext, value: CustomNodeData) =>
+    defaults: { label: "slewrate", value: 0.01 },
+    constructor: (context: AudioContext, value: Number) =>
       new SlewRateNode(context, { value: value.data.value }),
   },
   midiCC: {
-    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0, label: "midiCC", data: null, value: 0, pulsewidth: 0, cc: 1, interval: 0, eventName: "" },
-    constructor: (context: AudioContext, value: CustomNodeData) =>
+    defaults: { label: "midiCC", cc: 1, value: 0 },
+    constructor: (context: AudioContext, value: Number) =>
       new MidiControlChangeNode(context, {
         cc: value.data.cc,
         value: value.data.value,
       }),
   },
   pulse: {
-    defaults: { frequency: 1, gain: 0, feedback: 0, delay: 0, label: "pulse", data: null, value: 0, pulsewidth: 0.5, cc: 0, interval: 0, eventName: "" },
-    constructor: (context: AudioContext, value: CustomNodeData) =>
+    defaults: { frequency: 1, pulseWidth: 0.5, label: "pulse" },
+    constructor: (context: AudioContext, value: Number) =>
       new PulseNode(context, value.data.frequency, value.data.pulseWidth),
   },
   event: {
-    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0, label: 'event', data: null, value: 0, pulsewidth: 0, cc: 0, interval: 50, eventName: 'defaultEvent' },
-    constructor: (context: AudioContext, value: CustomNodeData) =>
+    defaults: { eventName: 'defaultEvent', interval: 50, label: 'event' },
+    constructor: (context: AudioContext, value: CustomNode) =>
       new EventReceiverNode(context, { eventName: value.data.eventName, interval: value.data.interval }),
   },
 };
@@ -173,10 +172,12 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
 
     get().nodes.forEach((value) => {
       if (!(value.id in patch)) {
-        const constructor = nodeConfig[value.type].constructor;
-        if (constructor) {
-          const obj = constructor(context, value);
-          patch[value.id] = obj;
+        if (value.type && nodeConfig[value.type]) {
+          const constructor = nodeConfig[value.type].constructor;
+          if (constructor) {
+            const obj = constructor(context, value.data);
+            patch[value.id] = obj;
+          }
         }
       }
     });
