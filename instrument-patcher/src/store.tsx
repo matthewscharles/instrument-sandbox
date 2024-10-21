@@ -2,6 +2,7 @@
 import {
   applyNodeChanges,
   applyEdgeChanges,
+  addEdge,
   Node,
   Edge,
   NodeChange,
@@ -59,22 +60,23 @@ interface CustomNodeData {
   eventName: string;
 }
 
-interface CustomNodeDataData {
-  frequency: number;
-  gain: number;
-  feedback: number;
-  delay: number;
-  label: string;
-  data: CustomNodeData;
-  value: number;
-  pulsewidth: number;
-  cc: number;
-  interval: number;
-  eventName: string;
-}
+// interface CustomNodeDataData {
+//   frequency: number;
+//   gain: number;
+//   feedback: number;
+//   delay: number;
+//   label: string;
+//   data: CustomNodeData;
+//   value: number;
+//   pulsewidth: number;
+//   cc: number;
+//   interval: number;
+//   eventName: string;
+// }
 
 interface CustomNode extends Node {
   data: CustomNodeData;
+  value: any;
 }
 
 ///* patch and connections in the global scope for debugging purposes */
@@ -82,26 +84,26 @@ window.context = new AudioContext();
 window.patch = window.patch || {};
 window.connections = window.connections || {};
 
-
 //* node configuration */
-const nodeConfig = {
+
+const nodeConfig: Record<string, { defaults: CustomNodeData; constructor: (context: AudioContext, value: CustomNodeData) => any }> = {
   oscillator: {
-    defaults: { frequency: 440, label: "oscillator" },
+    defaults: { frequency: 440, gain: 0, feedback: 0, delay: 0, label: "oscillator", data: null, value: 0, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
     constructor: (context: AudioContext, value: CustomNodeData) =>
       new CustomOscillatorNode(context, { frequency: value.data.frequency }),
   },
   filter: {
-    defaults: { frequency: 100, Q: 1, label: "filter" },
+    defaults: { frequency: 100, gain: 0, feedback: 0, delay: 0, label: "filter", data: null, value: 0, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
     constructor: (context: AudioContext, value: CustomNodeData) =>
       new CustomFilterNode(context, { frequency: value.data.frequency }),
   },
   gain: {
-    defaults: { gain: 1, label: "gain" },
+    defaults: { frequency: 0, gain: 1, feedback: 0, delay: 0, label: "gain", data: null, value: 0, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
     constructor: (context: AudioContext, value: CustomNodeData) =>
       new CustomGainNode(context, { gain: value.data.gain }),
   },
   delay: {
-    defaults: { delay: 0.5, label: "delay" },
+    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0.5, label: "delay", data: null, value: 0, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
     constructor: (context: AudioContext, value: CustomNodeData) =>
       new EchoNode(context, {
         delayTime: value.data.delay,
@@ -109,33 +111,33 @@ const nodeConfig = {
       }),
   },
   output: {
-    defaults: { label: "output" },
+    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0, label: "output", data: null, value: 0, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
     constructor: (context: AudioContext) => context.destination,
   },
   constant: {
-    defaults: { value: 1, label: "constant" },
+    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0, label: "constant", data: null, value: 1, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
     constructor: (context: AudioContext, value: CustomNodeData) => new ConstantNode(context, value.data.value),
   },
   noise: {
-    defaults: { label: "noise" },
+    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0, label: "noise", data: null, value: 0, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
     constructor: (context: AudioContext) => new NoiseNode(context),
   },
   dust: {
-    defaults: { label: "dust" },
+    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0, label: "dust", data: null, value: 0, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
     constructor: (context: AudioContext) => new DustNode(context),
   },
   sampleandhold: {
-    defaults: { label: "sampleandhold", value: 0.01 },
+    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0, label: "sampleandhold", data: null, value: 0.01, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
     constructor: (context: AudioContext, value: CustomNodeData) =>
       new SampleHoldNode(context, { value: value.data.value }),
   },
   slewrate: {
-    defaults: { label: "slewrate", value: 0.01 },
+    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0, label: "slewrate", data: null, value: 0.01, pulsewidth: 0, cc: 0, interval: 0, eventName: "" },
     constructor: (context: AudioContext, value: CustomNodeData) =>
       new SlewRateNode(context, { value: value.data.value }),
   },
   midiCC: {
-    defaults: { label: "midiCC", cc: 1, value: 0 },
+    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0, label: "midiCC", data: null, value: 0, pulsewidth: 0, cc: 1, interval: 0, eventName: "" },
     constructor: (context: AudioContext, value: CustomNodeData) =>
       new MidiControlChangeNode(context, {
         cc: value.data.cc,
@@ -143,13 +145,13 @@ const nodeConfig = {
       }),
   },
   pulse: {
-    defaults: { frequency: 1, pulseWidth: 0.5, label: "pulse" },
+    defaults: { frequency: 1, gain: 0, feedback: 0, delay: 0, label: "pulse", data: null, value: 0, pulsewidth: 0.5, cc: 0, interval: 0, eventName: "" },
     constructor: (context: AudioContext, value: CustomNodeData) =>
       new PulseNode(context, value.data.frequency, value.data.pulseWidth),
   },
   event: {
-    defaults: { eventName: 'defaultEvent', interval: 50, label: 'event' },
-    constructor: (context: AudioContext, value: CustomNode) =>
+    defaults: { frequency: 0, gain: 0, feedback: 0, delay: 0, label: 'event', data: null, value: 0, pulsewidth: 0, cc: 0, interval: 50, eventName: 'defaultEvent' },
+    constructor: (context: AudioContext, value: CustomNodeData) =>
       new EventReceiverNode(context, { eventName: value.data.eventName, interval: value.data.interval }),
   },
 };
@@ -185,6 +187,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
     const key = `e_${source}-${sourceHandle}_${target}-${targetHandle}`;
 
     const newConnection: Connection = {
+      id: key,
       source,
       target,
       sourceHandle,
@@ -234,10 +237,18 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
           // console.log("destination is AudioDestinationNode", target);
           source.connect(target);
         } else {
-          source.connect(target[value.targetHandle]);
+          if (value.targetHandle != null) {
+            source.connect(target[value.targetHandle]);
+          } else {
+            console.error("targetHandle is null or undefined", value);
+          }
         }
       } else {
-        source[value.sourceHandle].connect(target[value.targetHandle]);
+        if (value.sourceHandle != null && value.targetHandle != null) {
+          source[value.sourceHandle].connect(target[value.targetHandle]);
+        } else {
+          console.error("sourceHandle or targetHandle is null or undefined", value);
+        }
       }
       const key = `e_${value.source}-${value.sourceHandle}_${value.target}-${value.targetHandle}`;
       window.connections[id] = { ...value, id: key };
@@ -300,7 +311,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
     }
   },
 
-  addNode(type, position) {
+  addNode(type: keyof typeof nodeConfig, position) {
     const id = (get().nodes.length + 1).toString();
 
     const newNode: CustomNode = {
@@ -308,6 +319,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
       type,
       position,
       data: nodeConfig[type].defaults,
+      value: null, // or provide an appropriate initial value
     };
     set({ nodes: [...get().nodes, newNode] });
   },

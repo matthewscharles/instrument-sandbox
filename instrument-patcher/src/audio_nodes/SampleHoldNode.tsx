@@ -1,12 +1,16 @@
 import { CustomAudioNode } from './CustomAudioNode';
 
+interface SampleHoldNodeOptions {
+  value: number;
+}
+
 class SampleHoldNode extends CustomAudioNode {
   input: GainNode;
   trigger: GainNode;
 
-  constructor(context: AudioContext, options: {}) {
+  constructor(context: AudioContext, options: SampleHoldNodeOptions) {
     super(context);
-
+    console.log(options.value);
     this.input = new GainNode(context);
     this.trigger = new GainNode(context);
     this.initialized = false;

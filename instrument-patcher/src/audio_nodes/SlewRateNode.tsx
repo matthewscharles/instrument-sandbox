@@ -1,13 +1,19 @@
 import { CustomAudioNode } from './CustomAudioNode';
 
+interface SlewRateNodeOptions {
+  value: number;
+}
+
+
 class SlewRateNode extends CustomAudioNode {
   input: GainNode;
   rise: GainNode;
   fall: GainNode;
   
-  constructor(context: AudioContext, options: {}) { 
-    super(context);
 
+  constructor(context: AudioContext, options: SlewRateNodeOptions) { 
+    super(context);
+    console.log(options.value);
     this.input = context.createGain();
     this.rise = context.createGain();
     this.fall = context.createGain();
