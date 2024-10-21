@@ -8,10 +8,11 @@ const rightStyle = { right: 10 };
 
 export function PulseInit({
   id,
-  data: { frequency, label },
+  // data: { frequency, label },
+  data: { frequency },
 }: NodeProps<{ frequency: number, label: string }>) {
   const [number, setNumber] = useState(frequency);
-  const [waveform, setWaveform] = useState('triangle');
+  // const [waveform, setWaveform] = useState('triangle');
 
   const onChangeFrequency = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const cappedNumber = Math.round(

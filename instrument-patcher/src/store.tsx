@@ -41,8 +41,8 @@ interface Connection {
   id: string;
   source: string;
   target: string;
-  sourceHandle?: string;
-  targetHandle?: string;
+  sourceHandle: string;
+  targetHandle: string;
 }
 
 interface CustomNodeData {
@@ -51,7 +51,7 @@ interface CustomNodeData {
   feedback: number;
   delay: number;
   label: string;
-  data: CustomNodeDataData;
+  data: any;
   value: number;
   pulsewidth: number;
   cc: number;
@@ -199,7 +199,9 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
     // Connect the nodes in the audio context
     const patch = window.patch;
     if (patch[source] && patch[target]) {
-      patch[source][sourceHandle].connect(patch[target][targetHandle]);
+      
+        patch[source][sourceHandle].connect(patch[target][targetHandle]);
+      
     }
   },
   

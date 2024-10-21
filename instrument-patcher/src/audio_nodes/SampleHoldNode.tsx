@@ -4,7 +4,7 @@ class SampleHoldNode extends CustomAudioNode {
   input: GainNode;
   trigger: GainNode;
 
-  constructor(context: AudioContext) {
+  constructor(context: AudioContext, options: {}) {
     super(context);
 
     this.input = new GainNode(context);

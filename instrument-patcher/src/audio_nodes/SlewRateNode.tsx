@@ -5,7 +5,7 @@ class SlewRateNode extends CustomAudioNode {
   rise: GainNode;
   fall: GainNode;
   
-  constructor(context: AudioContext) {
+  constructor(context: AudioContext, options: {}) { 
     super(context);
 
     this.input = context.createGain();
