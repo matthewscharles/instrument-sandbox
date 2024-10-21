@@ -47,8 +47,30 @@ interface Connection {
 
 interface CustomNodeData {
   frequency: number;
+  gain: number;
+  feedback: number;
+  delay: number;
   label: string;
-  data: object;
+  data: CustomNodeDataData;
+  value: number;
+  pulsewidth: number;
+  cc: number;
+  interval: number;
+  eventName: string;
+}
+
+interface CustomNodeDataData {
+  frequency: number;
+  gain: number;
+  feedback: number;
+  delay: number;
+  label: string;
+  data: CustomNodeData;
+  value: number;
+  pulsewidth: number;
+  cc: number;
+  interval: number;
+  eventName: string;
 }
 
 interface CustomNode extends Node {
@@ -65,22 +87,22 @@ window.connections = window.connections || {};
 const nodeConfig = {
   oscillator: {
     defaults: { frequency: 440, label: "oscillator" },
-    constructor: (context: AudioContext, value: Number) =>
+    constructor: (context: AudioContext, value: CustomNodeData) =>
       new CustomOscillatorNode(context, { frequency: value.data.frequency }),
   },
   filter: {
     defaults: { frequency: 100, Q: 1, label: "filter" },
-    constructor: (context: AudioContext, value: Number) =>
+    constructor: (context: AudioContext, value: CustomNodeData) =>
       new CustomFilterNode(context, { frequency: value.data.frequency }),
   },
   gain: {
     defaults: { gain: 1, label: "gain" },
-    constructor: (context: AudioContext, value: Number) =>
+    constructor: (context: AudioContext, value: CustomNodeData) =>
       new CustomGainNode(context, { gain: value.data.gain }),
   },
   delay: {
     defaults: { delay: 0.5, label: "delay" },
-    constructor: (context: AudioContext, value: Number) =>
+    constructor: (context: AudioContext, value: CustomNodeData) =>
       new EchoNode(context, {
         delayTime: value.data.delay,
         feedback: value.data.feedback || 0,
@@ -92,7 +114,7 @@ const nodeConfig = {
   },
   constant: {
     defaults: { value: 1, label: "constant" },
-    constructor: (context: AudioContext, value: Number) => new ConstantNode(context, value.data.value),
+    constructor: (context: AudioContext, value: CustomNodeData) => new ConstantNode(context, value.data.value),
   },
   noise: {
     defaults: { label: "noise" },
@@ -104,17 +126,17 @@ const nodeConfig = {
   },
   sampleandhold: {
     defaults: { label: "sampleandhold", value: 0.01 },
-    constructor: (context: AudioContext, value: Number) =>
+    constructor: (context: AudioContext, value: CustomNodeData) =>
       new SampleHoldNode(context, { value: value.data.value }),
   },
   slewrate: {
     defaults: { label: "slewrate", value: 0.01 },
-    constructor: (context: AudioContext, value: Number) =>
+    constructor: (context: AudioContext, value: CustomNodeData) =>
       new SlewRateNode(context, { value: value.data.value }),
   },
   midiCC: {
     defaults: { label: "midiCC", cc: 1, value: 0 },
-    constructor: (context: AudioContext, value: Number) =>
+    constructor: (context: AudioContext, value: CustomNodeData) =>
       new MidiControlChangeNode(context, {
         cc: value.data.cc,
         value: value.data.value,
@@ -122,7 +144,7 @@ const nodeConfig = {
   },
   pulse: {
     defaults: { frequency: 1, pulseWidth: 0.5, label: "pulse" },
-    constructor: (context: AudioContext, value: Number) =>
+    constructor: (context: AudioContext, value: CustomNodeData) =>
       new PulseNode(context, value.data.frequency, value.data.pulseWidth),
   },
   event: {
