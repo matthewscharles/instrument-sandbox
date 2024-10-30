@@ -286,9 +286,9 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
     
     if (Array.isArray(data) && data.length > 0) {
       let id = data[0].id;
-      console.log("deleteNode", id, data);
+      // console.log("deleteNode", id, data);
       let patcher = window.patch;
-      console.log("delete", patcher[id]);
+      // console.log("delete", patcher[id]);
       //** don't dispose just yet, since we may need to undo */
       // patcher[id].dispose();
       delete patcher[id];

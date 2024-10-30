@@ -1,15 +1,15 @@
 // App.tsx
 import ReactFlow, {
-  Node,
-  Edge,
+  // Node,
+  // Edge,
   Controls,
   Background,
   BackgroundVariant,
-  MiniMap,
-  useNodesState,
-  useEdgesState,
-  Connection,
-  addEdge,
+  // MiniMap,
+  // useNodesState,
+  // useEdgesState,
+  // Connection,
+  // addEdge,
   ReactFlowInstance,
 } from 'reactflow';
 import { useCallback, useState, useRef } from 'react';
@@ -31,6 +31,7 @@ import { SlewRateInit } from './nodes/slewRateInit';
 import { MidiCCNode } from './nodes/midiCC';
 import { PulseInit } from './components/pulse';
 import { EventReceiverInit } from './nodes/event';
+
 const selector = (store: StoreState) => ({
   nodes: store.nodes,
   edges: store.edges,

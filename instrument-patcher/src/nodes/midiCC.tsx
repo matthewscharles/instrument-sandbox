@@ -21,7 +21,7 @@ function MidiCCComponent({ id, data }: NodeProps<MidiCCNodeData>) {
   // Event listener to update the value state
   const handleMidiCCChange = useCallback((event: CustomEvent) => {
     const patcher = window.patch;
-    console.log('MidiCCNode', id, number, event.detail.ccLane, ccLane, event.detail.value);
+    // console.log('MidiCCNode', id, number, event.detail.ccLane, ccLane, event.detail.value);
     if (patcher && patcher[id]) {
       const identifier = patcher[id].displayId;
       if (event.detail.identifier === identifier) {

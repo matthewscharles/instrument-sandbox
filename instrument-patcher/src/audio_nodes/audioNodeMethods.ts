@@ -4,7 +4,7 @@ export async function connect(context: any, output: AudioNode, destination: Audi
         await context.initPromise; // Wait for initialization
     }
     
-    console.log('Connecting', output, 'to', destination);
+    // console.log('Connecting', output, 'to', destination);
     
     if (destination instanceof AudioDestinationNode) {
         output.connect(destination);
