@@ -27,7 +27,6 @@ class SampleHold extends AudioWorkletProcessor {
       // Detect rising edge in trigger signal
       if (this.prevTrigger <= 0 && currentTrigger > 0) {
         this.lastSample = source[i];
-        // console.log('sample-hold: ', this.lastSample);
       }
       
       output[i] = this.lastSample;

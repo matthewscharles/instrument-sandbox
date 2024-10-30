@@ -196,7 +196,6 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
   addEdge(data) {
     // const id = (get().edges.length + 1).toString();
     const id = `e_${data.source}-${data.sourceHandle}_${data.target}-${data.targetHandle}`;
-    // console.log(id, data);
     const edge = { id, ...data };
     set({ edges: [edge, ...get().edges] });
 
@@ -207,7 +206,6 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
       ];
       if (source instanceof CustomAudioNode) {
         if (target instanceof AudioDestinationNode) {
-          // console.log("destination is AudioDestinationNode", target);
           source.connect(target);
         } else {
           source.connect(target[value.targetHandle]);
@@ -223,7 +221,6 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
   deleteEdge(data) {
     if (Array.isArray(data) && data.length > 0) {
       const id = data[0].id;
-      // console.log("deleteEdge", id, data);
 
       const patcher = window.patch;
       const connections = window.connections;
@@ -238,11 +235,8 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
           const sourceNode = patcher[sourceId];
           const targetNode = patcher[targetId];
 
-          // console.log("delete", sourceNode, targetNode);
-
           if (sourceNode instanceof CustomAudioNode) {
             if (targetNode instanceof AudioDestinationNode) {
-              // console.log("destination is AudioDestinationNode", targetNode);
               sourceNode.disconnect(targetNode);
             } else {
               sourceNode.disconnect(targetNode[targetHandle]);
@@ -257,7 +251,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
             targetId
           );
         }
-        // console.log("delete connection", connections[id]);
+
         if(id in connections){
           delete connections[id];
         } else {
@@ -289,7 +283,7 @@ export const useStore = createWithEqualityFn<StoreState>((set, get) => ({
   },
 
   deleteNode(data) {
-    // console.log("deleteNode", data);
+    
     if (Array.isArray(data) && data.length > 0) {
       let id = data[0].id;
       console.log("deleteNode", id, data);
