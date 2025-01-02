@@ -50,7 +50,6 @@
         this.node.disconnect();
       } else {
         if (destination instanceof AudioParam) {
-          // Disconnect from the AudioParam
           this.node.disconnect(destination, outputIndex);
         } else if (destination instanceof AudioNode) {
           this.node.disconnect(destination, outputIndex, inputIndex);

@@ -15,7 +15,8 @@ const delayHandles: HandleConfig[] = [
 ];
 
 function DelayComponent({ id, data }: NodeProps<DelayNodeData>) {
-  const { time, label } = data;
+  // const { time, label } = data;
+  const { time } = data;
   const { number, onChange } = useAudioNode(time, id);
 
   return (
