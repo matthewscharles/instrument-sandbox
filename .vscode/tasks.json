@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "instrument-patcher",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - instrument-patcher",
+			"detail": "tsc -b && vite build --force"
+		}
+	]
+}
